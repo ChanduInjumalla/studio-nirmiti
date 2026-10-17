@@ -1,11 +1,10 @@
 /* =========================================================================
    STUDIO NIRMITI — SCROLL-SCRUBBED CINEMATIC VIDEO HERO
-   Pure Architectural Film · Zero Demo UI · Seamless Sticky Container
+   Pure Architectural Film · Zero Photos · Direct Smooth Video Scrubbing
    
    Layer Stack (bottom → top):
-   z-index 1  →  <video>           (scroll-scrubbed video)
-   z-index 2  →  <picture>         (crystal-clear reference image overlay)
-   z-index 3  →  .scrimOverlay     (gradient for text readability)
+   z-index 1  →  <video>           (direct scroll-scrubbed video)
+   z-index 2  →  .scrimOverlay     (gradient for text readability)
    z-index 10 →  .heroContent      (editorial text + CTAs)
    ========================================================================= */
 
@@ -34,30 +33,7 @@
   backface-visibility: hidden;
 }
 
-/* =========================================================================
-   VIDEO + IMAGE ALIGNMENT
-   Both layers MUST share identical sizing, positioning, and object-fit
-   so they overlap perfectly with zero visual misalignment.
-   ========================================================================= */
-
-/* Fullscreen Hardware-Accelerated Scrub Canvas */
-.canvasElement {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 1;
-
-  /* GPU acceleration for butter-smooth 60/120fps scrubbing */
-  transform: translateZ(0);
-  will-change: contents;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* Fullscreen Background Video (fallback) */
+/* Fullscreen Background Video */
 .videoElement {
   position: absolute;
   top: 0;
@@ -69,46 +45,11 @@
   display: block;
   z-index: 1;
 
-  /* GPU acceleration for instant compositing */
+  /* GPU acceleration for instantaneous scrubbing */
   transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-}
-
-/* Crystal-Clear Reference Image Layer (top-quality landing visual) */
-.initialImageLayer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
-
-  /* GPU compositing for smooth opacity transitions */
-  transform: translateZ(0);
-  will-change: opacity;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-
-  /* Ultra-smooth crossfade — eased transition for cinematic feel */
-  transition: opacity 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.initialImage {
-  width: 100%;
-  height: 100%;
-
-  /* CRITICAL: Must match .videoElement's object-fit + position exactly */
-  object-fit: cover;
-  object-position: center center;
-
-  display: block;
-
-  /* Ensure no browser default rendering artifacts */
-  image-rendering: auto;
-  -webkit-image-rendering: auto;
 }
 
 /* Subtle Architectural Scrim (ensures text legibility without darkening the house) */

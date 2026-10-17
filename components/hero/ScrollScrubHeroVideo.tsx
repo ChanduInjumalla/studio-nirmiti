@@ -7,122 +7,36 @@ import styles from './ScrollScrubHeroVideo.module.css';
 /**
  * ScrollScrubHeroVideo
  * ────────────────────
- * Premium cinematic hero section with:
- *  • Crystal-clear static reference image shown on load (no blurry video frame)
- *  • Invisible crossfade from image → video when user begins scrolling
- *  • Fully scroll-linked video scrubbing (forward + reverse)
- *  • GPU-composited layers for zero layout shift
+ * Pure architectural video scrubbed directly to scroll position.
+ * Features:
+ *  • Real HTML5 <video> element with GOP-2 ultra-low-latency keyframes
+ *  • Zero trailing lag: stops the exact millisecond the user stops scrolling
+ *  • Continuous rAF seeking gate: prevents decoder aborts and black frames
+ *  • Minimalist architectural room labels synchronized to walkthrough
  */
-const TOTAL_FRAMES = 96;
-
 export default function ScrollScrubHeroVideo() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const [progress, setProgress] = useState(0);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const [canvasReady, setCanvasReady] = useState(false);
 
-  const targetFrameRef = useRef(0);
-  const currentFrameRef = useRef(0);
+  const targetTimeRef = useRef(0);
   const rafIdRef = useRef<number>(0);
 
-  // ───── Preload 96 optimized WebP frames ─────
+  // ───── Continuous rAF Loop for Zero-Lag, Decoder-Safe Video Scrubbing ─────
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
-
-    // Prioritize frame 1 for instant first paint
-    const firstImg = new Image();
-    firstImg.src = '/images/hero-frames/frame_0001.webp';
-    firstImg.onload = () => {
-      loadedImages[0] = firstImg;
-      setCanvasReady(true);
-    };
-    loadedImages[0] = firstImg;
-
-    // Asynchronously preload all remaining frames into memory
-    for (let i = 2; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      const pad = String(i).padStart(4, '0');
-      img.src = `/images/hero-frames/frame_${pad}.webp`;
-      img.decoding = 'async';
-      loadedImages[i - 1] = img;
-    }
-
-    imagesRef.current = loadedImages;
-  }, []);
-
-  // ───── Draw frame to canvas with object-fit: cover ─────
-  const drawFrame = useCallback((frameIndex: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: false });
-    if (!ctx) return;
-
-    const img = imagesRef.current[frameIndex] || imagesRef.current[0];
-    if (!img || !img.complete || img.naturalWidth === 0) return;
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-
-    if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) {
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-    }
-
-    ctx.save();
-    ctx.scale(dpr, dpr);
-
-    const imgAspect = img.naturalWidth / img.naturalHeight;
-    const screenAspect = width / height;
-
-    let drawW: number;
-    let drawH: number;
-    let drawX: number;
-    let drawY: number;
-
-    if (screenAspect > imgAspect) {
-      drawW = width;
-      drawH = width / imgAspect;
-      drawX = 0;
-      drawY = (height - drawH) / 2;
-    } else {
-      drawH = height;
-      drawW = height * imgAspect;
-      drawX = (width - drawW) / 2;
-      drawY = 0;
-    }
-
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'medium';
-    ctx.drawImage(img, drawX, drawY, drawW, drawH);
-    ctx.restore();
-  }, []);
-
-  // ───── Continuous 60/120fps render loop with smooth interpolation ─────
-  useEffect(() => {
-    let lastRenderedIndex = -1;
+    let active = true;
 
     const renderLoop = () => {
-      const diff = targetFrameRef.current - currentFrameRef.current;
+      if (!active) return;
 
-      // Snappy lerp: 0.35 factor ensures instant response without lag or stutter
-      if (Math.abs(diff) > 0.05) {
-        currentFrameRef.current += diff * 0.35;
-      } else {
-        currentFrameRef.current = targetFrameRef.current;
-      }
-
-      const frameIdx = Math.min(
-        TOTAL_FRAMES - 1,
-        Math.max(0, Math.round(currentFrameRef.current))
-      );
-
-      if (frameIdx !== lastRenderedIndex || !canvasReady) {
-        drawFrame(frameIdx);
-        lastRenderedIndex = frameIdx;
+      const video = videoRef.current;
+      if (video && !video.seeking) {
+        const target = targetTimeRef.current;
+        // Only seek if the difference is more than ~1 frame (0.03s at 29fps)
+        if (Math.abs(video.currentTime - target) > 0.03) {
+          video.currentTime = target;
+        }
       }
 
       rafIdRef.current = requestAnimationFrame(renderLoop);
@@ -131,41 +45,80 @@ export default function ScrollScrubHeroVideo() {
     rafIdRef.current = requestAnimationFrame(renderLoop);
 
     return () => {
+      active = false;
       cancelAnimationFrame(rafIdRef.current);
     };
-  }, [drawFrame, canvasReady]);
+  }, []);
 
-  // ───── Scroll calculation: SCROLL POSITION = FRAME INDEX ─────
+  // ───── Direct Scroll to Video Progress Mapping ─────
   const handleScroll = useCallback(() => {
     const container = containerRef.current;
+    const video = videoRef.current;
     if (!container) return;
 
-    const rect = container.getBoundingClientRect();
     const totalScrollable = container.offsetHeight - window.innerHeight;
     if (totalScrollable <= 0) return;
 
-    // Scrolled distance within this container (0 at top, totalScrollable at bottom)
-    const scrolled = -rect.top;
+    // Direct scrollY without layout reflow
+    const scrolled = Math.max(0, window.scrollY);
     const normalized = Math.min(1, Math.max(0, scrolled / totalScrollable));
-
-    // Mark first scroll event for image transition
-    if (!hasScrolled && normalized > 0.001) {
-      setHasScrolled(true);
-    }
 
     setProgress(normalized);
 
-    // Map 0..1 to 0..(TOTAL_FRAMES - 1)
-    targetFrameRef.current = normalized * (TOTAL_FRAMES - 1);
-  }, [hasScrolled]);
+    const dur = video?.duration && !isNaN(video.duration) && video.duration > 0 ? video.duration : 48;
+    targetTimeRef.current = Math.max(0, Math.min(dur - 0.05, normalized * dur));
+  }, []);
 
-  // ───── Global scroll and resize listeners ─────
+  // ───── Immediate Seek on 'seeked' for Maximum Responsiveness ─────
+  const handleSeeked = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const target = targetTimeRef.current;
+    if (Math.abs(video.currentTime - target) > 0.03) {
+      video.currentTime = target;
+    }
+  }, []);
+
+  // ───── Initialize Video Priming (Immediate First Frame) ─────
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const primeVideo = () => {
+      video.muted = true;
+      video.playsInline = true;
+      if (video.currentTime === 0) {
+        try {
+          video.currentTime = 0.01;
+        } catch {
+          // Ignore initial restriction
+        }
+      }
+      handleScroll();
+    };
+
+    if (video.readyState >= 1) {
+      primeVideo();
+    } else {
+      video.addEventListener('loadedmetadata', primeVideo, { once: true });
+    }
+
+    video.addEventListener('seeked', handleSeeked);
+
+    return () => {
+      video.removeEventListener('loadedmetadata', primeVideo);
+      video.removeEventListener('seeked', handleSeeked);
+    };
+  }, [handleSeeked, handleScroll]);
+
+  // ───── Scroll and Resize Listeners ─────
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     window.addEventListener('orientationchange', handleScroll, { passive: true });
 
-    // Initial check
+    // Initial run
     handleScroll();
 
     return () => {
@@ -175,15 +128,6 @@ export default function ScrollScrubHeroVideo() {
     };
   }, [handleScroll]);
 
-  // ───── Image opacity calculation ─────
-  const computeImageOpacity = (): number => {
-    if (!hasScrolled) return 1;
-    if (!canvasReady) return 1;
-    return Math.max(0, Math.min(1, 1 - progress / 0.03));
-  };
-
-  const imageOpacity = computeImageOpacity();
-
   return (
     <section
       ref={containerRef}
@@ -192,46 +136,18 @@ export default function ScrollScrubHeroVideo() {
     >
       {/* Pinned Sticky Viewport (100vh) */}
       <div className={styles.heroSticky}>
-        {/* Hardware-Accelerated 60fps Scroll Canvas (instantaneous frame drawing, zero decoder stalls) */}
-        <canvas
-          ref={canvasRef}
-          className={styles.canvasElement}
+        {/* Hardware-Accelerated Scrubbed Video Element */}
+        <video
+          ref={videoRef}
+          className={styles.videoElement}
+          src="/videos/hero_scrub_video.mp4"
+          muted
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
           aria-hidden="true"
         />
-
-        {/* Crystal-Clear Reference Photo Layer — shown on load, fades into video on scroll */}
-        <picture
-          className={styles.initialImageLayer}
-          style={{ opacity: imageOpacity }}
-          aria-hidden="true"
-        >
-          {/* Desktop high-quality WebP */}
-          <source
-            media="(min-width: 1440px)"
-            srcSet="/images/hero_reference_hq.webp"
-            type="image/webp"
-          />
-          {/* Standard desktop WebP */}
-          <source
-            media="(min-width: 768px)"
-            srcSet="/images/hero_reference_hq.webp 2x, /images/hero_reference.webp 1x"
-            type="image/webp"
-          />
-          {/* Mobile WebP */}
-          <source
-            srcSet="/images/hero_reference_mobile.webp"
-            type="image/webp"
-          />
-          {/* Fallback PNG */}
-          <img
-            src="/images/hero_reference.png"
-            alt="Studio Nirmiti Luxury Estate Interior & Grand Foyer"
-            className={styles.initialImage}
-            fetchPriority="high"
-            decoding="sync"
-            loading="eager"
-          />
-        </picture>
 
         {/* Subtle Architectural Scrim Overlay for Readability */}
         <div className={styles.scrimOverlay} aria-hidden="true" />
@@ -241,7 +157,6 @@ export default function ScrollScrubHeroVideo() {
           <div className={styles.editorialText}>
             {/* Room-specific labels that change as video scrolls through spaces */}
             {(() => {
-              // Define room sections with their scroll ranges, index, and immense architectural content
               const rooms = [
                 {
                   start: 0,
