@@ -23,7 +23,11 @@ export default function ScrollScrubHeroVideo() {
   const [hasScrolled, setHasScrolled] = useState(false);
 
   const targetTimeRef = useRef(0);
+  const smoothedTimeRef = useRef(0);
   const durationRef = useRef(48.0);
+  const isSeekingRef = useRef(false);
+  const pendingTargetTimeRef = useRef<number | null>(null);
+  const lastSeekTimestampRef = useRef<number>(0);
   const rafIdRef = useRef<number>(0);
 
   // ───── Responsive video source selection ─────
@@ -35,38 +39,66 @@ export default function ScrollScrubHeroVideo() {
     }
   }, []);
 
+  // ───── Core Non-Blocking Seek Dispatcher ─────
+  // Guarantees we never interrupt an in-flight seek, eliminating browser decoder stalls
+  const performSeek = useCallback((targetTime: number) => {
+    const video = videoRef.current;
+    if (!video || video.readyState < 1) return;
+
+    // If browser is actively seeking, queue this target time for when 'seeked' fires
+    if (video.seeking || isSeekingRef.current) {
+      pendingTargetTimeRef.current = targetTime;
+      return;
+    }
+
+    // Skip if within ~half a frame duration (< 0.015s)
+    const diff = Math.abs(video.currentTime - targetTime);
+    if (diff < 0.015) return;
+
+    isSeekingRef.current = true;
+    lastSeekTimestampRef.current = performance.now();
+
+    try {
+      const vidAny = video as unknown as { fastSeek?: (t: number) => void };
+      if (typeof vidAny.fastSeek === 'function') {
+        vidAny.fastSeek(targetTime);
+      } else {
+        video.currentTime = targetTime;
+      }
+    } catch {
+      isSeekingRef.current = false;
+    }
+  }, []);
+
   // ───── Continuous frame synchronization loop ─────
-  // Uses interpolated seeking for buttery smooth scrubbing
+  // Uses non-blocking interpolation for buttery smooth, stall-free scrubbing
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    let lastSeekTimestamp = 0;
-    // Smoothed current time for interpolation
-    let smoothedTime = 0;
+    const renderLoop = () => {
+      // Watchdog: If browser took longer than 120ms to fire 'seeked', release lock so it never deadlocks
+      if (isSeekingRef.current && performance.now() - lastSeekTimestampRef.current > 120) {
+        isSeekingRef.current = false;
+        if (pendingTargetTimeRef.current !== null) {
+          const next = pendingTargetTimeRef.current;
+          pendingTargetTimeRef.current = null;
+          performSeek(next);
+        }
+      }
 
-    const renderLoop = (now: number) => {
       if (video.readyState >= 1) {
         const target = targetTimeRef.current;
-        const diff = target - smoothedTime;
+        const diff = target - smoothedTimeRef.current;
 
-        // Interpolate smoothly toward target (lerp factor)
-        // Higher factor = more responsive but potentially choppier
-        const lerpFactor = 0.15;
-        smoothedTime += diff * lerpFactor;
-
-        // Only issue seek if meaningful difference from current video position
-        const seekDiff = Math.abs(smoothedTime - video.currentTime);
-        if (seekDiff > 0.005) {
-          // Rate-limit seeks: at most every ~16ms (60fps budget)
-          if (!video.seeking || now - lastSeekTimestamp > 16) {
-            try {
-              video.currentTime = smoothedTime;
-              lastSeekTimestamp = now;
-            } catch {
-              // Ignore seek aborts during fast scrolling
-            }
-          }
+        // Snappy, organic interpolation: responsive to fast scrolls without lagging
+        if (Math.abs(diff) > 0.005) {
+          smoothedTimeRef.current += diff * 0.35;
+          performSeek(smoothedTimeRef.current);
+        } else if (pendingTargetTimeRef.current !== null && !isSeekingRef.current) {
+          const next = pendingTargetTimeRef.current;
+          pendingTargetTimeRef.current = null;
+          performSeek(next);
         }
       }
 
@@ -78,7 +110,7 @@ export default function ScrollScrubHeroVideo() {
     return () => {
       cancelAnimationFrame(rafIdRef.current);
     };
-  }, []);
+  }, [performSeek]);
 
   // ───── Scroll calculation: SCROLL POSITION = VIDEO POSITION ─────
   const handleScroll = useCallback(() => {
@@ -105,7 +137,12 @@ export default function ScrollScrubHeroVideo() {
     // Map 0..1 to 0..duration (clamped precisely)
     const target = Math.min(dur - 0.001, Math.max(0, normalized * dur));
     targetTimeRef.current = target;
-  }, [hasScrolled]);
+
+    // If first frame or user scrolls while idle, trigger performSeek directly for zero latency
+    if (!isSeekingRef.current) {
+      performSeek(target);
+    }
+  }, [hasScrolled, performSeek]);
 
   // ───── Video initialization and metadata listeners ─────
   useEffect(() => {
@@ -137,6 +174,16 @@ export default function ScrollScrubHeroVideo() {
       handleScroll();
     };
 
+    const onSeeked = () => {
+      isSeekingRef.current = false;
+      // Immediately process the latest queued scroll position
+      if (pendingTargetTimeRef.current !== null) {
+        const nextTime = pendingTargetTimeRef.current;
+        pendingTargetTimeRef.current = null;
+        performSeek(nextTime);
+      }
+    };
+
     const onPlay = () => {
       // Prevent unauthorized autoplay — user scroll is the only playback engine
       video.pause();
@@ -145,6 +192,7 @@ export default function ScrollScrubHeroVideo() {
     video.addEventListener('loadedmetadata', onLoadedMetadata);
     video.addEventListener('loadeddata', onLoadedMetadata);
     video.addEventListener('canplay', onCanPlay);
+    video.addEventListener('seeked', onSeeked);
     video.addEventListener('play', onPlay);
 
     // Prompt the browser to load video metadata
@@ -161,9 +209,10 @@ export default function ScrollScrubHeroVideo() {
       video.removeEventListener('loadedmetadata', onLoadedMetadata);
       video.removeEventListener('loadeddata', onLoadedMetadata);
       video.removeEventListener('canplay', onCanPlay);
+      video.removeEventListener('seeked', onSeeked);
       video.removeEventListener('play', onPlay);
     };
-  }, [handleScroll, videoSrc]);
+  }, [handleScroll, performSeek, videoSrc]);
 
   // ───── Global scroll, resize and orientation listeners ─────
   useEffect(() => {

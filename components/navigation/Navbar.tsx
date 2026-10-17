@@ -77,41 +77,68 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
               </Link>
 
               {/* Dropdown */}
-              {item.children && activeDropdown === item.label && (
-                <div
-                  className={styles.dropdown}
-                  onMouseEnter={() => handleDropdownEnter(item.label)}
-                  onMouseLeave={handleDropdownLeave}
-                >
-                  <div className={styles.dropdownInner}>
-                    {item.children.map((group) => (
-                      <div key={group.label} className={styles.dropdownGroup}>
-                        {group.children ? (
-                          <>
-                            <span className={styles.dropdownLabel}>{group.label}</span>
-                            {group.children.map((child) => (
+              {item.children && activeDropdown === item.label && (() => {
+                const isMegaMenu = item.children.some((child) => Boolean(child.children && child.children.length > 0));
+                const isMultiColumn = !isMegaMenu && item.children.length > 6;
+
+                return (
+                  <div
+                    className={styles.dropdown}
+                    onMouseEnter={() => handleDropdownEnter(item.label)}
+                    onMouseLeave={handleDropdownLeave}
+                  >
+                    {isMegaMenu ? (
+                      /* Multi-category Mega Menu (e.g. Services) */
+                      <div className={styles.dropdownInnerMega}>
+                        {item.children.map((group) => (
+                          <div key={group.label} className={styles.dropdownGroup}>
+                            {group.children ? (
+                              <>
+                                <span className={styles.dropdownLabel}>{group.label}</span>
+                                {group.children.map((child) => (
+                                  <Link
+                                    key={child.href}
+                                    href={child.href}
+                                    className={`${styles.dropdownLink} ${pathname === child.href ? styles.active : ''}`}
+                                    onClick={() => setActiveDropdown(null)}
+                                  >
+                                    {child.label}
+                                  </Link>
+                                ))}
+                              </>
+                            ) : (
                               <Link
-                                key={child.href}
-                                href={child.href}
-                                className={`${styles.dropdownLink} ${pathname === child.href ? styles.active : ''}`}
+                                href={group.href}
+                                className={`${styles.dropdownLink} ${pathname === group.href ? styles.active : ''}`}
+                                onClick={() => setActiveDropdown(null)}
                               >
-                                {child.label}
+                                {group.label}
                               </Link>
-                            ))}
-                          </>
-                        ) : (
-                          <Link
-                            href={group.href}
-                            className={`${styles.dropdownLink} ${pathname === group.href ? styles.active : ''}`}
-                          >
-                            {group.label}
-                          </Link>
-                        )}
+                            )}
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    ) : (
+                      /* Straight Vertical Dropdown (e.g. Projects, Insights) — max 6 per column */
+                      <div className={styles.dropdownInnerSimple}>
+                        <div className={isMultiColumn ? styles.dropdownListMulti : styles.dropdownListSingle}>
+                          {item.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={`${styles.simpleDropdownLink} ${pathname === child.href ? styles.active : ''}`}
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              <span className={styles.simpleDropdownText}>{child.label}</span>
+                              <span className={styles.simpleDropdownIndicator} aria-hidden="true" />
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
+                );
+              })()}
             </div>
           ))}
         </nav>
