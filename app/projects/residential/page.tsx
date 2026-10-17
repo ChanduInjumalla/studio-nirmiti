@@ -1,21 +1,24 @@
 import type { Metadata } from 'next';
-import InnerPageShell from '@/components/layout/InnerPageShell';
+import { projectsData } from '@/data/projects';
+import ProjectsPortfolioView from '@/components/projects/ProjectsPortfolioView';
 
 export const metadata: Metadata = {
-  title: 'Residential Projects',
-  description: 'Apartments, villas and homes designed with care for how families live, move and grow.',
+  title: 'Residential Architecture & Villa Projects | Studio Nirmiti',
+  description: 'Private contemporary villas, sky penthouses, and bespoke residences designed and built across India.',
   alternates: {
     canonical: '/projects/residential',
   },
 };
 
-export default function Page() {
+export default function ResidentialProjectsPage() {
   return (
-    <InnerPageShell
-      eyebrow="Residential"
-      title="Residential Projects"
-      description="Apartments, villas and homes designed with care for how families live, move and grow."
+    <ProjectsPortfolioView
+      projects={projectsData}
+      initialCategory="residential"
       breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: 'Residential' }]}
+      pageTitle="Residential Architecture & Villa Projects"
+      pageEyebrow="Private Sanctuaries"
+      tagline="Independent luxury villas, sky penthouses, and private estates tailored around light orientation, generous proportions, and timeless materiality."
     />
   );
 }

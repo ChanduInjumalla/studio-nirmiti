@@ -1,21 +1,24 @@
 import type { Metadata } from 'next';
-import InnerPageShell from '@/components/layout/InnerPageShell';
+import { projectsData } from '@/data/projects';
+import ProjectsPortfolioView from '@/components/projects/ProjectsPortfolioView';
 
 export const metadata: Metadata = {
-  title: 'Hospitality Design Projects',
-  description: 'Hotels, resorts and guest experiences where architecture and interiors serve the journey of every visitor.',
+  title: 'Hospitality & Luxury Resort Architecture | Studio Nirmiti',
+  description: 'Destination wellness retreats, boutique resort suites, and fine-dining pavilions by Studio Nirmiti.',
   alternates: {
     canonical: '/projects/hospitality',
   },
 };
 
-export default function Page() {
+export default function HospitalityProjectsPage() {
   return (
-    <InnerPageShell
-      eyebrow="Hospitality"
-      title="Hospitality Projects"
-      description="Hotels, resorts and guest experiences where architecture and interiors serve the journey of every visitor."
+    <ProjectsPortfolioView
+      projects={projectsData}
+      initialCategory="hospitality"
       breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: 'Hospitality' }]}
+      pageTitle="Hospitality & Luxury Resort Projects"
+      pageEyebrow="Destination Architecture"
+      tagline="Eco-sensitive wellness sanctuaries, hillside luxury suites, and experiential culinary venues rooted in local landscape and cultural context."
     />
   );
 }

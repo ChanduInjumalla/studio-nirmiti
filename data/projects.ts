@@ -61,7 +61,7 @@ export const projectsData: Project[] = [
       'We rationalized circulation paths by knocking down non-structural walls, introducing continuous fluted timber portal frames, and unifying the living-dining continuum under an acoustic coffered ceiling.',
     gallery: [
       {
-        src: '/images/hero_architectural_living.jpg',
+        src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
         alt: 'Warm minimalist living room with travertine wall and smoked oak details',
       },
       {
@@ -88,53 +88,32 @@ export const projectsData: Project[] = [
     },
   },
   {
-    title: 'Aura Executive Corporate Suite',
-    slug: 'aura-corporate-suite',
-    projectType: 'commercial',
-    serviceTags: ['Commercial Interiors', 'Space Planning', 'Turnkey Execution'],
-    location: 'HITEC City, Hyderabad',
-    scope: '14,500 sq.ft Tech Leadership Corporate Headquarters',
+    title: 'The Cantilever Lake House',
+    slug: 'the-cantilever-lake-house',
+    projectType: 'residential',
+    serviceTags: ['Architecture', 'Landscape Design', 'Structural Glazing'],
+    location: 'Alibaug, Maharashtra',
+    scope: '9,200 sq.ft Waterfront Independent Estate',
     summary:
-      'An executive workspace balancing authoritative boardroom presence, acoustic privacy booths, and biophilic collaborative lounges for 180 team members.',
+      'A monumental lake-facing residence sculpted from exposed board-marked concrete, black slate, and cantilevered infinity terraces floating over the shoreline.',
     challenge:
-      'Delivering an ultra-fast 75-day turnaround while meeting strict STC 52 acoustic insulation standards between executive suites and public presentation areas.',
+      'Engineering high-salinity coastal weathering resistance and seismic stability for 6-meter post-tensioned cantilevers without internal supporting pillars.',
     approach:
-      'Modular pre-fabricated acoustic timber wall panels, decoupled double-glazed partition walls, and precision-engineered linear HVAC diffusers that prevent sound leakage.',
+      'Utilized marine-grade self-compacting concrete, concealed steel portal frames, and motorized sliding glass pocket doors that dissolve the boundary between indoors and the lake.',
     gallery: [
       {
-        src: '/images/project_commercial_office.jpg',
-        alt: 'Executive boardroom and collaborative lounge with warm walnut accents',
+        src: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+        alt: 'Cantilever lake house exterior elevation with infinity pool reflection',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+        alt: 'Open pavilion living room facing lake waters',
       },
     ],
     seo: {
-      seoTitle: 'Aura Executive Corporate Suite | Studio Nirmiti Commercial Project',
+      seoTitle: 'The Cantilever Lake House | Studio Nirmiti Villa Architecture',
       metaDescription:
-        'Commercial turnkey interior fit-out for technology headquarters in Hyderabad by Studio Nirmiti.',
-    },
-  },
-  {
-    title: 'Sereno Boutique Resort Lounge',
-    slug: 'sereno-boutique-resort',
-    projectType: 'hospitality',
-    serviceTags: ['Hospitality Design', 'Lighting Design', '3D Walkthrough'],
-    location: 'Coorg, Karnataka',
-    scope: '12,000 sq.ft Resort Central Clubhouse & Destination Suites',
-    summary:
-      'A hillside wellness retreat woven directly into the cardamom plantation landscape, utilizing reclaimed local granite, cane weaves, and open-air fire pits.',
-    challenge:
-      'Constructing on a steep 32-degree slope without removing native heritage shade trees or disrupting natural water runoff channels.',
-    approach:
-      'Stepped pavilion architecture on localized micro-piles, cantilevered open-air dining decks, and native stone walls that blend invisibly into the forest.',
-    gallery: [
-      {
-        src: '/images/project_hospitality_resort.jpg',
-        alt: 'Evening ambient illumination across the open pavilion lounge',
-      },
-    ],
-    seo: {
-      seoTitle: 'Sereno Boutique Resort Lounge | Studio Nirmiti Hospitality Project',
-      metaDescription:
-        'Boutique resort architecture and interior design in Coorg by Studio Nirmiti.',
+        'Luxury waterfront architectural villa design and execution in Alibaug by Studio Nirmiti.',
     },
   },
   {
@@ -152,7 +131,7 @@ export const projectsData: Project[] = [
       'Integrated dual-layer motorized solar shading, custom Venetian plaster feature walls that diffuse light, and low-iron architectural glazing.',
     gallery: [
       {
-        src: '/images/hero_architectural_living.jpg',
+        src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
         alt: 'Sky penthouse living area with uninterrupted sunset vistas',
       },
     ],
@@ -160,6 +139,31 @@ export const projectsData: Project[] = [
       seoTitle: 'Minimalist Urban Penthouse | Studio Nirmiti Residential Case Study',
       metaDescription:
         'Minimalist interior architecture for a 4,200 sq.ft sky residence by Studio Nirmiti.',
+    },
+  },
+  {
+    title: 'Aura Executive Corporate Suite',
+    slug: 'aura-corporate-suite',
+    projectType: 'commercial',
+    serviceTags: ['Commercial Interiors', 'Space Planning', 'Turnkey Execution'],
+    location: 'HITEC City, Hyderabad',
+    scope: '14,500 sq.ft Tech Leadership Corporate Headquarters',
+    summary:
+      'An executive workspace balancing authoritative boardroom presence, acoustic privacy booths, and biophilic collaborative lounges for 180 team members.',
+    challenge:
+      'Delivering an ultra-fast 75-day turnaround while meeting strict STC 52 acoustic insulation standards between executive suites and public presentation areas.',
+    approach:
+      'Modular pre-fabricated acoustic timber wall panels, decoupled double-glazed partition walls, and precision-engineered linear HVAC diffusers that prevent sound leakage.',
+    gallery: [
+      {
+        src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+        alt: 'Executive boardroom and collaborative lounge with warm walnut accents',
+      },
+    ],
+    seo: {
+      seoTitle: 'Aura Executive Corporate Suite | Studio Nirmiti Commercial Project',
+      metaDescription:
+        'Commercial turnkey interior fit-out for technology headquarters in Hyderabad by Studio Nirmiti.',
     },
   },
   {
@@ -177,7 +181,7 @@ export const projectsData: Project[] = [
       'Glass-encased soundproof roasting theatre that lets customers observe the roasting ritual while acoustic ceiling baffle clouds maintain pleasant conversational acoustics.',
     gallery: [
       {
-        src: '/images/project_commercial_office.jpg',
+        src: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80',
         alt: 'Artisan cafe interior with brass bar and warm ambient lighting',
       },
     ],
@@ -185,6 +189,81 @@ export const projectsData: Project[] = [
       seoTitle: 'Artisan Coffee Roasters & Cafe | Studio Nirmiti Commercial Project',
       metaDescription:
         'Specialty retail cafe and hospitality interior fit-out by Studio Nirmiti.',
+    },
+  },
+  {
+    title: 'Lumina Luxury Flagship Showroom',
+    slug: 'lumina-luxury-flagship',
+    projectType: 'commercial',
+    serviceTags: ['Retail Architecture', 'Lighting Design', 'Display Millwork'],
+    location: 'UB City, Bengaluru',
+    scope: '6,500 sq.ft Haute Couture & Fine Watch Boutique',
+    summary:
+      'An opulent retail jewel box combining back-lit onyx portals, suede-lined showcases, brass accents, and museum-grade color rendering index (CRI 98) lighting.',
+    challenge:
+      'Designing discrete high-security biometric storage vaults while maintaining an airy, welcoming boutique luxury salon ambience.',
+    approach:
+      'Secret pivot doors concealed within wall paneling leading to private VIP viewing lounges, paired with anti-reflective glass display cabinets.',
+    gallery: [
+      {
+        src: 'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1200&q=80',
+        alt: 'Lumina flagship retail showroom with back-lit stone portals',
+      },
+    ],
+    seo: {
+      seoTitle: 'Lumina Luxury Flagship Showroom | Studio Nirmiti Commercial Project',
+      metaDescription:
+        'Boutique luxury retail showroom design and turnkey fit-out in Bengaluru by Studio Nirmiti.',
+    },
+  },
+  {
+    title: 'Sereno Boutique Resort Lounge',
+    slug: 'sereno-boutique-resort',
+    projectType: 'hospitality',
+    serviceTags: ['Hospitality Design', 'Lighting Design', '3D Walkthrough'],
+    location: 'Coorg, Karnataka',
+    scope: '12,000 sq.ft Resort Central Clubhouse & Destination Suites',
+    summary:
+      'A hillside wellness retreat woven directly into the cardamom plantation landscape, utilizing reclaimed local granite, cane weaves, and open-air fire pits.',
+    challenge:
+      'Constructing on a steep 32-degree slope without removing native heritage shade trees or disrupting natural water runoff channels.',
+    approach:
+      'Stepped pavilion architecture on localized micro-piles, cantilevered open-air dining decks, and native stone walls that blend invisibly into the forest.',
+    gallery: [
+      {
+        src: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80',
+        alt: 'Evening ambient illumination across the open pavilion lounge',
+      },
+    ],
+    seo: {
+      seoTitle: 'Sereno Boutique Resort Lounge | Studio Nirmiti Hospitality Project',
+      metaDescription:
+        'Boutique resort architecture and interior design in Coorg by Studio Nirmiti.',
+    },
+  },
+  {
+    title: 'Alaya Forest Wellness Pavilion',
+    slug: 'alaya-forest-wellness',
+    projectType: 'hospitality',
+    serviceTags: ['Eco-Architecture', 'Resort Masterplan', 'Biophilic Design'],
+    location: 'Wayanad, Kerala',
+    scope: '18,000 sq.ft Ayurvedic Spa & Private Treehouse Villas',
+    summary:
+      'A rainforest sanctuary built with rammed earth walls, curved thatched timber roofs, and private plunge pools perched above the canopy.',
+    challenge:
+      'Zero-emission sustainable construction within an environmentally sensitive Western Ghats buffer zone.',
+    approach:
+      'Locally sourced laterite stone foundations, solar-passive orientation eliminating air-conditioning needs, and rainwater harvesting terraces.',
+    gallery: [
+      {
+        src: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+        alt: 'Alaya wellness sanctuary floating in misty rainforest landscape',
+      },
+    ],
+    seo: {
+      seoTitle: 'Alaya Forest Wellness Pavilion | Studio Nirmiti Hospitality Project',
+      metaDescription:
+        'Eco-luxury resort masterplanning and wellness pavilion architecture by Studio Nirmiti.',
     },
   },
 ];

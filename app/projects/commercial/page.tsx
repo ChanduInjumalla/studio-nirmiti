@@ -1,21 +1,24 @@
 import type { Metadata } from 'next';
-import InnerPageShell from '@/components/layout/InnerPageShell';
+import { projectsData } from '@/data/projects';
+import ProjectsPortfolioView from '@/components/projects/ProjectsPortfolioView';
 
 export const metadata: Metadata = {
-  title: 'Commercial Interior & Architecture Design',
-  description: 'Offices, retail spaces, restaurants and business environments planned for brand, function and durability.',
+  title: 'Commercial & Corporate Architecture Projects | Studio Nirmiti',
+  description: 'Corporate headquarters, boutique retail flagships, and artisanal commercial spaces by Studio Nirmiti.',
   alternates: {
     canonical: '/projects/commercial',
   },
 };
 
-export default function Page() {
+export default function CommercialProjectsPage() {
   return (
-    <InnerPageShell
-      eyebrow="Commercial"
-      title="Commercial Projects"
-      description="Offices, retail spaces, restaurants and business environments planned for brand, function and durability."
+    <ProjectsPortfolioView
+      projects={projectsData}
+      initialCategory="commercial"
       breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: 'Commercial' }]}
+      pageTitle="Commercial & Corporate Architecture"
+      pageEyebrow="High-Performance Workplaces"
+      tagline="Executive boardrooms, agile corporate headquarters, and high-end retail flagships balancing acoustic privacy with authoritative brand expression."
     />
   );
 }

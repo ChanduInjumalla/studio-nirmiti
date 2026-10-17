@@ -738,6 +738,330 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
   // Check categories by keyword
   const s = (cleanSlug + ' ' + title).toLowerCase();
 
+  // 1. ARCHITECTURAL DESIGN & PLANNING
+  if (s.includes('architect')) {
+    return {
+      slug: cleanSlug || 'architectural-design',
+      title: pageTitle || 'Architectural Design & Planning',
+      eyebrow: 'Core Architectural Practice',
+      resultsCount: 'Showing 32 Master Architecture Works',
+      shortDesc: 'Comprehensive architectural planning, volumetric massing, sun-path analysis, structural coordinate drawings, and turnkey build oversight by Studio Nirmiti.',
+      readMoreText: [
+        'At Studio Nirmiti, we treat architecture as an enduring framework for life. We begin with comprehensive site micro-climate studies, soil analysis, and zoning feasibility before sculpting volumetric massing.',
+        'Our architectural packages include complete working drawing sets, MEP coordination, 3D daylight simulations, and periodic milestone inspections to ensure zero deviation from sanctioned designs.',
+      ],
+      filterTags: ['All', 'Modern Luxury Villas', 'Cantilever Estates', 'Contemporary Facades', 'Working Drawings', 'Volumetric Massing'],
+      trendingHeading: 'Top Trending Architecture Works',
+      trendingSubheading: 'Built residences and master concepts by Studio Nirmiti architects',
+      trendingItems: [
+        { id: 'ta-1', title: 'The Glass Pavilion Cantilevered Villa with Central Courtyard', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', tag: 'Modern Luxury Villas' },
+        { id: 'ta-2', title: 'Monolithic Exposed Concrete Residence with Reflection Pool', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80', tag: 'Cantilever Estates' },
+        { id: 'ta-3', title: 'Hillside Modern Estate with Kinetic Timber Screen Facade', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80', tag: 'Contemporary Facades' },
+      ],
+      designs: [
+        { id: 'ad-1', title: 'The Glass Pavilion Villa: 7,800 sq.ft Architectural Build', image: '/images/project_residential_villa.jpg', price: '₹450 / sq.ft*', size: 'Area: 7,800 sq.ft', tag: 'Modern Luxury Villas', finish: 'Exposed Concrete, Acoustic Glazing, Teak', photosCount: 6 },
+        { id: 'ad-2', title: 'The Cantilever Lake House with Post-Tensioned Terraces', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80', price: '₹380 / sq.ft*', size: 'Area: 9,200 sq.ft', tag: 'Cantilever Estates', finish: 'Black Basalt Stone & Structural Steel', photosCount: 5 },
+        { id: 'ad-3', title: 'Urban Courtyard Residence with Double-Height Glass Portals', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', price: '₹350 / sq.ft*', size: 'Area: 5,600 sq.ft', tag: 'Contemporary Facades', finish: 'White Travertine & Fluted Aluminium', photosCount: 4 },
+        { id: 'ad-4', title: 'Comprehensive Working Drawing & MEP Engineering Set', image: '/images/before_concept_wireframe.jpg', price: 'Included in Scope', size: 'Full Site Coordination', tag: 'Working Drawings', finish: 'Sanction Approval & Structural Audits', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Architectural Feasibility', title: 'Site Review & Volumetric Massing', subtitle: 'Book a site review session with principal architect Kushal Kumar Pendekatla.', ctaText: 'REQUEST ARCHITECTURAL CONSULT' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 2. INTERIOR DESIGN
+  if (s.includes('interior') && !s.includes('turnkey') && !s.includes('office') && !s.includes('commercial')) {
+    return {
+      slug: cleanSlug || 'interior-design',
+      title: pageTitle || 'Interior Design & Architecture',
+      eyebrow: 'Bespoke Living Environments',
+      resultsCount: 'Showing 40 Curated Interior Concepts',
+      shortDesc: 'Bespoke interior architecture, custom cabinetry, material palettes, and lighting design crafted for elevated everyday living.',
+      readMoreText: [
+        'Studio Nirmiti interiors balance tactile materials, daylight orientation, and seamless millwork. We eliminate awkward builder layouts by creating cohesive spatial continuums.',
+        'From rough-hewn travertine stone claddings and smoked oak paneling to concealed 2700K ambient LED coves, every corner is tailored around your family daily routines.',
+      ],
+      filterTags: ['All', 'Warm Minimalist', 'Japandi', 'Modern Classical', 'Italian Contemporary', 'Luxury Penthouses'],
+      trendingHeading: 'Top Trending Interior Concepts',
+      trendingSubheading: 'Curated living spaces chosen by Studio Nirmiti clients',
+      trendingItems: [
+        { id: 'ti-1', title: 'Warm Minimalist Living Room with Travertine Hearth & Oak Paneling', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', tag: 'Warm Minimalist' },
+        { id: 'ti-2', title: 'Contemporary Sky Penthouse with Open Kitchen Continuum', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80', tag: 'Luxury Penthouses' },
+        { id: 'ti-3', title: 'Japandi Master Suite with Limewash & Fluted Timber Screen', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80', tag: 'Japandi' },
+      ],
+      designs: [
+        { id: 'in-1', title: 'The Stone & Timber Penthouse: Full Living & Dining Suite', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', price: '₹22,50,000*', size: 'Area: 5,400 sq.ft', tag: 'Warm Minimalist', finish: 'Smoked Oak, Travertine, Dimmable LEDs', photosCount: 5 },
+        { id: 'in-2', title: 'Italian Contemporary Double-Height Living Pavilion', image: '/images/hero_architectural_living.jpg', price: '₹18,00,000*', size: 'Area: 4,200 sq.ft', tag: 'Italian Contemporary', finish: 'Bookmatched Statuario Marble & Brass', photosCount: 4 },
+        { id: 'in-3', title: 'Modern Classical Apartment with Fluted Paneling & Coves', image: '/images/after_completed_living.jpg', price: '₹14,50,000*', size: 'Area: 3,200 sq.ft', tag: 'Modern Classical', finish: 'Cashmere PU, Satin Brass & Silk Rugs', photosCount: 4 },
+      ],
+      promoBanner: { badge: 'Full Home Interior Offer', title: 'Complete Interior Packages from ₹18 Lakh*', subtitle: 'Includes custom millwork, false ceilings, lighting design, and paint finishes.', ctaText: 'BOOK FREE INTERIOR CONSULT' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 3. EXTERIOR & FACADE DESIGN
+  if (s.includes('exterior') || s.includes('facade')) {
+    return {
+      slug: cleanSlug || 'exterior-design',
+      title: pageTitle || 'Exterior & Facade Design Services',
+      eyebrow: 'Facade Engineering',
+      resultsCount: 'Showing 22 Curated Facade Treatments',
+      shortDesc: 'Architectural facade language, kinetic solar screens, natural stone cladding, exterior illumination, and weathering strategy.',
+      readMoreText: [
+        'A facade is the public face of architecture. At Studio Nirmiti, we design elevations that balance street elegance, thermal insulation, and low-maintenance longevity in Indian tropical climates.',
+        'We specialize in motorized timber louvers, dry-clad terracotta tiles, zinc standing-seam panels, and architectural facade illumination that transforms buildings at night.',
+      ],
+      filterTags: ['All', 'Kinetic Louvers', 'Stone Cladding', 'Curtain Walls', 'Terrace Pergolas', 'Compound Gates'],
+      trendingHeading: 'Top Trending Facade Concepts',
+      trendingSubheading: 'Sculptural exterior elevations crafted by Studio Nirmiti',
+      trendingItems: [
+        { id: 'te-1', title: 'Double-Height Motorized Timber Louver Screen for Privacy', image: '/images/project_residential_villa.jpg', tag: 'Kinetic Louvers' },
+        { id: 'te-2', title: 'Cantilever Terrace with Integrated Bio-Pergola & Stone Wall', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80', tag: 'Stone Cladding' },
+      ],
+      designs: [
+        { id: 'ex-1', title: 'Modern Cantilever Facade with Travertine & Fluted Aluminium', image: '/images/project_residential_villa.jpg', price: '₹650 / sq.ft*', size: 'Scope: Full Elevation', tag: 'Kinetic Louvers', finish: 'Weather-Resistant Teak & Exposed Concrete', photosCount: 4 },
+        { id: 'ex-2', title: 'Minimalist Charcoal Stone Villa Elevation with Hidden Lighting', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80', price: '₹550 / sq.ft*', size: 'Scope: 3 Elevations', tag: 'Stone Cladding', finish: 'Basalt Stone Clad, 3000K Warm Uplighters', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Facade Modernization', title: 'Facade Renovation from ₹4.5 Lakh*', subtitle: 'Modernize your villa elevation with premium stone, louvers, and architectural lighting.', ctaText: 'REQUEST FACADE ESTIMATE' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 4. SPACE PLANNING
+  if (s.includes('space-planning') || s.includes('space planning')) {
+    return {
+      slug: cleanSlug || 'space-planning',
+      title: pageTitle || 'Architectural Space Planning',
+      eyebrow: 'Spatial Efficiency & Flow',
+      resultsCount: 'Showing 26 Space Layout Strategies',
+      shortDesc: 'Vastu-aligned ergonomic space planning, circulation flow optimization, volumetric zoning, and furniture layout logic.',
+      readMoreText: [
+        'Every great home begins with intelligent space planning. We eliminate wasted corridors, dark nooks, and cramped doorways by sculpting clear sightlines and proportional volumes.',
+        'We ensure seamless transitions between public entertaining zones, semi-private family lounges, and completely private bedroom sanctuaries.',
+      ],
+      filterTags: ['All', 'Vastu Aligned', 'Open Concept', 'Duplex Circulation', 'Double Height Volumes', 'Penthouses'],
+      trendingHeading: 'Top Trending Spatial Layouts',
+      trendingSubheading: 'Engineered for seamless movement and natural cross-ventilation',
+      trendingItems: [
+        { id: 'tsp-1', title: 'Open-Concept Living & Dining with Concealed Sliding Portals', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', tag: 'Open Concept' },
+        { id: 'tsp-2', title: 'Double-Height Foyer with Sculptural Floating Staircase', image: '/images/hero_architectural_living.jpg', tag: 'Double Height Volumes' },
+      ],
+      designs: [
+        { id: 'sp-1', title: 'Comprehensive 4 BHK Villa Spatial Zoning & Vastu Study', image: '/images/before_concept_wireframe.jpg', price: '₹75,000*', size: '4,500 sq.ft Plan', tag: 'Vastu Aligned', finish: 'Detailed 2D CAD Drawings & 3D Volumetric Models', photosCount: 4 },
+        { id: 'sp-2', title: 'Penthouse Duplex Circulation & Staircase Optimization', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80', price: '₹60,000*', size: '3,800 sq.ft Plan', tag: 'Duplex Circulation', finish: 'Structural Knock-Down Analysis & Layouts', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Floor Plan Review', title: 'Architectural Floor Plan Audit', subtitle: 'Send us your builder floor plan for an ergonomic and Vastu review by our senior planners.', ctaText: 'SUBMIT FLOOR PLAN' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 5. 3D VISUALIZATION & 3D WALKTHROUGHS
+  if (s.includes('3d') || s.includes('visualization') || s.includes('walkthrough')) {
+    return {
+      slug: cleanSlug || '3d-visualization',
+      title: pageTitle || '3D Visualization & Walkthroughs',
+      eyebrow: 'Photorealistic CGI',
+      resultsCount: 'Showing 35 Visual Simulations',
+      shortDesc: 'Unreal Engine cinematic walkthroughs, 4K ray-traced daylight simulations, VR immersion, and accurate material rendering.',
+      readMoreText: [
+        'Experience your home before a single brick is laid. Our 3D visualization studio renders exact lighting calculations, sun-angle studies, and authentic material textures down to the fabric weave.',
+        'We provide interactive 4K video walkthroughs that allow you to inspect finishes, ceiling heights, and cabinetry clearance with absolute certainty.',
+      ],
+      filterTags: ['All', 'Photorealistic Renders', 'Cinematic Walkthroughs', 'Day / Night Studies', 'VR Immersion', 'Material Samples'],
+      trendingHeading: 'Top Trending 3D Simulations',
+      trendingSubheading: 'CGI renderings indistinguishable from real photography',
+      trendingItems: [
+        { id: 't3d-1', title: 'Daylight & Golden Hour Solar Simulation of Living Pavilion', image: '/images/hero_architectural_living.jpg', tag: 'Day / Night Studies' },
+        { id: 't3d-2', title: '4K Architectural Walkthrough of Contemporary Villa', image: '/images/project_residential_villa.jpg', tag: 'Cinematic Walkthroughs' },
+      ],
+      designs: [
+        { id: 'vis-1', title: 'Ultra-HD Interior CGI Package: 8 Key Perspectives', image: '/images/after_completed_living.jpg', price: '₹45,000*', size: '8 Renders', tag: 'Photorealistic Renders', finish: '4K Resolution, Physically-Based Rendering', photosCount: 4 },
+        { id: 'vis-2', title: 'Cinematic 90-Second 3D Video Walkthrough with Soundscape', image: '/images/project_residential_villa.jpg', price: '₹85,000*', size: '4K 60fps Video', tag: 'Cinematic Walkthroughs', finish: 'Drone Simulation & Interior Flow', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Free 3D Simulation', title: 'Complimentary 3D Preview with Turnkey', subtitle: 'Book full turnkey execution with Studio Nirmiti and receive complete 3D visualization free of charge.', ctaText: 'CLAIM FREE 3D OFFER' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 6. EXECUTION WORKS & PROJECT SUPERVISION
+  if (s.includes('execution') || s.includes('supervision')) {
+    return {
+      slug: cleanSlug || 'execution-works',
+      title: pageTitle || 'Execution Works & Project Supervision',
+      eyebrow: 'On-Site Engineering Oversight',
+      resultsCount: 'Showing 28 Handover Milestones',
+      shortDesc: 'Multi-layer site inspections, civil structural alignment, vendor coordination, snag clearance, and strict timeline adherence.',
+      readMoreText: [
+        'A magnificent design is only as good as its on-site execution. Our dedicated site engineers manage every stage from structural masonry to plumbing pressure tests and microcement application.',
+        'With 146 documented quality checks and digital milestone updates, we ensure zero compromise on construction standards.',
+      ],
+      filterTags: ['All', 'Civil Execution', 'MEP Coordination', 'Milestone Audits', 'Snag Clearance', 'Site Supervision'],
+      trendingHeading: 'Recent Handover Milestones',
+      trendingSubheading: 'Rigorous engineering standards delivered on schedule',
+      trendingItems: [
+        { id: 'tex-1', title: '146-Point Quality Audit for Luxury Villa Handover', image: '/images/project_residential_villa.jpg', tag: 'Milestone Audits' },
+        { id: 'tex-2', title: 'Precision MEP & Concealed HVAC Ducting Inspection', image: '/images/before_concept_wireframe.jpg', tag: 'MEP Coordination' },
+      ],
+      designs: [
+        { id: 'ew-1', title: 'Comprehensive Full Site Supervision & Milestone Handover', image: '/images/project_residential_villa.jpg', price: 'Custom Quote*', size: 'Dedicated Site Engineer', tag: 'Site Supervision', finish: 'Daily Logs, Snag Rectification, Material Testing', photosCount: 5 },
+        { id: 'ew-2', title: 'Civil Masonry, Waterproofing & Electrical Coordination', image: '/images/after_completed_living.jpg', price: 'Contract Based', size: 'Full Scope Execution', tag: 'Civil Execution', finish: 'BWP Waterproofing, Anti-Crack Screeds', photosCount: 4 },
+      ],
+      promoBanner: { badge: 'Zero Snag Guarantee', title: 'Strict 45-Day Milestone Delivery', subtitle: 'Daily photo updates via our client portal with penalty clauses for unapproved project delays.', ctaText: 'REQUEST SUPERVISION QUOTE' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 7. RENOVATION & REMODELING
+  if (s.includes('renovation') || s.includes('remodeling')) {
+    return {
+      slug: cleanSlug || 'renovation-remodeling',
+      title: pageTitle || 'Renovation & Remodeling Services',
+      eyebrow: 'Architectural Transformation',
+      resultsCount: 'Showing 24 Restoration Case Studies',
+      shortDesc: 'Complete home structural remodeling, bathroom overhauls, kitchen makeovers, wall removals, and heritage estate updates.',
+      readMoreText: [
+        'Transform tired, fragmented spaces into open, contemporary sanctuaries. We identify non-load-bearing walls for structural removal, modernize electrical grids, and re-waterproof wet areas.',
+        'We deliver complete turnkey transformations within fixed budgets and pre-agreed timelines with zero surprise escalations.',
+      ],
+      filterTags: ['All', 'Complete Remodeling', 'Structural Alterations', 'Kitchen Makeovers', 'Bathroom Transformations', 'Terrace Extensions'],
+      trendingHeading: 'Top Trending Transformations',
+      trendingSubheading: 'Before & After transformations completed by Studio Nirmiti',
+      trendingItems: [
+        { id: 'tr-1', title: '25-Year-Old Villa Reimagined into Warm Minimalist Sanctuary', image: '/images/after_completed_living.jpg', tag: 'Complete Remodeling' },
+        { id: 'tr-2', title: 'Master Bathroom Spa Transformation with Freestanding Tub', image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80', tag: 'Bathroom Transformations' },
+      ],
+      designs: [
+        { id: 'ren-1', title: 'Full 3 BHK Penthouse Structural Remodeling & Modernization', image: '/images/after_completed_living.jpg', price: '₹14,50,000*', size: 'Scope: Full Home', tag: 'Complete Remodeling', finish: 'Wall Removals, New Flooring, Modular Cabinets', photosCount: 4 },
+        { id: 'ren-2', title: 'Luxury Wet-Area & Master Ensuite Spa Renovation', image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80', price: '₹3,80,000*', size: 'Size: 12x10 feet', tag: 'Bathroom Transformations', finish: 'Fluted Tiles, Hansgrohe Concealed Fixtures', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Remodeling Package', title: 'Apartment Revamp from ₹8.5 Lakh*', subtitle: 'Includes new flooring, bathroom upgrades, kitchen refacing, and false ceilings.', ctaText: 'REQUEST REMODELING ESTIMATE' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 8. CUSTOM FURNITURE & SELECTION
+  if (s.includes('furniture')) {
+    return {
+      slug: cleanSlug || 'custom-furniture',
+      title: pageTitle || 'Custom Furniture & Selection',
+      eyebrow: 'Handcrafted Millwork',
+      resultsCount: 'Showing 38 Artisanal Pieces',
+      shortDesc: 'Bespoke custom-made sofas, marble dining tables, acoustic headboards, credenzas, and international designer furniture curation.',
+      readMoreText: [
+        'Mass-produced furniture rarely fits the proportions of unique architectural spaces. Studio Nirmiti custom manufactures bespoke furniture tailored to the millimeter.',
+        'We select high-density foams, kiln-dried seasoned teak and beech woods, Italian top-grain leathers, and exotic marble slabs for timeless pieces.',
+      ],
+      filterTags: ['All', 'Sectional Sofas', 'Dining Tables', 'Accent Chairs', 'Console Credenzas', 'Italian Marble Tables'],
+      trendingHeading: 'Top Trending Custom Pieces',
+      trendingSubheading: 'Handcrafted for high luxury and ergonomic comfort',
+      trendingItems: [
+        { id: 'tf-1', title: 'Monolithic Travertine Dining Table with Fluted Pedestals', image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1200&q=80', tag: 'Dining Tables' },
+        { id: 'tf-2', title: 'Curved Bouclé Sectional Sofa with Deep Lounge Seating', image: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1200&q=80', tag: 'Sectional Sofas' },
+      ],
+      designs: [
+        { id: 'fur-1', title: 'Handcrafted 8-Seater Italian Marble Dining Table & Chairs', image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1200&q=80', price: '₹2,40,000*', size: 'Size: 8x4 feet', tag: 'Dining Tables', finish: 'Calacatta Marble & Brushed Brass Base', photosCount: 4 },
+        { id: 'fur-2', title: 'Custom L-Shape Bouclé Fabric Sectional with Memory Foam', image: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1200&q=80', price: '₹1,95,000*', size: 'Size: 11x7 feet', tag: 'Sectional Sofas', finish: 'High-Martindale Belgian Bouclé', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Factory Direct Furniture', title: 'Custom Living Packages from ₹3 Lakh*', subtitle: 'Includes 3-seater sofa, 2 accent armchairs, marble center table, and TV console.', ctaText: 'REQUEST FURNITURE CATALOG' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 9. LIGHTING & FALSE CEILING
+  if (s.includes('lighting') || s.includes('ceiling')) {
+    return {
+      slug: cleanSlug || 'lighting-false-ceiling',
+      title: pageTitle || 'Lighting & False Ceiling Design',
+      eyebrow: 'Illumination Architecture',
+      resultsCount: 'Showing 30 Ceiling & Lighting Schemes',
+      shortDesc: 'Concealed 2700K ambient LED coves, low-glare magnetic tracks, shadow-gap gypsum ceilings, and custom chandelier installations.',
+      readMoreText: [
+        'Lighting defines the emotional resonance of a room. We engineer 3 layers of illumination: general ambient light, task lighting for work and cooking, and dramatic focal accentuation.',
+        'Our ceiling systems integrate shadow gaps, concealed AC slot diffusers, and acoustic acoustic dampening to avoid the cavernous hollow sound of standard builder ceilings.',
+      ],
+      filterTags: ['All', 'Magnetic Tracks', 'Concealed Coves', 'Acoustic Ceilings', 'Chandelier Drops', 'Shadow Gaps'],
+      trendingHeading: 'Top Trending Lighting Concepts',
+      trendingSubheading: 'Atmospheric light designs that set the evening mood',
+      trendingItems: [
+        { id: 'tli-1', title: 'Minimalist Magnetic Track Fixtures with Dimmable 2700K Warm Light', image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80', tag: 'Magnetic Tracks' },
+        { id: 'tli-2', title: 'Architectural Shadow-Gap Ceiling with Integrated AC Grille', image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80', tag: 'Shadow Gaps' },
+      ],
+      designs: [
+        { id: 'li-1', title: 'Full Living & Dining Magnetic Track & Ambient Cove Package', image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80', price: '₹1,85,000*', size: 'Area: 800 sq.ft', tag: 'Magnetic Tracks', finish: 'CRI 95+ LEDs, Dali Smart Dimming', photosCount: 3 },
+        { id: 'li-2', title: 'Saint-Gobain Gypsum Ceiling with 15mm Perimeter Shadow Gap', image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80', price: '₹145 / sq.ft*', size: 'Scope: Full Home', tag: 'Shadow Gaps', finish: 'Moisture-Resistant Gyproc Boards & Primer', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Smart Lighting Special', title: 'Automated Dimmable Lighting from ₹1.2 Lakh*', subtitle: 'App and voice-controlled 2700K warm ambient coves and magnetic track systems.', ctaText: 'REQUEST LIGHTING PLAN' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 10. MATERIAL & FINISHES
+  if (s.includes('material') || s.includes('finish')) {
+    return {
+      slug: cleanSlug || 'material-finishes',
+      title: pageTitle || 'Material Selection & Finishes',
+      eyebrow: 'Tactile Materiality',
+      resultsCount: 'Showing 45 Material Specifications',
+      shortDesc: 'Imported Italian marble, smoked natural oak veneers, microcement, brushed brass hardware, and textured lime plasters.',
+      readMoreText: [
+        'Architecture is experienced through touch as much as sight. We maintain a curated library of certified materials: zero-VOC paints, bookmatched Italian marbles, and moisture-sealed hardwoods.',
+        'Clients receive tactile physical sample boxes during the design phase to inspect grain, sheen, and texture under actual day and evening lighting.',
+      ],
+      filterTags: ['All', 'Italian Marble', 'Smoked Oak Veneers', 'Microcement', 'Brushed Brass', 'Fluted Travertine'],
+      trendingHeading: 'Trending Material Combinations',
+      trendingSubheading: 'Authentic stone, timber, and metal pairings',
+      trendingItems: [
+        { id: 'tmat-1', title: 'Bookmatched Statuario Marble with Brushed Brass Accents', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', tag: 'Italian Marble' },
+        { id: 'tmat-2', title: 'Textured Roman Travertine with Smoked White Ash Veneer', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', tag: 'Fluted Travertine' },
+      ],
+      designs: [
+        { id: 'mat-1', title: 'Curated Full Home Material Sample Box & Moodboard', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', price: 'Complimentary with Project', size: '12 Curated Samples', tag: 'Italian Marble', finish: 'Marble, Veneer, Fabric, Metal Swatches', photosCount: 4 },
+      ],
+      promoBanner: { badge: 'Sample Experience', title: 'Request Physical Sample Box', subtitle: 'Experience authentic veneers, Italian marbles, and fabrics at your doorstep or our studio.', ctaText: 'REQUEST SAMPLES' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 11. LIVING ROOM
+  if (s.includes('living')) {
+    return {
+      slug: cleanSlug || 'living-room-design',
+      title: pageTitle || 'Luxury Living Room Designs',
+      eyebrow: 'Pavilion Living',
+      resultsCount: 'Showing 36 Curated Living Rooms',
+      shortDesc: 'Double-height living pavilions, travertine feature walls, integrated bar consoles, and plush modular seating designed for entertaining.',
+      readMoreText: [
+        'The living room is the architectural center of gravity in every home. We orchestrate generous proportions, seamless sightlines to garden terraces, and concealed entertainment systems.',
+        'Whether for intimate family evenings or large celebratory gatherings, our living rooms balance acoustic warmth with monumental visual grandeur.',
+      ],
+      filterTags: ['All', 'Double Height', 'Travertine Feature Walls', 'Lounge Seating', 'Integrated Bar Units', 'Acoustic Ceilings'],
+      trendingHeading: 'Top Trending Living Rooms',
+      trendingSubheading: 'Design ideas chosen by Studio Nirmiti homeowners in October, 2026',
+      trendingItems: [
+        { id: 'tl-1', title: 'Double-Height Living Pavilion with Travertine Wall & Fluted Oak', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', tag: 'Double Height' },
+        { id: 'tl-2', title: 'Contemporary Sky Penthouse Lounge with Floating Media Console', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80', tag: 'Travertine Feature Walls' },
+      ],
+      designs: [
+        { id: 'l-1', title: 'Monumental Double-Height Living Room with Brass Portal', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80', price: '₹8,50,000*', size: 'Size: 22x18 feet', tag: 'Double Height', finish: 'Bookmatched Travertine & Smoked Oak', photosCount: 4 },
+        { id: 'l-2', title: 'Warm Contemporary Living Room with Low-Slung Leather Seating', image: '/images/hero_architectural_living.jpg', price: '₹6,20,000*', size: 'Size: 18x14 feet', tag: 'Lounge Seating', finish: 'Microcement & Fluted Wall Paneling', photosCount: 3 },
+      ],
+      promoBanner: { badge: 'Living Room Special', title: 'Living Room Packages from ₹4.8 Lakh*', subtitle: 'Includes feature TV wall, false ceiling with warm coves, and custom sofa seating.', ctaText: 'GET LIVING ROOM ESTIMATE' },
+      promise: categoryCatalogs['modular-kitchens'].promise,
+      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    };
+  }
+
+  // 12. BEDROOM
   if (s.includes('bedroom')) {
     return {
       slug: cleanSlug || 'bedroom-design',
@@ -769,7 +1093,8 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
     };
   }
 
-  if (s.includes('pooja')) {
+  // 13. POOJA ROOM
+  if (s.includes('pooja') || s.includes('mandir')) {
     return {
       slug: cleanSlug || 'pooja-room-design',
       title: pageTitle || 'Sacred Pooja Room Designs',
@@ -797,7 +1122,8 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
     };
   }
 
-  if (s.includes('office') || s.includes('commercial')) {
+  // 14. COMMERCIAL & OFFICE
+  if (s.includes('office') || s.includes('commercial') || s.includes('retail')) {
     return {
       slug: cleanSlug || 'office-interiors',
       title: pageTitle || 'Commercial & Office Interiors',
@@ -856,5 +1182,6 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
     consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
   };
 }
+
 
 
