@@ -607,6 +607,12 @@ export default function VisualInlineEditor({
         setEditHistory((prev) => {
           const newHistory = [...prev.slice(0, historyIndex + 1), record];
           setHistoryIndex(newHistory.length - 1);
+          try {
+            localStorage.setItem('studio_visual_edits', JSON.stringify(newHistory));
+            window.dispatchEvent(new Event('studio-visual-edits-updated'));
+          } catch {
+            // ignore quota error
+          }
           return newHistory;
         });
       }
@@ -668,6 +674,7 @@ export default function VisualInlineEditor({
   const handleResetAll = () => {
     if (confirm('Revert all visual modifications back to the original page?')) {
       localStorage.removeItem('studio_visual_edits');
+      window.dispatchEvent(new Event('studio-visual-edits-updated'));
       setEditHistory([]);
       setHistoryIndex(-1);
       setSelectedElement(null);
@@ -688,7 +695,13 @@ export default function VisualInlineEditor({
       type: 'editor-apply-record',
       record: { ...rec, newValue: rec.oldValue },
     }, '*');
-    setHistoryIndex(historyIndex - 1);
+    const newIdx = historyIndex - 1;
+    setHistoryIndex(newIdx);
+    try {
+      const activeEdits = editHistory.slice(0, newIdx + 1);
+      localStorage.setItem('studio_visual_edits', JSON.stringify(activeEdits));
+      window.dispatchEvent(new Event('studio-visual-edits-updated'));
+    } catch {}
   };
 
   const handleRedo = () => {
@@ -700,6 +713,11 @@ export default function VisualInlineEditor({
       record: rec,
     }, '*');
     setHistoryIndex(nextIdx);
+    try {
+      const activeEdits = editHistory.slice(0, nextIdx + 1);
+      localStorage.setItem('studio_visual_edits', JSON.stringify(activeEdits));
+      window.dispatchEvent(new Event('studio-visual-edits-updated'));
+    } catch {}
   };
 
   const sendStyleUpdate = (prop: string, value: string) => {

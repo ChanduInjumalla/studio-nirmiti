@@ -98,6 +98,7 @@ export const footerNavigation: NavigationItem[] = [
       { label: 'Insights', href: '/insights' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Contact', href: '/contact' },
+      { label: 'Admin Portal', href: '/admin' },
     ],
   },
   {

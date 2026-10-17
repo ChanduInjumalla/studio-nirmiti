@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { Syne, Plus_Jakarta_Sans, Cinzel } from 'next/font/google';
 import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/navigation/Footer';
+import LiveVisualEditsApplier from '@/components/admin/LiveVisualEditsApplier';
 import { siteNavigation, footerNavigation, globalSettings } from '@/data/navigation';
 import './globals.css';
 
@@ -70,6 +71,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body suppressHydrationWarning>
+        <LiveVisualEditsApplier />
         <Suspense>
           <Navbar
             navigation={siteNavigation}

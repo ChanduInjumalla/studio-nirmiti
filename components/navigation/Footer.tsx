@@ -75,6 +75,9 @@ export default function Footer({ navigation, businessName, phone }: FooterProps)
           <div className={styles.bottomLinks}>
             <Link href="/privacy-policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
+            <Link href="/admin" title="Studio Nirmiti Staff Portal" style={{ opacity: 0.65 }}>
+              Staff Portal
+            </Link>
           </div>
         </div>
       </div>

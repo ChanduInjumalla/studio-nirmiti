@@ -97,7 +97,10 @@ const defaultSections: EditableSection[] = [
 ];
 
 export default function AdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [emailInput, setEmailInput] = useState('admin@studionirmiti.com');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState<'dashboard' | 'editor' | 'leads'>('dashboard');
   const [leads, setLeads] = useState<Lead[]>([]);
   const [sections, setSections] = useState<EditableSection[]>(defaultSections);
@@ -107,6 +110,14 @@ export default function AdminPage() {
   const [saveNotice, setSaveNotice] = useState<string>('');
 
   useEffect(() => {
+    // Check existing authentication
+    try {
+      const auth = localStorage.getItem('studio_admin_auth') || sessionStorage.getItem('studio_admin_auth');
+      if (auth === 'true') {
+        setIsAuthenticated(true);
+      }
+    } catch {}
+
     // Load leads from localStorage
     try {
       const stored = JSON.parse(localStorage.getItem('studio_leads') || '[]');
@@ -136,6 +147,45 @@ export default function AdminPage() {
     }
   }, []);
 
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanEmail = emailInput.trim().toLowerCase();
+    const cleanPass = passwordInput.trim();
+
+    // Check credentials: admin@studionirmiti.com / Nirmiti@2026 (or admin / admin123)
+    if (
+      (cleanEmail === 'admin@studionirmiti.com' || cleanEmail === 'admin' || cleanEmail === 'studio') &&
+      (cleanPass === 'Nirmiti@2026' || cleanPass === 'admin123' || cleanPass === 'admin')
+    ) {
+      setIsAuthenticated(true);
+      setLoginError('');
+      try {
+        localStorage.setItem('studio_admin_auth', 'true');
+      } catch {}
+    } else {
+      setLoginError('Invalid credentials. Please use admin@studionirmiti.com / Nirmiti@2026');
+    }
+  };
+
+  const handleQuickDemoLogin = () => {
+    setEmailInput('admin@studionirmiti.com');
+    setPasswordInput('Nirmiti@2026');
+    setIsAuthenticated(true);
+    setLoginError('');
+    try {
+      localStorage.setItem('studio_admin_auth', 'true');
+    } catch {}
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setPasswordInput('');
+    try {
+      localStorage.removeItem('studio_admin_auth');
+      sessionStorage.removeItem('studio_admin_auth');
+    } catch {}
+  };
+
   const handlePublish = () => {
     setLastPublished(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' IST');
     setSaveNotice('Published revision successfully!');
@@ -153,6 +203,68 @@ export default function AdminPage() {
   };
 
   const selectedSection = sections.find((s) => s.id === selectedSectionId) || sections[0];
+
+  if (!isAuthenticated) {
+    return (
+      <div className={styles.adminWrapper}>
+        <div className={styles.loginCard}>
+          <div className={styles.loginLogoRow}>
+            <div className={styles.loginLogoMark}>N</div>
+          </div>
+          <h1 className={styles.loginTitle}>Studio Nirmiti Portal</h1>
+          <p className={styles.loginSub}>
+            Enter authorized administrator credentials to manage leads, page layouts, and the visual editor.
+          </p>
+
+          <div className={styles.credentialsBadge}>
+            <div><strong>Authorized Administrator Access:</strong></div>
+            <div>Email: <code>admin@studionirmiti.com</code></div>
+            <div>Password: <code>Nirmiti@2026</code></div>
+          </div>
+
+          {loginError && <div className={styles.loginError}>{loginError}</div>}
+
+          <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
+            <div className={styles.loginFieldGroup}>
+              <label className={styles.loginLabel}>Email or Username</label>
+              <input
+                type="text"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                className={styles.loginInput}
+                placeholder="admin@studionirmiti.com"
+                required
+              />
+            </div>
+
+            <div className={styles.loginFieldGroup}>
+              <label className={styles.loginLabel}>Password</label>
+              <input
+                type="password"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                className={styles.loginInput}
+                placeholder="Enter password"
+                required
+              />
+            </div>
+
+            <button type="submit" className={styles.loginBtn}>
+              Sign In to Admin Portal →
+            </button>
+
+            <button
+              type="button"
+              onClick={handleQuickDemoLogin}
+              className={styles.demoLoginBtn}
+            >
+              One-Click Demo Login
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.adminWrapper}>
@@ -224,6 +336,27 @@ export default function AdminPage() {
             >
               Live Site ↗
             </Link>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              style={{
+                fontSize: '11px',
+                fontFamily: 'var(--font-syne), sans-serif',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                color: '#ff8a80',
+                background: 'rgba(239, 83, 80, 0.12)',
+                border: '1px solid rgba(239, 83, 80, 0.3)',
+                padding: '6px 12px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
+              title="Lock Admin Session"
+            >
+              Log Out
+            </button>
           </div>
         </header>
 
