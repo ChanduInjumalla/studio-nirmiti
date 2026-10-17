@@ -40,7 +40,24 @@
    so they overlap perfectly with zero visual misalignment.
    ========================================================================= */
 
-/* Fullscreen Background Video (underneath initial image) */
+/* Fullscreen Hardware-Accelerated Scrub Canvas */
+.canvasElement {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+
+  /* GPU acceleration for butter-smooth 60/120fps scrubbing */
+  transform: translateZ(0);
+  will-change: contents;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Fullscreen Background Video (fallback) */
 .videoElement {
   position: absolute;
   top: 0;

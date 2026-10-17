@@ -13,93 +13,116 @@ import styles from './ScrollScrubHeroVideo.module.css';
  *  • Fully scroll-linked video scrubbing (forward + reverse)
  *  • GPU-composited layers for zero layout shift
  */
+const TOTAL_FRAMES = 96;
+
 export default function ScrollScrubHeroVideo() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
 
   const [progress, setProgress] = useState(0);
-  const [videoSrc, setVideoSrc] = useState('/videos/hero_scrub_video.mp4');
-  const [videoReady, setVideoReady] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [canvasReady, setCanvasReady] = useState(false);
 
-  const targetTimeRef = useRef(0);
-  const smoothedTimeRef = useRef(0);
-  const durationRef = useRef(48.0);
-  const isSeekingRef = useRef(false);
-  const pendingTargetTimeRef = useRef<number | null>(null);
-  const lastSeekTimestampRef = useRef<number>(0);
+  const targetFrameRef = useRef(0);
+  const currentFrameRef = useRef(0);
   const rafIdRef = useRef<number>(0);
 
-  // ───── Responsive video source selection ─────
+  // ───── Preload 96 optimized WebP frames ─────
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-      setVideoSrc('/videos/hero_scrub_video_mobile.mp4');
+    const loadedImages: HTMLImageElement[] = [];
+
+    // Prioritize frame 1 for instant first paint
+    const firstImg = new Image();
+    firstImg.src = '/images/hero-frames/frame_0001.webp';
+    firstImg.onload = () => {
+      loadedImages[0] = firstImg;
+      setCanvasReady(true);
+    };
+    loadedImages[0] = firstImg;
+
+    // Asynchronously preload all remaining frames into memory
+    for (let i = 2; i <= TOTAL_FRAMES; i++) {
+      const img = new Image();
+      const pad = String(i).padStart(4, '0');
+      img.src = `/images/hero-frames/frame_${pad}.webp`;
+      img.decoding = 'async';
+      loadedImages[i - 1] = img;
+    }
+
+    imagesRef.current = loadedImages;
+  }, []);
+
+  // ───── Draw frame to canvas with object-fit: cover ─────
+  const drawFrame = useCallback((frameIndex: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+
+    const img = imagesRef.current[frameIndex] || imagesRef.current[0];
+    if (!img || !img.complete || img.naturalWidth === 0) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+
+    if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) {
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+    }
+
+    ctx.save();
+    ctx.scale(dpr, dpr);
+
+    const imgAspect = img.naturalWidth / img.naturalHeight;
+    const screenAspect = width / height;
+
+    let drawW: number;
+    let drawH: number;
+    let drawX: number;
+    let drawY: number;
+
+    if (screenAspect > imgAspect) {
+      drawW = width;
+      drawH = width / imgAspect;
+      drawX = 0;
+      drawY = (height - drawH) / 2;
     } else {
-      setVideoSrc('/videos/hero_scrub_video.mp4');
+      drawH = height;
+      drawW = height * imgAspect;
+      drawX = (width - drawW) / 2;
+      drawY = 0;
     }
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'medium';
+    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+    ctx.restore();
   }, []);
 
-  // ───── Core Non-Blocking Seek Dispatcher ─────
-  // Guarantees we never interrupt an in-flight seek, eliminating browser decoder stalls
-  const performSeek = useCallback((targetTime: number) => {
-    const video = videoRef.current;
-    if (!video || video.readyState < 1) return;
-
-    // If browser is actively seeking, queue this target time for when 'seeked' fires
-    if (video.seeking || isSeekingRef.current) {
-      pendingTargetTimeRef.current = targetTime;
-      return;
-    }
-
-    // Skip if within ~half a frame duration (< 0.015s)
-    const diff = Math.abs(video.currentTime - targetTime);
-    if (diff < 0.015) return;
-
-    isSeekingRef.current = true;
-    lastSeekTimestampRef.current = performance.now();
-
-    try {
-      const vidAny = video as unknown as { fastSeek?: (t: number) => void };
-      if (typeof vidAny.fastSeek === 'function') {
-        vidAny.fastSeek(targetTime);
-      } else {
-        video.currentTime = targetTime;
-      }
-    } catch {
-      isSeekingRef.current = false;
-    }
-  }, []);
-
-  // ───── Continuous frame synchronization loop ─────
-  // Uses non-blocking interpolation for buttery smooth, stall-free scrubbing
+  // ───── Continuous 60/120fps render loop with smooth interpolation ─────
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    let lastRenderedIndex = -1;
 
     const renderLoop = () => {
-      // Watchdog: If browser took longer than 120ms to fire 'seeked', release lock so it never deadlocks
-      if (isSeekingRef.current && performance.now() - lastSeekTimestampRef.current > 120) {
-        isSeekingRef.current = false;
-        if (pendingTargetTimeRef.current !== null) {
-          const next = pendingTargetTimeRef.current;
-          pendingTargetTimeRef.current = null;
-          performSeek(next);
-        }
+      const diff = targetFrameRef.current - currentFrameRef.current;
+
+      // Snappy lerp: 0.35 factor ensures instant response without lag or stutter
+      if (Math.abs(diff) > 0.05) {
+        currentFrameRef.current += diff * 0.35;
+      } else {
+        currentFrameRef.current = targetFrameRef.current;
       }
 
-      if (video.readyState >= 1) {
-        const target = targetTimeRef.current;
-        const diff = target - smoothedTimeRef.current;
+      const frameIdx = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.max(0, Math.round(currentFrameRef.current))
+      );
 
-        // Snappy, organic interpolation: responsive to fast scrolls without lagging
-        if (Math.abs(diff) > 0.005) {
-          smoothedTimeRef.current += diff * 0.35;
-          performSeek(smoothedTimeRef.current);
-        } else if (pendingTargetTimeRef.current !== null && !isSeekingRef.current) {
-          const next = pendingTargetTimeRef.current;
-          pendingTargetTimeRef.current = null;
-          performSeek(next);
-        }
+      if (frameIdx !== lastRenderedIndex || !canvasReady) {
+        drawFrame(frameIdx);
+        lastRenderedIndex = frameIdx;
       }
 
       rafIdRef.current = requestAnimationFrame(renderLoop);
@@ -110,12 +133,11 @@ export default function ScrollScrubHeroVideo() {
     return () => {
       cancelAnimationFrame(rafIdRef.current);
     };
-  }, [performSeek]);
+  }, [drawFrame, canvasReady]);
 
-  // ───── Scroll calculation: SCROLL POSITION = VIDEO POSITION ─────
+  // ───── Scroll calculation: SCROLL POSITION = FRAME INDEX ─────
   const handleScroll = useCallback(() => {
     const container = containerRef.current;
-    const video = videoRef.current;
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
@@ -126,95 +148,18 @@ export default function ScrollScrubHeroVideo() {
     const scrolled = -rect.top;
     const normalized = Math.min(1, Math.max(0, scrolled / totalScrollable));
 
-    // Mark first scroll event for image→video transition
+    // Mark first scroll event for image transition
     if (!hasScrolled && normalized > 0.001) {
       setHasScrolled(true);
     }
 
     setProgress(normalized);
 
-    const dur = video?.duration && !isNaN(video.duration) ? video.duration : durationRef.current;
-    // Map 0..1 to 0..duration (clamped precisely)
-    const target = Math.min(dur - 0.001, Math.max(0, normalized * dur));
-    targetTimeRef.current = target;
+    // Map 0..1 to 0..(TOTAL_FRAMES - 1)
+    targetFrameRef.current = normalized * (TOTAL_FRAMES - 1);
+  }, [hasScrolled]);
 
-    // If first frame or user scrolls while idle, trigger performSeek directly for zero latency
-    if (!isSeekingRef.current) {
-      performSeek(target);
-    }
-  }, [hasScrolled, performSeek]);
-
-  // ───── Video initialization and metadata listeners ─────
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Ensure video is properly configured for background scrubbing
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.pause();
-
-    const onLoadedMetadata = () => {
-      if (video.duration && !isNaN(video.duration)) {
-        durationRef.current = video.duration;
-      }
-      video.pause();
-      // Seek to frame 0 so the video canvas matches the static image
-      try {
-        video.currentTime = 0;
-      } catch {
-        // Ignore
-      }
-    };
-
-    const onCanPlay = () => {
-      setVideoReady(true);
-      video.pause();
-      handleScroll();
-    };
-
-    const onSeeked = () => {
-      isSeekingRef.current = false;
-      // Immediately process the latest queued scroll position
-      if (pendingTargetTimeRef.current !== null) {
-        const nextTime = pendingTargetTimeRef.current;
-        pendingTargetTimeRef.current = null;
-        performSeek(nextTime);
-      }
-    };
-
-    const onPlay = () => {
-      // Prevent unauthorized autoplay — user scroll is the only playback engine
-      video.pause();
-    };
-
-    video.addEventListener('loadedmetadata', onLoadedMetadata);
-    video.addEventListener('loadeddata', onLoadedMetadata);
-    video.addEventListener('canplay', onCanPlay);
-    video.addEventListener('seeked', onSeeked);
-    video.addEventListener('play', onPlay);
-
-    // Prompt the browser to load video metadata
-    video.load();
-
-    if (video.readyState >= 1) {
-      onLoadedMetadata();
-    }
-    if (video.readyState >= 4) {
-      onCanPlay();
-    }
-
-    return () => {
-      video.removeEventListener('loadedmetadata', onLoadedMetadata);
-      video.removeEventListener('loadeddata', onLoadedMetadata);
-      video.removeEventListener('canplay', onCanPlay);
-      video.removeEventListener('seeked', onSeeked);
-      video.removeEventListener('play', onPlay);
-    };
-  }, [handleScroll, performSeek, videoSrc]);
-
-  // ───── Global scroll, resize and orientation listeners ─────
+  // ───── Global scroll and resize listeners ─────
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
@@ -231,18 +176,9 @@ export default function ScrollScrubHeroVideo() {
   }, [handleScroll]);
 
   // ───── Image opacity calculation ─────
-  // The reference image stays at full opacity until the user scrolls.
-  // Once scrolling begins AND the video is ready, crossfade over 3% of scroll progress.
-  // If video isn't ready yet, keep the image visible as a fallback.
   const computeImageOpacity = (): number => {
-    // If user hasn't scrolled at all, always show the image at full opacity
     if (!hasScrolled) return 1;
-
-    // If video isn't ready yet, keep image fully visible (prevents flash)
-    if (!videoReady) return 1;
-
-    // Smooth crossfade: full opacity at progress=0, fully transparent by progress=0.03
-    // This maps to ~18vh of scroll distance — enough to feel seamless
+    if (!canvasReady) return 1;
     return Math.max(0, Math.min(1, 1 - progress / 0.03));
   };
 
@@ -256,18 +192,10 @@ export default function ScrollScrubHeroVideo() {
     >
       {/* Pinned Sticky Viewport (100vh) */}
       <div className={styles.heroSticky}>
-        {/* Scroll-Scrubbed Video Element (always paused, scrubbed via currentTime) */}
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          poster="/images/hero_reference.webp"
-          playsInline
-          muted
-          preload="auto"
-          controls={false}
-          disablePictureInPicture
-          disableRemotePlayback
-          className={styles.videoElement}
+        {/* Hardware-Accelerated 60fps Scroll Canvas (instantaneous frame drawing, zero decoder stalls) */}
+        <canvas
+          ref={canvasRef}
+          className={styles.canvasElement}
           aria-hidden="true"
         />
 
