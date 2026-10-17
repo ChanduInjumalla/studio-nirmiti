@@ -1,21 +1,24 @@
 import type { Metadata } from 'next';
-import InnerPageShell from '@/components/layout/InnerPageShell';
+import CategoryDesignCatalog from '@/components/catalog/CategoryDesignCatalog';
 
 export const metadata: Metadata = {
-  title: 'Turnkey Interior Solutions',
-  description: 'End-to-end interior delivery from design concept through procurement, execution and final handover.',
+  title: 'Turnkey Interior Solutions | 45-Day Guaranteed Handover & Full Home Execution',
+  description:
+    'Full home turnkey interior packages for 2BHK, 3BHK, 4BHK and luxury villas with fixed price contracts, 3D visualization, German fittings, and single-source accountability.',
   alternates: {
     canonical: '/services/turnkey-interiors',
   },
 };
 
-export default function Page() {
+export default function TurnkeyInteriorsPage() {
   return (
-    <InnerPageShell
-      eyebrow="Turnkey"
-      title="Turnkey Interior Solutions"
-      description="End-to-end interior delivery from design concept through procurement, execution and final handover."
-      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }, { label: 'Turnkey Interiors' }]}
+    <CategoryDesignCatalog
+      categorySlug="turnkey-interiors"
+      breadcrumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Services', href: '/services/architectural-design' },
+        { label: 'Turnkey Interior Solutions' },
+      ]}
     />
   );
 }

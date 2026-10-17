@@ -1,21 +1,24 @@
 import type { Metadata } from 'next';
-import InnerPageShell from '@/components/layout/InnerPageShell';
+import CategoryDesignCatalog from '@/components/catalog/CategoryDesignCatalog';
 
 export const metadata: Metadata = {
-  title: 'Modular Kitchen Design',
-  description: 'Modular kitchen design with layout planning, storage optimisation, material selection and factory coordination.',
+  title: 'Modular Kitchen Designs | 3000+ Modular Kitchen Ideas & Turnkey Execution',
+  description:
+    'Explore curated modular kitchen designs with layout planning, German fittings, quartz countertops, anti-fingerprint acrylic finishes, and 45-day turnkey installation by Studio Nirmiti.',
   alternates: {
     canonical: '/services/modular-kitchens',
   },
 };
 
-export default function Page() {
+export default function ModularKitchensPage() {
   return (
-    <InnerPageShell
-      eyebrow="Kitchens"
-      title="Modular Kitchen Design"
-      description="Modular kitchen design with layout planning, storage optimisation, material selection and factory coordination."
-      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }, { label: 'Modular Kitchens' }]}
+    <CategoryDesignCatalog
+      categorySlug="modular-kitchens"
+      breadcrumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Services', href: '/services/architectural-design' },
+        { label: 'Modular Kitchen Designs' },
+      ]}
     />
   );
 }
