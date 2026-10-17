@@ -1,0 +1,150 @@
+.sectionWrapper {
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+  background-color: var(--color-bg);
+}
+
+.headerArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-12);
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.introText {
+  max-width: 600px;
+}
+
+.eyebrow {
+  font-family: var(--font-syne), sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+  display: inline-block;
+}
+
+.title {
+  font-family: var(--font-cinzel), serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-syne), sans-serif;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 4px;
+  transition: all var(--transition-fast);
+}
+
+.viewAllLink:hover {
+  color: var(--color-accent);
+  padding-bottom: 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-8);
+}
+
+.projectCard {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  group: 1;
+}
+
+.imageFrame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  transition: all var(--transition-base);
+}
+
+.projectCard:hover .imageFrame {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.projectImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.projectCard:hover .projectImage {
+  transform: scale(1.04);
+}
+
+.floatingBadge {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: rgba(20, 24, 22, 0.8);
+  backdrop-filter: blur(8px);
+  color: var(--color-text-light);
+  font-family: var(--font-syne), sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-2);
+}
+
+.cardTitle {
+  font-family: var(--font-cinzel), serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: color var(--transition-fast);
+}
+
+.projectCard:hover .cardTitle {
+  color: var(--color-accent);
+}
+
+.location {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-syne), sans-serif;
+}
+
+.scope {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
