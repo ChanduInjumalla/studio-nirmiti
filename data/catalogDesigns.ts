@@ -247,13 +247,13 @@ export const categoryCatalogs: Record<string, CategoryCatalogData> = {
       {
         id: 'trend-w2',
         title: 'Minimalist Floor-to-Ceiling Oak Wardrobe with Concealed Pulls',
-        image: 'https://images.unsplash.com/photo-1558997519-83ea9252def8?auto=format&fit=crop&w=1200&q=80',
+        image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=80',
         tag: 'Floor-to-Ceiling',
       },
       {
         id: 'trend-w3',
         title: 'Contemporary Fluted Glass Sliding Wardrobe with Ambient Coves',
-        image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1200&q=80',
+        image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80',
         tag: 'Sliding Door',
       },
     ],
@@ -271,7 +271,7 @@ export const categoryCatalogs: Record<string, CategoryCatalogData> = {
       {
         id: 'w-2',
         title: 'Modern Minimalist 4-Door Hinged Wardrobe in White Ash',
-        image: 'https://images.unsplash.com/photo-1558997519-83ea9252def8?auto=format&fit=crop&w=1200&q=80',
+        image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=80',
         price: '₹2,65,000*',
         size: 'Size: 8x7 feet',
         tag: 'Hinged Shutters',
@@ -281,7 +281,7 @@ export const categoryCatalogs: Record<string, CategoryCatalogData> = {
       {
         id: 'w-3',
         title: 'Fluted Glass 3-Track Sliding Wardrobe with Internal Illumination',
-        image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1200&q=80',
+        image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80',
         price: '₹3,45,000*',
         size: 'Size: 10x8 feet',
         tag: 'Sliding Door',
@@ -311,7 +311,7 @@ export const categoryCatalogs: Record<string, CategoryCatalogData> = {
       {
         id: 'w-6',
         title: 'Contemporary Soft-Close Wardrobe with Integrated Dressing Mirror',
-        image: 'https://images.unsplash.com/photo-1558997519-83ea9252def8?auto=format&fit=crop&w=1200&q=80',
+        image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=80',
         price: '₹2,95,000*',
         size: 'Size: 9x8 feet',
         tag: 'Hinged Shutters',
@@ -755,12 +755,12 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       trendingItems: [
         { id: 'tb-1', title: 'Master Suite with Fluted Travertine Paneling & Warm Coves', image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80', tag: 'Master Suites' },
         { id: 'tb-2', title: 'Modern Minimalist Japanese Oak Bedroom with Platform Bed', image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80', tag: 'Minimalist' },
-        { id: 'tb-3', title: 'Contemporary Suite with Smoked Bronze Glass Wardrobe', image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1200&q=80', tag: 'Walk-in Closets' },
+        { id: 'tb-3', title: 'Contemporary Suite with Smoked Bronze Glass Wardrobe', image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80', tag: 'Walk-in Closets' },
       ],
       designs: [
         { id: 'b-1', title: 'Contemporary Master Suite with Fluted Fabric Acoustic Wall', image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80', price: '₹4,80,000*', size: 'Size: 16x14 feet', tag: 'Master Suites', finish: 'Linen Paneling, Warm Dimmable 2700K LEDs', photosCount: 4 },
         { id: 'b-2', title: 'Warm Oak Bedroom with Integrated Floating Study Table', image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80', price: '₹3,90,000*', size: 'Size: 14x12 feet', tag: 'Study Corners', finish: 'White Oak Veneer & Cashmere PU', photosCount: 3 },
-        { id: 'b-3', title: 'Boutique Suite with Transparent Walk-In Dressing Area', image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef4?auto=format&fit=crop&w=1200&q=80', price: '₹5,60,000*', size: 'Size: 18x15 feet', tag: 'Walk-in Closets', finish: 'Smoked Tint Glass, Bronze Trims', photosCount: 5 },
+        { id: 'b-3', title: 'Boutique Suite with Transparent Walk-In Dressing Area', image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80', price: '₹5,60,000*', size: 'Size: 18x15 feet', tag: 'Walk-in Closets', finish: 'Smoked Tint Glass, Bronze Trims', photosCount: 5 },
         { id: 'b-4', title: 'Minimalist Japandi Bedroom with Curved Bedhead', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80', price: '₹3,40,000*', size: 'Size: 13x11 feet', tag: 'Minimalist', finish: 'Bouclé Fabric, Textured Limewash', photosCount: 3 },
       ],
       promoBanner: { badge: 'Bedroom Package Offer', title: 'Master Bedrooms from ₹3.4 Lakh*', subtitle: 'Includes custom bed, acoustic wall paneling, wardrobe, and mood lighting.', ctaText: 'GET BEDROOM ESTIMATE' },
@@ -784,11 +784,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       trendingHeading: 'Top Trending Mandir Designs',
       trendingSubheading: 'Sacred spaces designed with reverence and modern grace',
       trendingItems: [
-        { id: 'tp-1', title: 'White Thassos Marble Mandir with Backlit Om & Brass Bells', image: 'https://images.unsplash.com/photo-1545042746-ec9e5a5968d3?auto=format&fit=crop&w=1200&q=80', tag: 'Marble Mandirs' },
+        { id: 'tp-1', title: 'White Thassos Marble Mandir with Backlit Om & Brass Bells', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', tag: 'Marble Mandirs' },
         { id: 'tp-2', title: 'Teak Wood Jaali Mandir with Concealed Storage Drawers', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1200&q=80', tag: 'Wooden Jaali' },
       ],
       designs: [
-        { id: 'p-1', title: 'Pure White Carved Marble Mandir with Ambient Backlit Onyx', image: 'https://images.unsplash.com/photo-1545042746-ec9e5a5968d3?auto=format&fit=crop&w=1200&q=80', price: '₹2,80,000*', size: 'Size: 6x5 feet', tag: 'Marble Mandirs', finish: 'White Corian & Translucent Onyx', photosCount: 4 },
+        { id: 'p-1', title: 'Pure White Carved Marble Mandir with Ambient Backlit Onyx', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', price: '₹2,80,000*', size: 'Size: 6x5 feet', tag: 'Marble Mandirs', finish: 'White Corian & Translucent Onyx', photosCount: 4 },
         { id: 'p-2', title: 'Contemporary Teak Wood Jaali Temple with Hanging Brass Bells', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1200&q=80', price: '₹1,95,000*', size: 'Size: 5x4 feet', tag: 'Wooden Jaali', finish: 'Solid Burmese Teak & Brushed Brass', photosCount: 3 },
       ],
       promoBanner: { badge: 'Vastu Consultation Included', title: 'Bespoke Mandirs from ₹1.5 Lakh*', subtitle: 'Custom fabricated to exact dimensions with Vastu-compliant orientation and sacred geometry.', ctaText: 'REQUEST MANDIR ESTIMATE' },
