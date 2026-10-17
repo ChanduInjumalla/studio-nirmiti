@@ -49,7 +49,7 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
       className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${isTransparent ? styles.transparent : ''} ${!isHome && !scrolled ? styles.innerPageHeader : ''}`}
       role="banner"
     >
-      <div className={`container ${styles.inner}`}>
+      <div className={styles.inner}>
         {/* Logo */}
         <Link href="/" className={styles.logo} aria-label={`${businessName} — Home`}>
           <span className={styles.logoMark}>N</span>
