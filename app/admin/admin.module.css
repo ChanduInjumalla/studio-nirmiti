@@ -56,7 +56,14 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--space-6);
+  transition: max-width 0.2s ease;
 }
+
+.adminContainerFull {
+  max-width: 100%;
+  padding: 0 var(--space-4);
+}
+
 
 .adminHeader {
   display: flex;

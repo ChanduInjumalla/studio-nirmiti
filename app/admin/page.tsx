@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { projectsData } from '@/data/projects';
 import { servicesData } from '@/data/services';
+import VisualInlineEditor from '@/components/admin/VisualInlineEditor';
 import styles from './admin.module.css';
 
 interface Lead {
@@ -155,7 +156,7 @@ export default function AdminPage() {
 
   return (
     <div className={styles.adminWrapper}>
-      <div className={styles.adminContainer}>
+      <div className={`${styles.adminContainer} ${activeTab === 'editor' ? styles.adminContainerFull : ''}`}>
         {/* Header Bar */}
         <header className={styles.adminHeader}>
           <div className={styles.adminBrand}>
@@ -334,199 +335,9 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* TAB 2: VISUAL PAGE EDITOR */}
+        {/* TAB 2: VISUAL PAGE EDITOR (Interactive Website Clone) */}
         {activeTab === 'editor' && (
-          <div className={styles.editorGrid}>
-            {/* Sidebar Controls */}
-            <div className={styles.sidebarPanel}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
-                <h2 style={{ fontFamily: 'var(--font-cinzel), serif', fontSize: '1.1rem' }}>
-                  Page Sections
-                </h2>
-                {saveNotice && <span style={{ color: '#81c784', fontSize: '11px' }}>{saveNotice}</span>}
-              </div>
-
-              <div style={{ marginBottom: 'var(--space-6)' }}>
-                {sections.map((sec) => (
-                  <div
-                    key={sec.id}
-                    className={`${styles.sectionItem} ${selectedSectionId === sec.id ? styles.sectionItemActive : ''}`}
-                    onClick={() => setSelectedSectionId(sec.id)}
-                  >
-                    <div>
-                      <p style={{ margin: 0, fontSize: '13px', fontWeight: 600 }}>{sec.name}</p>
-                      <span style={{ fontSize: '10px', color: '#a09d95' }}>
-                        {sec.enabled ? '● Visible' : '○ Hidden'}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        color: sec.enabled ? 'var(--color-accent)' : '#a09d95',
-                        fontSize: '11px',
-                        cursor: 'pointer',
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSections(sections.map((s) => (s.id === sec.id ? { ...s, enabled: !s.enabled } : s)));
-                      }}
-                    >
-                      {sec.enabled ? 'Hide' : 'Show'}
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              {/* Edit Form for Selected Section */}
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 'var(--space-4)' }}>
-                <h3 style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: 'var(--space-3)' }}>
-                  Edit: {selectedSection.name}
-                </h3>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div>
-                    <label style={{ fontSize: '11px', color: '#a09d95', display: 'block', marginBottom: '4px' }}>
-                      Eyebrow Label
-                    </label>
-                    <input
-                      type="text"
-                      value={selectedSection.eyebrow}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setSections(sections.map((s) => (s.id === selectedSection.id ? { ...s, eyebrow: val } : s)));
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '8px',
-                        background: '#141716',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        color: '#fff',
-                        borderRadius: '4px',
-                        fontSize: '12px',
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ fontSize: '11px', color: '#a09d95', display: 'block', marginBottom: '4px' }}>
-                      Section Heading
-                    </label>
-                    <input
-                      type="text"
-                      value={selectedSection.heading}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setSections(sections.map((s) => (s.id === selectedSection.id ? { ...s, heading: val } : s)));
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '8px',
-                        background: '#141716',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        color: '#fff',
-                        borderRadius: '4px',
-                        fontSize: '12px',
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ fontSize: '11px', color: '#a09d95', display: 'block', marginBottom: '4px' }}>
-                      Description Copy
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={selectedSection.body}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setSections(sections.map((s) => (s.id === selectedSection.id ? { ...s, body: val } : s)));
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '8px',
-                        background: '#141716',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        color: '#fff',
-                        borderRadius: '4px',
-                        fontSize: '12px',
-                        resize: 'vertical',
-                      }}
-                    />
-                  </div>
-
-                  <button
-                    type="button"
-                    className={styles.loginBtn}
-                    style={{ padding: '10px', marginTop: 'var(--space-2)' }}
-                    onClick={handlePublish}
-                  >
-                    Save & Publish Live
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Interactive Preview Canvas */}
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)' }}>
-                <span style={{ fontSize: '12px', color: '#a09d95' }}>Responsive Preview Mode</span>
-                <div className={styles.viewportSwitcher}>
-                  <button
-                    type="button"
-                    className={`${styles.viewportBtn} ${viewportWidth === '100%' ? styles.viewportBtnActive : ''}`}
-                    onClick={() => setViewportWidth('100%')}
-                  >
-                    <Monitor size={14} style={{ display: 'inline', marginRight: '4px' }} /> Desktop
-                  </button>
-                  <button
-                    type="button"
-                    className={`${styles.viewportBtn} ${viewportWidth === '768px' ? styles.viewportBtnActive : ''}`}
-                    onClick={() => setViewportWidth('768px')}
-                  >
-                    <Tablet size={14} style={{ display: 'inline', marginRight: '4px' }} /> Tablet
-                  </button>
-                  <button
-                    type="button"
-                    className={`${styles.viewportBtn} ${viewportWidth === '390px' ? styles.viewportBtnActive : ''}`}
-                    onClick={() => setViewportWidth('390px')}
-                  >
-                    <Smartphone size={14} style={{ display: 'inline', marginRight: '4px' }} /> Mobile
-                  </button>
-                </div>
-              </div>
-
-              <div
-                className={styles.previewFrame}
-                style={{
-                  maxWidth: viewportWidth,
-                  margin: '0 auto',
-                  transition: 'max-width 0.3s ease',
-                }}
-              >
-                <div style={{ padding: 'var(--space-6)', background: 'var(--color-bg)', color: 'var(--color-text-primary)', borderRadius: 'var(--radius-sm)' }}>
-                  <span style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 600 }}>
-                    {selectedSection.eyebrow}
-                  </span>
-                  <h2 style={{ fontFamily: 'var(--font-cinzel), serif', fontSize: '1.8rem', margin: '8px 0 12px' }}>
-                    {selectedSection.heading}
-                  </h2>
-                  <p style={{ color: 'var(--color-text-secondary)', fontSize: '14px', lineHeight: 1.6 }}>
-                    {selectedSection.body}
-                  </p>
-                  <div style={{ marginTop: 'var(--space-6)', display: 'flex', gap: '8px' }}>
-                    <span className="btn btn-primary" style={{ fontSize: '11px', padding: '8px 16px' }}>
-                      Primary Action
-                    </span>
-                    <span className="btn btn-outline" style={{ fontSize: '11px', padding: '8px 16px' }}>
-                      Secondary Action
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <VisualInlineEditor embedded={true} initialRoute="/" />
         )}
 
         {/* TAB 3: LEADS INBOX */}
