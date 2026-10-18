@@ -26,6 +26,7 @@ import {
   Palette,
   Code2,
   Check,
+  ArrowRight,
 } from 'lucide-react';
 import styles from './VisualInlineEditor.module.css';
 
@@ -44,6 +45,8 @@ export interface SelectedElement {
   textContent: string;
   src?: string;
   alt?: string;
+  href?: string;
+  linkText?: string;
   computedStyles: {
     fontSize: string;
     fontFamily: string;
@@ -76,15 +79,88 @@ const viewportPresets: ViewportPreset[] = [
   { label: 'Mobile', width: '390px', icon: <Smartphone size={14} /> },
 ];
 
-const availableRoutes = [
-  { label: 'Homepage (/)', path: '/' },
-  { label: 'About Studio (/about)', path: '/about' },
-  { label: 'Services (/services)', path: '/services' },
-  { label: 'Projects (/projects)', path: '/projects' },
-  { label: 'Seven-Stage Process (/process)', path: '/process' },
-  { label: 'Why Studio Nirmiti (/why-studio-nirmiti)', path: '/why-studio-nirmiti' },
-  { label: 'Contact & Consultation (/contact)', path: '/contact' },
-  { label: 'FAQ (/faq)', path: '/faq' },
+export const availableRoutesGrouped = [
+  {
+    category: 'Core Pages',
+    routes: [
+      { label: 'Homepage (/)', path: '/' },
+      { label: 'About Studio (/about)', path: '/about' },
+      { label: 'Why Studio Nirmiti (/why-studio-nirmiti)', path: '/why-studio-nirmiti' },
+      { label: 'Seven-Stage Process (/process)', path: '/process' },
+      { label: 'Book Consultation (/book-consultation)', path: '/book-consultation' },
+      { label: 'Contact Us (/contact)', path: '/contact' },
+      { label: 'FAQ (/faq)', path: '/faq' },
+    ],
+  },
+  {
+    category: 'Architecture & Execution',
+    routes: [
+      { label: 'Architectural Design (/services/architectural-design)', path: '/services/architectural-design' },
+      { label: 'Interior Design (/services/interior-design)', path: '/services/interior-design' },
+      { label: 'Turnkey Interiors (/services/turnkey-interiors)', path: '/services/turnkey-interiors' },
+      { label: 'Execution Works (/services/execution-works)', path: '/services/execution-works' },
+      { label: 'Exterior & Facade (/services/exterior-design)', path: '/services/exterior-design' },
+      { label: 'Facade Design (/services/facade-design)', path: '/services/facade-design' },
+      { label: 'Space Planning (/services/space-planning)', path: '/services/space-planning' },
+      { label: 'Project Supervision (/services/project-supervision)', path: '/services/project-supervision' },
+      { label: 'Renovation & Remodeling (/services/renovation-remodeling)', path: '/services/renovation-remodeling' },
+    ],
+  },
+  {
+    category: 'Specialised Interior Craft',
+    routes: [
+      { label: 'Modular Kitchens (/services/modular-kitchens)', path: '/services/modular-kitchens' },
+      { label: 'Wardrobes & Storage (/services/wardrobes-storage)', path: '/services/wardrobes-storage' },
+      { label: 'Furniture Selection (/services/furniture-selection)', path: '/services/furniture-selection' },
+      { label: 'Custom Furniture (/services/custom-furniture)', path: '/services/custom-furniture' },
+      { label: 'Lighting & False Ceiling (/services/lighting-false-ceiling)', path: '/services/lighting-false-ceiling' },
+      { label: 'Material & Finishes (/services/material-finishes)', path: '/services/material-finishes' },
+      { label: '3D Visualization (/services/3d-visualization)', path: '/services/3d-visualization' },
+      { label: '3D Walkthroughs (/services/3d-walkthroughs)', path: '/services/3d-walkthroughs' },
+    ],
+  },
+  {
+    category: 'Residential Spaces',
+    routes: [
+      { label: 'Living Room Design (/services/residential/living-room-design)', path: '/services/residential/living-room-design' },
+      { label: 'Bedroom Design (/services/residential/bedroom-design)', path: '/services/residential/bedroom-design' },
+      { label: 'Villa Interiors (/services/residential/villa-interiors)', path: '/services/residential/villa-interiors' },
+      { label: 'Apartment Interiors (/services/residential/apartment-interiors)', path: '/services/residential/apartment-interiors' },
+      { label: 'Dining Room Design (/services/residential/dining-room-design)', path: '/services/residential/dining-room-design' },
+      { label: 'Pooja Room Design (/services/residential/pooja-room-design)', path: '/services/residential/pooja-room-design' },
+      { label: 'Home Office & Study (/services/residential/home-office-study)', path: '/services/residential/home-office-study' },
+    ],
+  },
+  {
+    category: 'Commercial & Hospitality',
+    routes: [
+      { label: 'Office Interiors (/services/commercial/office-interiors)', path: '/services/commercial/office-interiors' },
+      { label: 'Restaurant & Cafe (/services/commercial/restaurant-cafe-interiors)', path: '/services/commercial/restaurant-cafe-interiors' },
+      { label: 'Retail Showroom (/services/commercial/retail-showroom-interiors)', path: '/services/commercial/retail-showroom-interiors' },
+      { label: 'Hotel Interiors (/services/hospitality/hotel-interiors)', path: '/services/hospitality/hotel-interiors' },
+      { label: 'Resort Interiors (/services/hospitality/resort-interiors)', path: '/services/hospitality/resort-interiors' },
+    ],
+  },
+  {
+    category: 'Projects Portfolio',
+    routes: [
+      { label: 'All Projects (/projects)', path: '/projects' },
+      { label: 'Residential Portfolio (/projects/residential)', path: '/projects/residential' },
+      { label: 'Commercial Portfolio (/projects/commercial)', path: '/projects/commercial' },
+      { label: 'Hospitality Portfolio (/projects/hospitality)', path: '/projects/hospitality' },
+    ],
+  },
+  {
+    category: 'Insights & Legal',
+    routes: [
+      { label: 'Insights Overview (/insights)', path: '/insights' },
+      { label: 'Architecture Insights (/insights/architecture)', path: '/insights/architecture' },
+      { label: 'Interiors Insights (/insights/interiors)', path: '/insights/interiors' },
+      { label: '3D Visualization Insights (/insights/3d-visualization)', path: '/insights/3d-visualization' },
+      { label: 'Privacy Policy (/privacy-policy)', path: '/privacy-policy' },
+      { label: 'Terms of Service (/terms)', path: '/terms' },
+    ],
+  },
 ];
 
 const studioPresetPhotos = [
@@ -118,6 +194,26 @@ export default function VisualInlineEditor({
   const [hoveredInfo, setHoveredInfo] = useState<{ tag: string; dims: string } | null>(null);
   const [iframeSrc, setIframeSrc] = useState('');
   const [isFullscreen, setIsFullscreen] = useState(!embedded);
+  const [pendingLinkPrompt, setPendingLinkPrompt] = useState<{
+    href: string;
+    label: string;
+    element: SelectedElement;
+  } | null>(null);
+
+  const handleNavigateToRoute = (targetRoute: string) => {
+    let path = targetRoute;
+    try {
+      if (path.startsWith('http')) {
+        const u = new URL(path);
+        path = u.pathname + u.search;
+      }
+    } catch {
+      // ignore
+    }
+    setCurrentRoute(path);
+    setSelectedElement(null);
+    setPendingLinkPrompt(null);
+  };
 
   // Set iframe src on mount / route change
   useEffect(() => {
@@ -403,6 +499,35 @@ export default function VisualInlineEditor({
       const isTxt = isTextElement(el);
       const isHidden = (el as HTMLElement).style.display === 'none';
 
+      // Check if clicked element is an anchor link or enclosed in an anchor
+      const anchorEl = (el.tagName.toLowerCase() === 'a' ? el : el.closest('a')) as HTMLAnchorElement | null;
+      let linkHref: string | undefined = undefined;
+      let linkText: string | undefined = undefined;
+      if (anchorEl) {
+        linkText = (anchorEl.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80);
+        const rawHref = anchorEl.getAttribute('href') || '';
+        if (
+          rawHref &&
+          !rawHref.startsWith('#') &&
+          !rawHref.startsWith('javascript:') &&
+          !rawHref.startsWith('tel:') &&
+          !rawHref.startsWith('mailto:')
+        ) {
+          try {
+            const parsed = new URL(rawHref, win.location.href);
+            if (parsed.origin === win.location.origin) {
+              linkHref = parsed.pathname + parsed.search;
+            } else {
+              linkHref = rawHref;
+            }
+          } catch {
+            if (rawHref.startsWith('/')) {
+              linkHref = rawHref;
+            }
+          }
+        }
+      }
+
       window.parent.postMessage({
         type: 'editor-select',
         data: {
@@ -412,6 +537,8 @@ export default function VisualInlineEditor({
           textContent: (el.textContent || '').slice(0, 800),
           src: (el as HTMLImageElement).src || (el as HTMLVideoElement).src || '',
           alt: (el as HTMLImageElement).alt || '',
+          href: linkHref,
+          linkText,
           computedStyles: getComputedProps(el),
           rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height },
           selector,
@@ -592,8 +719,34 @@ export default function VisualInlineEditor({
   useEffect(() => {
     const handler = (e: MessageEvent) => {
       if (e.data?.type === 'editor-select') {
-        setSelectedElement(e.data.data);
+        const sel = e.data.data as SelectedElement;
+        setSelectedElement(sel);
         setShowSidebar(true);
+        if (sel.href && (sel.href.startsWith('/') || sel.href.startsWith('http'))) {
+          // Normalize relative path if same-origin
+          let navPath = sel.href;
+          try {
+            if (navPath.startsWith('http')) {
+              const u = new URL(navPath);
+              if (u.origin === window.location.origin) {
+                navPath = u.pathname + u.search;
+              }
+            }
+          } catch {
+            // ignore
+          }
+          if (navPath.startsWith('/')) {
+            setPendingLinkPrompt({
+              href: navPath,
+              label: sel.linkText || sel.textContent || navPath,
+              element: sel,
+            });
+          } else {
+            setPendingLinkPrompt(null);
+          }
+        } else {
+          setPendingLinkPrompt(null);
+        }
       }
       if (e.data?.type === 'editor-hover') {
         setHoveredInfo(e.data.data);
@@ -783,11 +936,18 @@ export default function VisualInlineEditor({
             onChange={(e) => setCurrentRoute(e.target.value)}
             title="Choose page to edit"
           >
-            {availableRoutes.map((r) => (
-              <option key={r.path} value={r.path}>
-                {r.label}
-              </option>
+            {availableRoutesGrouped.map((grp) => (
+              <optgroup key={grp.category} label={grp.category}>
+                {grp.routes.map((r) => (
+                  <option key={r.path} value={r.path}>
+                    {r.label}
+                  </option>
+                ))}
+              </optgroup>
             ))}
+            {!availableRoutesGrouped.some((grp) => grp.routes.some((r) => r.path === currentRoute)) && (
+              <option value={currentRoute}>{currentRoute}</option>
+            )}
           </select>
 
           {editingText && (
@@ -931,6 +1091,81 @@ export default function VisualInlineEditor({
             <span>Page: {currentRoute}</span>
           </div>
 
+          {/* Link Decision Prompt: Edit Option vs Navigate into Page */}
+          {pendingLinkPrompt && (
+            <div className={styles.linkDecisionOverlay}>
+              <div className={styles.linkDecisionCard}>
+                <div className={styles.linkDecisionHeader}>
+                  <div className={styles.linkDecisionBadge}>
+                    <ExternalLink size={13} />
+                    <span>Link Detected</span>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.linkDecisionClose}
+                    onClick={() => setPendingLinkPrompt(null)}
+                    aria-label="Dismiss link option"
+                  >
+                    <X size={15} />
+                  </button>
+                </div>
+
+                <h3 className={styles.linkDecisionTitle}>
+                  &ldquo;{pendingLinkPrompt.label}&rdquo;
+                </h3>
+                <p className={styles.linkDecisionTarget}>
+                  Destination: <code>{pendingLinkPrompt.href}</code>
+                </p>
+
+                <p className={styles.linkDecisionPromptText}>
+                  What would you like to do with this option?
+                </p>
+
+                <div className={styles.linkDecisionGrid}>
+                  <button
+                    type="button"
+                    className={styles.decisionBtnEdit}
+                    onClick={() => {
+                      setSelectedElement(pendingLinkPrompt.element);
+                      setShowSidebar(true);
+                      setPendingLinkPrompt(null);
+                    }}
+                  >
+                    <div className={styles.decisionIconWrap}>
+                      <Type size={16} />
+                    </div>
+                    <div className={styles.decisionBtnBody}>
+                      <span className={styles.decisionBtnHeading}>Edit This Option</span>
+                      <span className={styles.decisionBtnSub}>
+                        Change words, styling, font or color directly in the sidebar
+                      </span>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={styles.decisionBtnNav}
+                    onClick={() => {
+                      const target = pendingLinkPrompt.href;
+                      setPendingLinkPrompt(null);
+                      handleNavigateToRoute(target);
+                    }}
+                  >
+                    <div className={styles.decisionIconWrapNav}>
+                      <ArrowRight size={16} />
+                    </div>
+                    <div className={styles.decisionBtnBody}>
+                      <span className={styles.decisionBtnHeading}>Go into That Page</span>
+                      <span className={styles.decisionBtnSub}>
+                        Load &ldquo;{pendingLinkPrompt.href}&rdquo; in this live editor to edit it
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div
             className={styles.iframeWrapper}
             style={{
@@ -994,6 +1229,37 @@ export default function VisualInlineEditor({
                     {Math.round(selectedElement.rect.height)} px
                   </span>
                 </div>
+
+                {/* Linked Destination Page Actions */}
+                {selectedElement.href && (
+                  <div className={styles.inspectorLinkBox}>
+                    <div className={styles.inspectorLinkHeader}>
+                      <ExternalLink size={12} />
+                      <span>Destination Link</span>
+                    </div>
+                    <code className={styles.inspectorLinkPath}>
+                      {selectedElement.href}
+                    </code>
+                    <div className={styles.inspectorLinkActions}>
+                      <button
+                        type="button"
+                        className={styles.inspectorNavBtn}
+                        onClick={() => handleNavigateToRoute(selectedElement.href!)}
+                      >
+                        🚀 Go into That Page in Editor
+                      </button>
+                      <a
+                        href={selectedElement.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={styles.inspectorLiveBtn}
+                        title="Open live page in new browser tab"
+                      >
+                        ↗ Open Live Page
+                      </a>
+                    </div>
+                  </div>
+                )}
 
                 {/* Text Content Editor */}
                 {selectedElement.isText && (

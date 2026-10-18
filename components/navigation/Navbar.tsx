@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Phone, ArrowRight, Menu, X, ChevronDown } from 'lucide-react';
+import { Phone, ArrowRight, Menu, X, ChevronDown, Shield } from 'lucide-react';
 import type { NavigationItem } from '@/types';
 import styles from './Navbar.module.css';
 
@@ -145,6 +145,15 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
 
         {/* Desktop Actions */}
         <div className={styles.desktopActions}>
+          <Link
+            href="/admin"
+            className={styles.adminNavLink}
+            title="Admin Dashboard & Live Editor (Ctrl+Shift+A)"
+            aria-label="Admin Portal"
+          >
+            <Shield size={13} />
+            <span>Admin</span>
+          </Link>
           <a href={`tel:+91${phone}`} className={styles.phoneLink} aria-label="Call Studio Nirmiti">
             <Phone size={14} />
             <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
@@ -202,6 +211,10 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
             </div>
           ))}
           <div className={styles.mobileDivider} />
+          <Link href="/admin" className={styles.mobileAdminLink}>
+            <Shield size={16} />
+            <span>Admin Portal & Live Editor</span>
+          </Link>
           <a href={`tel:+91${phone}`} className={styles.mobilePhone}>
             <Phone size={15} />
             <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>

@@ -1,0 +1,252 @@
+/* ── Global Admin Quick Access Floating Widget ── */
+
+.quickAccessContainer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9998;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  animation: fadeInQuickAccess 0.3s ease-out;
+}
+
+@keyframes fadeInQuickAccess {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Compact Floating Trigger */
+.floatingTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #141716;
+  color: #e5e2db;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.floatingTrigger:hover {
+  background: #1c201e;
+  border-color: #b08d57;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), 0 0 15px rgba(176, 141, 87, 0.25);
+}
+
+.triggerIcon {
+  color: #b08d57;
+  display: flex;
+  align-items: center;
+}
+
+.triggerText {
+  white-space: nowrap;
+}
+
+.triggerBadge {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(176, 141, 87, 0.2);
+  color: #d4af37;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Minimized Floating Circle */
+.minimizedCircle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #141716;
+  color: #b08d57;
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+.minimizedCircle:hover {
+  background: #1c201e;
+  border-color: #b08d57;
+  transform: scale(1.08);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 12px rgba(176, 141, 87, 0.3);
+}
+
+/* Popover Panel */
+.popover {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 290px;
+  background: #141716;
+  border: 1px solid rgba(176, 141, 87, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  animation: popoverSlideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@keyframes popoverSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popoverHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.popoverTitleBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popoverTitle {
+  font-family: var(--font-cinzel), serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e5e2db;
+  letter-spacing: 0.03em;
+}
+
+.popoverHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.headerActionBtn {
+  background: transparent;
+  border: none;
+  color: #8f8c85;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.headerActionBtn:hover {
+  color: #e5e2db;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.popoverLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.popoverLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  text-decoration: none;
+  color: #e5e2db;
+  transition: all 0.15s ease;
+}
+
+.popoverLink:hover {
+  background: rgba(176, 141, 87, 0.12);
+  border-color: rgba(176, 141, 87, 0.4);
+  transform: translateX(2px);
+}
+
+.linkIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(176, 141, 87, 0.15);
+  color: #b08d57;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.linkContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.linkDesc {
+  font-size: 10px;
+  color: #8f8c85;
+  margin-top: 1px;
+}
+
+.popoverFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 10px;
+  color: #716e68;
+}
+
+.shortcutBadge {
+  font-family: 'SF Mono', monospace;
+  font-size: 9px;
+  padding: 2px 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  color: #b08d57;
+}
+
+@media (max-width: 768px) {
+  .quickAccessContainer {
+    bottom: 16px;
+    right: 16px;
+  }
+  .popover {
+    width: 260px;
+    right: 0;
+  }
+}
