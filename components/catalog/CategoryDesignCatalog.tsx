@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import Link from 'next/link';
 import {
   Heart,
   ChevronLeft,
@@ -12,9 +11,6 @@ import {
   CheckCircle2,
   X,
   Phone,
-  Shield,
-  Clock,
-  CheckCircle,
   Sliders,
 } from 'lucide-react';
 import Breadcrumb from '@/components/seo/Breadcrumb';
@@ -355,52 +351,6 @@ export default function CategoryDesignCatalog({
             );
           })}
         </div>
-
-        {/* ── The Studio Nirmiti Promise (Livspace Reference 4) ── */}
-        {catalogData.promise && (
-          <section className={styles.promiseSection}>
-            <h2 className={styles.promiseTitle}>{catalogData.promise.title}</h2>
-            <p className={styles.promiseSubtitle}>
-              {catalogData.promise.subtitle}
-            </p>
-
-            <div className={styles.promiseGrid}>
-              {catalogData.promise.items.map((item, idx) => (
-                <div key={idx} className={styles.promiseItem}>
-                  <div className={styles.promiseIcon}>{item.icon}</div>
-                  <div>
-                    <h3 className={styles.promiseItemTitle}>{item.title}</h3>
-                    <p className={styles.promiseItemDesc}>{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className={styles.promiseActions}>
-              <button
-                type="button"
-                className={styles.promiseCtaBtn}
-                onClick={() =>
-                  setSelectedDesignForQuote({
-                    id: 'promise-quote',
-                    title: `${catalogData.title} Consultation`,
-                    image: catalogData.designs[0]?.image || '',
-                    price: 'Custom Specification',
-                    size: 'Full Home Scope',
-                    tag: 'Turnkey',
-                    finish: 'Premium Architecture',
-                    photosCount: 1,
-                  })
-                }
-              >
-                GET FREE QUOTE
-              </button>
-              <Link href="/why-studio-nirmiti" className={styles.promiseLink}>
-                Know more →
-              </Link>
-            </div>
-          </section>
-        )}
 
         {/* ── Designs for Every Budget Lead Capture (Livspace Reference 5) ── */}
         <section className={styles.leadCaptureSection}>
