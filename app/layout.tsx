@@ -4,7 +4,6 @@ import { Syne, Plus_Jakarta_Sans, Cinzel } from 'next/font/google';
 import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/navigation/Footer';
 import LiveVisualEditsApplier from '@/components/admin/LiveVisualEditsApplier';
-import AdminQuickAccess from '@/components/admin/AdminQuickAccess';
 import { siteNavigation, footerNavigation, globalSettings } from '@/data/navigation';
 import './globals.css';
 
@@ -86,7 +85,6 @@ export default function RootLayout({
           businessName={globalSettings.businessName}
           phone={globalSettings.phone}
         />
-        <AdminQuickAccess />
       </body>
     </html>
   );

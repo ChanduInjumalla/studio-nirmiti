@@ -324,7 +324,7 @@
   background: var(--color-accent, #b08d57);
   color: #ffffff;
   border-color: var(--color-accent, #b08d57);
-  box-shadow: 0 2px 8px rgba(176, 141, 87, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* ── Main Catalog Grid (3-Col) ── */
@@ -574,7 +574,7 @@
 .promoBtn:hover {
   background: var(--color-brass-hover, #c4a06a);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(176, 141, 87, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 /* ── The Studio Nirmiti Promise Section (Matching Screenshot 4) ── */

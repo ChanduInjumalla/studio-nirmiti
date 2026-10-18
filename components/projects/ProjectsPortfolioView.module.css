@@ -104,7 +104,7 @@
   background: var(--color-accent, #b08d57);
   color: #ffffff;
   border-color: var(--color-accent, #b08d57);
-  box-shadow: 0 4px 16px rgba(176, 141, 87, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .countBadge {

@@ -3,8 +3,9 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Phone, ArrowRight, Menu, X, ChevronDown, Shield } from 'lucide-react';
+import { Phone, ArrowRight, Menu, X, ChevronDown, User } from 'lucide-react';
 import type { NavigationItem } from '@/types';
+import UserProfileModal from '@/components/navigation/UserProfileModal';
 import styles from './Navbar.module.css';
 
 interface NavbarProps {
@@ -18,6 +19,7 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [profileOpen, setProfileOpen] = useState(false);
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -145,15 +147,16 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
 
         {/* Desktop Actions */}
         <div className={styles.desktopActions}>
-          <Link
-            href="/admin"
-            className={styles.adminNavLink}
-            title="Admin Dashboard & Live Editor (Ctrl+Shift+A)"
-            aria-label="Admin Portal"
+          <button
+            type="button"
+            className={styles.profileBtn}
+            onClick={() => setProfileOpen(true)}
+            title="Client Profile & Studio Access"
+            aria-label="Open Client Profile"
           >
-            <Shield size={13} />
-            <span>Admin</span>
-          </Link>
+            <User size={15} />
+            <span>Profile</span>
+          </button>
           <a href={`tel:+91${phone}`} className={styles.phoneLink} aria-label="Call Studio Nirmiti">
             <Phone size={14} />
             <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
@@ -211,10 +214,17 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
             </div>
           ))}
           <div className={styles.mobileDivider} />
-          <Link href="/admin" className={styles.mobileAdminLink}>
-            <Shield size={16} />
-            <span>Admin Portal & Live Editor</span>
-          </Link>
+          <button
+            type="button"
+            className={styles.mobileProfileBtn}
+            onClick={() => {
+              setMobileOpen(false);
+              setProfileOpen(true);
+            }}
+          >
+            <User size={16} />
+            <span>Client Profile & Studio Access</span>
+          </button>
           <a href={`tel:+91${phone}`} className={styles.mobilePhone}>
             <Phone size={15} />
             <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
@@ -225,6 +235,12 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
           </Link>
         </nav>
       )}
+
+      {/* Profile & Staff Access Modal */}
+      <UserProfileModal
+        isOpen={profileOpen}
+        onClose={() => setProfileOpen(false)}
+      />
     </header>
   );
 }
