@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Phone, ArrowRight, Menu, X, ChevronDown, User } from 'lucide-react';
 import type { NavigationItem } from '@/types';
-import UserProfileModal from '@/components/navigation/UserProfileModal';
 import styles from './Navbar.module.css';
 
 interface NavbarProps {
@@ -19,7 +18,6 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [profileOpen, setProfileOpen] = useState(false);
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -147,16 +145,15 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
 
         {/* Desktop Actions */}
         <div className={styles.desktopActions}>
-          <button
-            type="button"
+          <Link
+            href="/profile"
             className={styles.profileBtn}
-            onClick={() => setProfileOpen(true)}
             title="Client Profile & Studio Access"
             aria-label="Open Client Profile"
           >
             <User size={15} />
             <span>Profile</span>
-          </button>
+          </Link>
           <a href={`tel:+91${phone}`} className={styles.phoneLink} aria-label="Call Studio Nirmiti">
             <Phone size={14} />
             <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
@@ -214,17 +211,14 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
             </div>
           ))}
           <div className={styles.mobileDivider} />
-          <button
-            type="button"
+          <Link
+            href="/profile"
             className={styles.mobileProfileBtn}
-            onClick={() => {
-              setMobileOpen(false);
-              setProfileOpen(true);
-            }}
+            onClick={() => setMobileOpen(false)}
           >
             <User size={16} />
             <span>Client Profile & Studio Access</span>
-          </button>
+          </Link>
           <a href={`tel:+91${phone}`} className={styles.mobilePhone}>
             <Phone size={15} />
             <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
@@ -235,12 +229,6 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
           </Link>
         </nav>
       )}
-
-      {/* Profile & Staff Access Modal */}
-      <UserProfileModal
-        isOpen={profileOpen}
-        onClose={() => setProfileOpen(false)}
-      />
     </header>
   );
 }

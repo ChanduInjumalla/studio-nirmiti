@@ -48,7 +48,10 @@ export default function CategoryDesignCatalog({
   const [leadName, setLeadName] = useState('');
   const [leadEmail, setLeadEmail] = useState('');
   const [leadPhone, setLeadPhone] = useState('');
+  const [leadCategory, setLeadCategory] = useState(catalogData.title || 'Interior Design & Architecture');
+  const [leadCustomCategory, setLeadCustomCategory] = useState('');
   const [leadCity, setLeadCity] = useState('Hyderabad');
+  const [leadCustomCity, setLeadCustomCity] = useState('');
   const [whatsappOptIn, setWhatsappOptIn] = useState(true);
   const [submittedNotice, setSubmittedNotice] = useState('');
 
@@ -83,16 +86,19 @@ export default function CategoryDesignCatalog({
       return;
     }
 
+    const resolvedCity = leadCity === 'Other City' ? (leadCustomCity.trim() || 'Other City') : leadCity;
+    const resolvedCategory = leadCategory === 'Other Requirement' ? (leadCustomCategory.trim() || 'Custom Requirement') : leadCategory;
+
     const newLead = {
       id: `lead_${Date.now()}`,
       name: leadName,
       phone: leadPhone,
       email: leadEmail,
-      location: leadCity,
-      projectType: catalogData.title,
+      location: resolvedCity,
+      projectType: resolvedCategory,
       serviceNeeded: selectedDesignForQuote
-        ? `Inquiry for ${selectedDesignForQuote.title}`
-        : `${catalogData.title} Consultation`,
+        ? `Inquiry for ${selectedDesignForQuote.title} (${resolvedCategory})`
+        : `${resolvedCategory} Consultation`,
       submittedAt: new Date().toISOString(),
       status: 'new',
       whatsappOptIn,
@@ -111,6 +117,8 @@ export default function CategoryDesignCatalog({
     setLeadName('');
     setLeadEmail('');
     setLeadPhone('');
+    setLeadCustomCategory('');
+    setLeadCustomCity('');
     setTimeout(() => setSubmittedNotice(''), 5000);
   };
 
@@ -400,7 +408,7 @@ export default function CategoryDesignCatalog({
                     onChange={(e) => setLeadEmail(e.target.value)}
                   />
 
-                  <div className={styles.phoneInputWrap}>
+                  <div className={styles.phoneInputGroup}>
                     <div className={styles.countryCode}>
                       <span>🇮🇳</span>
                       <span>+91</span>
@@ -409,7 +417,7 @@ export default function CategoryDesignCatalog({
                       type="tel"
                       required
                       placeholder="Phone Number *"
-                      className={styles.formInput}
+                      className={styles.phoneInput}
                       value={leadPhone}
                       onChange={(e) => setLeadPhone(e.target.value)}
                     />
@@ -424,19 +432,73 @@ export default function CategoryDesignCatalog({
                     <span>Send me updates on WhatsApp</span>
                   </label>
 
+                  {/* Customer Requirement / Category Selector */}
+                  <select
+                    className={styles.formSelect}
+                    value={leadCategory}
+                    onChange={(e) => setLeadCategory(e.target.value)}
+                    aria-label="Requirement Category"
+                  >
+                    <option value={catalogData.title}>{catalogData.title} (Selected Service)</option>
+                    <option value="Interior Design & Architecture">Interior Design & Architecture</option>
+                    <option value="Modular Kitchens & Dining">Modular Kitchens & Dining</option>
+                    <option value="Complete Turnkey Civil & Site Execution">Complete Turnkey Civil & Site Execution</option>
+                    <option value="Architectural Planning & Blueprints">Architectural Planning & Blueprints</option>
+                    <option value="Full Home Renovation & Remodeling">Full Home Renovation & Remodeling</option>
+                    <option value="Commercial & Office Spaces">Commercial & Office Spaces</option>
+                    <option value="3D Elevation & CGI Walkthroughs">3D Elevation & CGI Walkthroughs</option>
+                    <option value="Bespoke Custom Furniture">Bespoke Custom Furniture</option>
+                    <option value="Wardrobes & Storage Systems">Wardrobes & Storage Systems</option>
+                    <option value="Other Requirement">Other Requirement (Specify below)</option>
+                  </select>
+
+                  {leadCategory === 'Other Requirement' && (
+                    <input
+                      type="text"
+                      required
+                      placeholder="Specify your project requirement *"
+                      className={styles.formInput}
+                      value={leadCustomCategory}
+                      onChange={(e) => setLeadCustomCategory(e.target.value)}
+                    />
+                  )}
+
+                  {/* All India Places / Cities Selector */}
                   <select
                     className={styles.formSelect}
                     value={leadCity}
                     onChange={(e) => setLeadCity(e.target.value)}
+                    aria-label="Select City"
                   >
                     <option value="Hyderabad">Hyderabad</option>
                     <option value="Bengaluru">Bengaluru</option>
                     <option value="Mumbai">Mumbai</option>
                     <option value="Delhi NCR">Delhi NCR</option>
-                    <option value="Chennai">Chennai</option>
                     <option value="Pune">Pune</option>
-                    <option value="Other">Other City</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Ahmedabad">Ahmedabad</option>
+                    <option value="Jaipur">Jaipur</option>
+                    <option value="Surat">Surat</option>
+                    <option value="Lucknow">Lucknow</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Kochi / Kerala">Kochi / Kerala</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Visakhapatnam">Visakhapatnam</option>
+                    <option value="Vijayawada">Vijayawada</option>
+                    <option value="Other City">Other City (Type your city)</option>
                   </select>
+
+                  {leadCity === 'Other City' && (
+                    <input
+                      type="text"
+                      required
+                      placeholder="Enter your city / location *"
+                      className={styles.formInput}
+                      value={leadCustomCity}
+                      onChange={(e) => setLeadCustomCity(e.target.value)}
+                    />
+                  )}
 
                   <button type="submit" className={styles.formSubmitBtn}>
                     GET FREE QUOTE
@@ -496,7 +558,7 @@ export default function CategoryDesignCatalog({
                   onChange={(e) => setLeadEmail(e.target.value)}
                 />
 
-                <div className={styles.phoneInputWrap}>
+                <div className={styles.phoneInputGroup}>
                   <div className={styles.countryCode}>
                     <span>🇮🇳</span>
                     <span>+91</span>
@@ -505,25 +567,79 @@ export default function CategoryDesignCatalog({
                     type="tel"
                     required
                     placeholder="Phone Number *"
-                    className={styles.formInput}
+                    className={styles.phoneInput}
                     value={leadPhone}
                     onChange={(e) => setLeadPhone(e.target.value)}
                   />
                 </div>
 
+                {/* Customer Requirement Selector */}
+                <select
+                  className={styles.formSelect}
+                  value={leadCategory}
+                  onChange={(e) => setLeadCategory(e.target.value)}
+                  aria-label="Requirement Category"
+                >
+                  <option value={catalogData.title}>{catalogData.title} (Selected)</option>
+                  <option value="Interior Design & Architecture">Interior Design & Architecture</option>
+                  <option value="Modular Kitchens & Dining">Modular Kitchens & Dining</option>
+                  <option value="Complete Turnkey Civil & Site Execution">Complete Turnkey Civil & Site Execution</option>
+                  <option value="Architectural Planning & Blueprints">Architectural Planning & Blueprints</option>
+                  <option value="Full Home Renovation & Remodeling">Full Home Renovation & Remodeling</option>
+                  <option value="Commercial & Office Spaces">Commercial & Office Spaces</option>
+                  <option value="3D Elevation & CGI Walkthroughs">3D Elevation & CGI Walkthroughs</option>
+                  <option value="Bespoke Custom Furniture">Bespoke Custom Furniture</option>
+                  <option value="Wardrobes & Storage Systems">Wardrobes & Storage Systems</option>
+                  <option value="Other Requirement">Other Requirement (Specify below)</option>
+                </select>
+
+                {leadCategory === 'Other Requirement' && (
+                  <input
+                    type="text"
+                    required
+                    placeholder="Specify your project requirement *"
+                    className={styles.formInput}
+                    value={leadCustomCategory}
+                    onChange={(e) => setLeadCustomCategory(e.target.value)}
+                  />
+                )}
+
+                {/* All India Places / Cities */}
                 <select
                   className={styles.formSelect}
                   value={leadCity}
                   onChange={(e) => setLeadCity(e.target.value)}
+                  aria-label="Select City"
                 >
                   <option value="Hyderabad">Hyderabad</option>
                   <option value="Bengaluru">Bengaluru</option>
                   <option value="Mumbai">Mumbai</option>
                   <option value="Delhi NCR">Delhi NCR</option>
-                  <option value="Chennai">Chennai</option>
                   <option value="Pune">Pune</option>
-                  <option value="Other">Other City</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Kolkata">Kolkata</option>
+                  <option value="Ahmedabad">Ahmedabad</option>
+                  <option value="Jaipur">Jaipur</option>
+                  <option value="Surat">Surat</option>
+                  <option value="Lucknow">Lucknow</option>
+                  <option value="Chandigarh">Chandigarh</option>
+                  <option value="Kochi / Kerala">Kochi / Kerala</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Visakhapatnam">Visakhapatnam</option>
+                  <option value="Vijayawada">Vijayawada</option>
+                  <option value="Other City">Other City (Type your city)</option>
                 </select>
+
+                {leadCity === 'Other City' && (
+                  <input
+                    type="text"
+                    required
+                    placeholder="Enter your city / location *"
+                    className={styles.formInput}
+                    value={leadCustomCity}
+                    onChange={(e) => setLeadCustomCity(e.target.value)}
+                  />
+                )}
 
                 <button type="submit" className={styles.formSubmitBtn}>
                   SUBMIT INQUIRY

@@ -84,6 +84,7 @@ export const availableRoutesGrouped = [
     category: 'Core Pages',
     routes: [
       { label: 'Homepage (/)', path: '/' },
+      { label: 'Client Profile (/profile)', path: '/profile' },
       { label: 'About Studio (/about)', path: '/about' },
       { label: 'Why Studio Nirmiti (/why-studio-nirmiti)', path: '/why-studio-nirmiti' },
       { label: 'Seven-Stage Process (/process)', path: '/process' },

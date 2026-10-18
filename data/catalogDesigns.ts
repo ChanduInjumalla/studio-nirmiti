@@ -766,7 +766,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Architectural Feasibility', title: 'Site Review & Volumetric Massing', subtitle: 'Book a site review session with principal architect Kushal Kumar Pendekatla.', ctaText: 'REQUEST ARCHITECTURAL CONSULT' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Architecture for Every Budget',
+        subtitle: 'Turn your site into an iconic architectural landmark. Let our principal architects guide your blueprint layouts and structural specifications.',
+        lifestyleImage: '/images/hero_architectural_living.jpg',
+      },
     };
   }
 
@@ -797,7 +801,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Full Home Interior Offer', title: 'Complete Interior Packages from ₹18 Lakh*', subtitle: 'Includes custom millwork, false ceilings, lighting design, and paint finishes.', ctaText: 'BOOK FREE INTERIOR CONSULT' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Interiors for Every Budget',
+        subtitle: 'Elevate your living spaces with bespoke interiors, tailored material palettes, and architectural illumination.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -826,7 +834,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Facade Modernization', title: 'Facade Renovation from ₹4.5 Lakh*', subtitle: 'Modernize your villa elevation with premium stone, louvers, and architectural lighting.', ctaText: 'REQUEST FACADE ESTIMATE' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Facades for Every Budget',
+        subtitle: 'Transform your building elevation with modern louvers, high-grade stone claddings, and architectural exterior lighting.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -855,7 +867,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Floor Plan Review', title: 'Architectural Floor Plan Audit', subtitle: 'Send us your builder floor plan for an ergonomic and Vastu review by our senior planners.', ctaText: 'SUBMIT FLOOR PLAN' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Space Planning for Every Budget',
+        subtitle: 'Optimize every square foot. Let our spatial planning experts craft seamless circulation and Vastu-compliant layouts.',
+        lifestyleImage: '/images/hero_architectural_living.jpg',
+      },
     };
   }
 
@@ -884,7 +900,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Free 3D Simulation', title: 'Complimentary 3D Preview with Turnkey', subtitle: 'Book full turnkey execution with Studio Nirmiti and receive complete 3D visualization free of charge.', ctaText: 'CLAIM FREE 3D OFFER' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: '3D Simulation for Every Budget',
+        subtitle: 'Preview your dream home in photorealistic 4K CGI and interactive walkthroughs before starting on-site construction.',
+        lifestyleImage: '/images/project_residential_villa.jpg',
+      },
     };
   }
 
@@ -913,7 +933,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Zero Snag Guarantee', title: 'Strict 45-Day Milestone Delivery', subtitle: 'Daily photo updates via our client portal with penalty clauses for unapproved project delays.', ctaText: 'REQUEST SUPERVISION QUOTE' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Precision Execution for Every Budget',
+        subtitle: 'Flawless site coordination, civil supervision, and 146-point quality checks. Guaranteed timeline adherence with zero snags.',
+        lifestyleImage: '/images/project_residential_villa.jpg',
+      },
     };
   }
 
@@ -942,7 +966,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Remodeling Package', title: 'Apartment Revamp from ₹8.5 Lakh*', subtitle: 'Includes new flooring, bathroom upgrades, kitchen refacing, and false ceilings.', ctaText: 'REQUEST REMODELING ESTIMATE' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Renovations for Every Budget',
+        subtitle: 'Reinvigorate your existing space with structural retrofitting, modernized layouts, and high-end finishes.',
+        lifestyleImage: '/images/after_completed_living.jpg',
+      },
     };
   }
 
@@ -971,7 +999,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Factory Direct Furniture', title: 'Custom Living Packages from ₹3 Lakh*', subtitle: 'Includes 3-seater sofa, 2 accent armchairs, marble center table, and TV console.', ctaText: 'REQUEST FURNITURE CATALOG' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Bespoke Furniture for Every Budget',
+        subtitle: 'Crafted to the millimeter. Custom sectional sofas, Italian marble dining tables, and artisanal millwork.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -1000,7 +1032,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Smart Lighting Special', title: 'Automated Dimmable Lighting from ₹1.2 Lakh*', subtitle: 'App and voice-controlled 2700K warm ambient coves and magnetic track systems.', ctaText: 'REQUEST LIGHTING PLAN' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Illumination for Every Budget',
+        subtitle: 'Layered 2700K ambient LED coves, architectural shadow gaps, and smart magnetic track systems.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -1028,7 +1064,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Sample Experience', title: 'Request Physical Sample Box', subtitle: 'Experience authentic veneers, Italian marbles, and fabrics at your doorstep or our studio.', ctaText: 'REQUEST SAMPLES' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Finishes for Every Budget',
+        subtitle: 'Tactile authenticity. Bookmatched Italian marbles, natural smoked veneers, microcement, and architectural hardware.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -1057,7 +1097,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Living Room Special', title: 'Living Room Packages from ₹4.8 Lakh*', subtitle: 'Includes feature TV wall, false ceiling with warm coves, and custom sofa seating.', ctaText: 'GET LIVING ROOM ESTIMATE' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Living Spaces for Every Budget',
+        subtitle: 'Craft an inviting luxury living and entertaining salon tailored to your family lifestyle and aesthetic tastes.',
+        lifestyleImage: '/images/after_completed_living.jpg',
+      },
     };
   }
 
@@ -1089,7 +1133,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Bedroom Package Offer', title: 'Master Bedrooms from ₹3.4 Lakh*', subtitle: 'Includes custom bed, acoustic wall paneling, wardrobe, and mood lighting.', ctaText: 'GET BEDROOM ESTIMATE' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Bedrooms for Every Budget',
+        subtitle: 'Create a private sanctuary with acoustic headboard walls, ambient coves, and serene master suite layouts.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -1118,7 +1166,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Vastu Consultation Included', title: 'Bespoke Mandirs from ₹1.5 Lakh*', subtitle: 'Custom fabricated to exact dimensions with Vastu-compliant orientation and sacred geometry.', ctaText: 'REQUEST MANDIR ESTIMATE' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Sacred Spaces for Every Budget',
+        subtitle: 'Serene pooja mandirs adhering to authentic Vastu orientations, crafted with bespoke stone jaalis and warm ambient lighting.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1545083036-b175dd155a1d?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -1148,7 +1200,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
       ],
       promoBanner: { badge: 'Commercial Fast-Track Delivery', title: 'Commercial Fit-Outs from ₹1,200/sq.ft*', subtitle: 'Complete MEP, civil, furniture, and IT infrastructure delivery within strict tenant lease deadlines.', ctaText: 'REQUEST COMMERCIAL PROPOSAL' },
       promise: categoryCatalogs['modular-kitchens'].promise,
-      consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+      consultationSection: {
+        title: 'Workspaces for Every Budget',
+        subtitle: 'Design inspiring corporate environments and commercial hubs engineered for productivity and brand distinction.',
+        lifestyleImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+      },
     };
   }
 
@@ -1179,7 +1235,11 @@ export function getCatalogData(slug?: string, pageTitle?: string, pageEyebrow?: 
     ],
     promoBanner: { badge: 'Signature Studio Offer', title: `${title} Starting Consultation`, subtitle: 'Book a one-on-one session with our principal architects to review floor plans and material samples.', ctaText: 'BOOK FREE CONSULTATION' },
     promise: categoryCatalogs['modular-kitchens'].promise,
-    consultationSection: categoryCatalogs['modular-kitchens'].consultationSection,
+    consultationSection: {
+      title: `${title} for Every Budget`,
+      subtitle: `Tailored architectural and interior solutions for your ${title}. Let our studio team guide your layout, materials, and execution.`,
+      lifestyleImage: '/images/hero_architectural_living.jpg',
+    },
   };
 }
 
