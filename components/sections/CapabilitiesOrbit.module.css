@@ -1,12 +1,11 @@
 .sectionWrapper {
   min-height: 100vh;
-  height: 100vh;
-  height: 100dvh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding-top: 82px; /* Clears fixed navbar height completely */
-  padding-bottom: clamp(14px, 2vh, 24px);
+  padding-top: clamp(84px, 11vh, 110px);
+  padding-bottom: clamp(40px, 6vh, 64px);
   background-color: var(--color-bg-primary);
   position: relative;
   overflow: hidden;
@@ -15,8 +14,8 @@
 
 .container {
   width: 100%;
-  max-width: 1400px;
-  margin: auto auto; /* Perfectly centers content in the available space below navbar */
+  max-width: 1440px;
+  margin: 0 auto;
   padding: 0 var(--space-6);
   display: flex;
   flex-direction: column;
@@ -24,11 +23,11 @@
   position: relative;
 }
 
-/* Header Area — Centered Architectural Tone, Compact for 100vh */
+/* Header Area — Centered Architectural Tone */
 .headerArea {
   text-align: center;
-  max-width: 820px;
-  margin: 0 auto clamp(12px, 2vh, 24px) auto;
+  max-width: 840px;
+  margin: 0 auto clamp(20px, 3vh, 32px) auto;
 }
 
 .eyebrow {
@@ -38,25 +37,25 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-brass);
-  margin-bottom: clamp(4px, 0.8vh, 8px);
+  margin-bottom: clamp(6px, 1vh, 10px);
   display: inline-block;
 }
 
 .title {
   font-family: var(--font-cinzel), serif;
-  font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+  font-size: clamp(1.8rem, 2.6vw, 2.75rem);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.22;
   color: var(--color-text-primary);
-  margin-bottom: clamp(6px, 1vh, 10px);
+  margin-bottom: clamp(8px, 1.2vh, 14px);
 }
 
 .subtitle {
   font-family: var(--font-body), sans-serif;
-  font-size: clamp(0.85rem, 0.95vw, 1rem);
+  font-size: clamp(0.9rem, 1vw, 1.05rem);
   color: var(--color-text-secondary);
-  line-height: 1.45;
-  max-width: 680px;
+  line-height: 1.5;
+  max-width: 720px;
   margin: 0 auto;
 }
 
@@ -68,11 +67,11 @@
 
 .scrollTrack {
   display: flex;
-  gap: clamp(16px, 1.8vw, 24px);
+  gap: clamp(18px, 2vw, 28px);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 6px 4px 14px 4px;
+  padding: 10px 4px 20px 4px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
@@ -82,18 +81,18 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
-/* ─── Service Card: Divided into 2 Parts (Top Photo Full Bleed, Bottom Content) ─── */
+/* ─── Service Card: Longer & Taller Architectural Showcase ─── */
 .card {
-  flex: 0 0 clamp(270px, 21vw, 305px);
+  flex: 0 0 clamp(310px, 24vw, 360px);
   scroll-snap-align: start;
   background: var(--color-bg-white);
   border: 1px solid var(--color-border);
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 0; /* No outside padding — divided into two parts */
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.35s ease,
               border-color 0.3s ease;
@@ -102,17 +101,17 @@
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   border-color: var(--color-brass);
-  box-shadow: 0 16px 36px rgba(176, 141, 87, 0.16);
+  box-shadow: 0 20px 44px rgba(176, 141, 87, 0.18);
 }
 
-/* ── Part 1: Top Photo (Fit Completely at Top Part Edge-to-Edge) ── */
+/* ── Part 1: Top Photo (Longer / Taller Full-Bleed 4:3 Ratio) ── */
 .imageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  height: clamp(150px, 18vh, 185px);
+  aspect-ratio: 4 / 3;
+  height: clamp(210px, 26vh, 250px);
   overflow: hidden;
   background: var(--color-bg-secondary);
 }
@@ -130,7 +129,7 @@
 
 /* ── Part 2: Bottom Padded Content ── */
 .content {
-  padding: clamp(12px, 1.6vh, 18px) 16px clamp(14px, 1.8vh, 20px) 16px;
+  padding: clamp(18px, 2.4vh, 24px) 20px clamp(20px, 2.6vh, 26px) 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,11 +139,11 @@
 
 .cardTitle {
   font-family: var(--font-syne), sans-serif;
-  font-size: clamp(1.05rem, 1.15vw, 1.2rem);
+  font-size: clamp(1.15rem, 1.25vw, 1.28rem);
   font-weight: 700;
   color: var(--color-text-primary);
   line-height: 1.25;
-  margin-bottom: clamp(4px, 0.6vh, 6px);
+  margin-bottom: clamp(6px, 0.8vh, 8px);
   transition: color 0.2s ease;
 }
 
@@ -154,10 +153,10 @@
 
 .cardSubtitle {
   font-family: var(--font-body), sans-serif;
-  font-size: clamp(0.8rem, 0.85vw, 0.88rem);
+  font-size: clamp(0.85rem, 0.9vw, 0.92rem);
   color: var(--color-text-secondary);
-  line-height: 1.4;
-  margin-bottom: clamp(10px, 1.4vh, 16px);
+  line-height: 1.48;
+  margin-bottom: clamp(16px, 2vh, 22px);
   flex-grow: 1;
 }
 
@@ -170,8 +169,8 @@
 }
 
 .ctaCircle {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
