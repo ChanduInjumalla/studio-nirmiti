@@ -61,6 +61,10 @@
   display: none;
 }
 
+.mobileHeadline {
+  display: none;
+}
+
 .desktopEditorial {
   display: block;
 }
@@ -319,9 +323,21 @@
     display: block !important;
     position: relative;
     z-index: 10;
-    max-width: 580px;
+    max-width: 480px;
     pointer-events: auto;
     animation: fadeSlideIn 0.5s ease both;
+  }
+
+  .mobileHeadline {
+    display: block !important;
+    font-family: var(--font-heading, 'Syne', system-ui, sans-serif);
+    font-size: clamp(1.4rem, 4.2vw, 1.85rem);
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
   }
 
   .minimalScrollHint {
@@ -337,13 +353,13 @@
 @media (max-width: 767px) {
   .heroScrollStory {
     height: 60svh !important;
-    min-height: 420px !important;
-    max-height: 520px !important;
+    min-height: 400px !important;
+    max-height: 500px !important;
   }
 
   .heroSticky {
-    min-height: 420px !important;
-    max-height: 520px !important;
+    min-height: 400px !important;
+    max-height: 500px !important;
   }
 
   .heroContent {
@@ -351,33 +367,22 @@
   }
 
   .roomLabel {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     letter-spacing: 0.22em;
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.4rem;
   }
 
-  .accentLine {
-    width: 28px;
-    margin-bottom: 0.75rem;
-  }
-
-  .headline {
-    font-size: clamp(1.45rem, 5.2vw, 1.95rem);
-    line-height: 1.16;
-    margin-bottom: 0.45rem;
-  }
-
-  .subheadline {
-    font-size: clamp(0.82rem, 2.5vw, 0.92rem);
-    line-height: 1.5;
-    max-width: 95vw;
+  .mobileHeadline {
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    margin-bottom: 0.85rem;
+    line-height: 1.22;
   }
 
   .ctas {
     display: flex;
     flex-wrap: wrap;
     gap: 0.65rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     width: 100%;
   }
 

@@ -184,20 +184,13 @@ export default function ScrollScrubHeroVideo() {
 
         {/* Semantic HTML Editorial Content Layer */}
         <div className={styles.heroContent} aria-live="polite">
-          {/* Mobile & Tablet Direct Architectural Hero Editorial */}
+          {/* Mobile & Tablet Ultra-Minimal Editorial */}
           <div className={styles.mobileEditorial}>
-            <span className={styles.accentLine} />
-            <span className={styles.roomLabel}>ARCHITECTURAL EXCELLENCE</span>
-            <h1 className={styles.headline}>Monumental Living, Sculpted in Light.</h1>
-            <p className={styles.subheadline}>
-              Bespoke residences and ultra-luxury interiors conceived with uncompromising materiality, balance, and precision.
-            </p>
+            <span className={styles.roomLabel}>STUDIO NIRMITI</span>
+            <h1 className={styles.mobileHeadline}>Bespoke Architecture & Interiors</h1>
             <div className={styles.ctas}>
               <Link href="/book-consultation" className={styles.primaryCta}>
                 Start a Project →
-              </Link>
-              <Link href="/projects" className={styles.secondaryCta}>
-                Explore Portfolio
               </Link>
             </div>
           </div>

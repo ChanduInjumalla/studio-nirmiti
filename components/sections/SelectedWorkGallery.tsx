@@ -51,18 +51,11 @@ export default function SelectedWorkGallery({ limit = 4 }: SelectedWorkGalleryPr
                   </span>
                 </div>
 
-                <div className={styles.metaRow}>
+                <div className={styles.metaCol}>
                   <h3 className={styles.cardTitle}>{project.title}</h3>
                   <span className={styles.location}>{project.location}</span>
-                </div>
-
-                <div className={styles.minimalMeta}>
-                  <span>{project.serviceTags?.[0] || 'Architecture'}</span>
-                  <span className={styles.metaSep}>/</span>
-                  <span>{project.serviceTags?.[1] || 'Turnkey'}</span>
-                  <span className={styles.metaSep}>/</span>
-                  <span className={styles.metaYear}>
-                    {project.location ? project.location.split(',')[0] : 'Hyderabad'}
+                  <span className={styles.servicePill}>
+                    {project.serviceTags?.[0] || 'Architecture'} · {project.projectType?.toUpperCase()}
                   </span>
                 </div>
               </Link>

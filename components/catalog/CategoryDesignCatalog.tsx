@@ -59,16 +59,21 @@ export default function CategoryDesignCatalog({
   // Trending carousel ref
   const trendingTrackRef = useRef<HTMLDivElement>(null);
 
-  // Lock body scroll when quote modal is open
+  // Lock body scroll when quote modal is open and support ESC close
   useEffect(() => {
     if (selectedDesignForQuote) {
       document.body.classList.add('menu-locked');
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setSelectedDesignForQuote(null);
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.body.classList.remove('menu-locked');
+      };
     } else {
       document.body.classList.remove('menu-locked');
     }
-    return () => {
-      document.body.classList.remove('menu-locked');
-    };
   }, [selectedDesignForQuote]);
 
   const scrollTrending = (direction: 'left' | 'right') => {
@@ -282,7 +287,12 @@ export default function CategoryDesignCatalog({
             return (
               <div key={design.id} style={{ display: 'contents' }}>
                 <div className={styles.designCard}>
-                  <div className={styles.cardImgWrap}>
+                  <div
+                    className={styles.cardImgWrap}
+                    onClick={() => setSelectedDesignForQuote(design)}
+                    style={{ cursor: 'pointer' }}
+                    title="Tap to view full details"
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={design.image}
@@ -295,7 +305,10 @@ export default function CategoryDesignCatalog({
                     <button
                       type="button"
                       className={styles.quickViewBtn}
-                      onClick={() => setSelectedDesignForQuote(design)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedDesignForQuote(design);
+                      }}
                       title="View Details"
                       aria-label={`View details for ${design.title}`}
                     >
@@ -307,7 +320,10 @@ export default function CategoryDesignCatalog({
                       className={`${styles.wishlistBtn} ${
                         isWishlisted ? styles.wishlistBtnActive : ''
                       }`}
-                      onClick={() => toggleWishlist(design.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleWishlist(design.id);
+                      }}
                       title={isWishlisted ? 'Remove from Wishlist' : 'Save to Wishlist'}
                     >
                       <Heart
@@ -551,49 +567,59 @@ export default function CategoryDesignCatalog({
           </div>
         </section>
 
-        {/* ── Consultation Modal for Design Specific Inquiries ── */}
+        {/* ── Quick View & Consultation Modal for Design Specific Inquiries ── */}
         {selectedDesignForQuote && (
           <div
-            className={styles.modalBackdrop}
+            className={styles.modalOverlay}
             onClick={() => setSelectedDesignForQuote(null)}
           >
             <div
-              className={styles.modalCard}
+              className={styles.modalContent}
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
                 className={styles.modalCloseBtn}
                 onClick={() => setSelectedDesignForQuote(null)}
+                aria-label="Close Design Details"
               >
                 <X size={20} />
               </button>
 
-              <h3 className={styles.modalTitle}>Request Free Estimate</h3>
-              <p className={styles.modalSubtitle}>
-                Inquiry for: <strong>{selectedDesignForQuote.title}</strong>
-              </p>
+              {/* Design Visual Preview */}
+              <div className={styles.modalImagePreview}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={selectedDesignForQuote.image}
+                  alt={selectedDesignForQuote.title}
+                  className={styles.modalImg}
+                />
+                <span className={styles.modalBadge}>{selectedDesignForQuote.tag}</span>
+              </div>
 
+              {/* Design Details */}
+              <div className={styles.modalHeaderInfo}>
+                <h3 className={styles.modalTitle}>{selectedDesignForQuote.title}</h3>
+                <div className={styles.modalPrice}>{selectedDesignForQuote.price}</div>
+                <div className={styles.modalSpecsRow}>
+                  <span>{selectedDesignForQuote.size}</span>
+                  <span>·</span>
+                  <span>{selectedDesignForQuote.finish}</span>
+                </div>
+              </div>
+
+              {/* Quick Inquiry Form */}
               <form
-                onSubmit={(e) => handleFormSubmit(e, `Modal: ${selectedDesignForQuote.title}`)}
-                className={styles.leadForm}
+                onSubmit={(e) => handleFormSubmit(e, `QuickView: ${selectedDesignForQuote.title}`)}
+                className={styles.modalForm}
               >
                 <input
                   type="text"
                   required
-                  placeholder="Your Name *"
-                  className={styles.formInput}
+                  placeholder="Your Full Name *"
+                  className={styles.modalInput}
                   value={leadName}
                   onChange={(e) => setLeadName(e.target.value)}
-                />
-
-                <input
-                  type="email"
-                  required
-                  placeholder="Email Address *"
-                  className={styles.formInput}
-                  value={leadEmail}
-                  onChange={(e) => setLeadEmail(e.target.value)}
                 />
 
                 <div className={styles.phoneInputGroup}>
@@ -604,83 +630,15 @@ export default function CategoryDesignCatalog({
                   <input
                     type="tel"
                     required
-                    placeholder="Phone Number *"
+                    placeholder="Mobile Number *"
                     className={styles.phoneInput}
                     value={leadPhone}
                     onChange={(e) => setLeadPhone(e.target.value)}
                   />
                 </div>
 
-                {/* Customer Requirement Selector */}
-                <select
-                  className={styles.formSelect}
-                  value={leadCategory}
-                  onChange={(e) => setLeadCategory(e.target.value)}
-                  aria-label="Requirement Category"
-                >
-                  <option value={catalogData.title}>{catalogData.title} (Selected)</option>
-                  <option value="Interior Design & Architecture">Interior Design & Architecture</option>
-                  <option value="Modular Kitchens & Dining">Modular Kitchens & Dining</option>
-                  <option value="Complete Turnkey Civil & Site Execution">Complete Turnkey Civil & Site Execution</option>
-                  <option value="Architectural Planning & Blueprints">Architectural Planning & Blueprints</option>
-                  <option value="Full Home Renovation & Remodeling">Full Home Renovation & Remodeling</option>
-                  <option value="Commercial & Office Spaces">Commercial & Office Spaces</option>
-                  <option value="3D Elevation & CGI Walkthroughs">3D Elevation & CGI Walkthroughs</option>
-                  <option value="Bespoke Custom Furniture">Bespoke Custom Furniture</option>
-                  <option value="Wardrobes & Storage Systems">Wardrobes & Storage Systems</option>
-                  <option value="Other Requirement">Other Requirement (Specify below)</option>
-                </select>
-
-                {leadCategory === 'Other Requirement' && (
-                  <input
-                    type="text"
-                    required
-                    placeholder="Specify your project requirement *"
-                    className={styles.formInput}
-                    value={leadCustomCategory}
-                    onChange={(e) => setLeadCustomCategory(e.target.value)}
-                  />
-                )}
-
-                {/* All India Places / Cities */}
-                <select
-                  className={styles.formSelect}
-                  value={leadCity}
-                  onChange={(e) => setLeadCity(e.target.value)}
-                  aria-label="Select City"
-                >
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Bengaluru">Bengaluru</option>
-                  <option value="Mumbai">Mumbai</option>
-                  <option value="Delhi NCR">Delhi NCR</option>
-                  <option value="Pune">Pune</option>
-                  <option value="Chennai">Chennai</option>
-                  <option value="Kolkata">Kolkata</option>
-                  <option value="Ahmedabad">Ahmedabad</option>
-                  <option value="Jaipur">Jaipur</option>
-                  <option value="Surat">Surat</option>
-                  <option value="Lucknow">Lucknow</option>
-                  <option value="Chandigarh">Chandigarh</option>
-                  <option value="Kochi / Kerala">Kochi / Kerala</option>
-                  <option value="Goa">Goa</option>
-                  <option value="Visakhapatnam">Visakhapatnam</option>
-                  <option value="Vijayawada">Vijayawada</option>
-                  <option value="Other City">Other City (Type your city)</option>
-                </select>
-
-                {leadCity === 'Other City' && (
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter your city / location *"
-                    className={styles.formInput}
-                    value={leadCustomCity}
-                    onChange={(e) => setLeadCustomCity(e.target.value)}
-                  />
-                )}
-
-                <button type="submit" className={styles.formSubmitBtn}>
-                  SUBMIT INQUIRY
+                <button type="submit" className={styles.modalSubmitBtn}>
+                  BOOK FREE CONSULTATION
                 </button>
               </form>
             </div>
