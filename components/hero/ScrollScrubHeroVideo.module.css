@@ -11,12 +11,13 @@
 .heroScrollStory {
   position: relative;
   width: 100%;
-  height: 420vh;
+  height: 250vh;
   background-color: #0c0f0d;
 }
 
 /* Pinned Sticky Viewport (100vh) */
 .heroSticky {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   left: 0;
@@ -30,6 +31,7 @@
   background-position: center center;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 
   /* GPU compositing for the entire sticky layer */
   transform: translateZ(0);
