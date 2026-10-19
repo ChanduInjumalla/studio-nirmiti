@@ -1,157 +1,298 @@
 .sectionWrapper {
   padding-top: var(--space-section);
   padding-bottom: var(--space-section);
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-bg-primary);
   position: relative;
   overflow: hidden;
 }
 
-.headerArea {
-  margin-bottom: var(--space-12);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: var(--space-8);
-  flex-wrap: wrap;
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  position: relative;
 }
 
-.introText {
-  max-width: 600px;
+/* Header Area — Centered Architectural Tone */
+.headerArea {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto var(--space-12) auto;
 }
 
 .eyebrow {
   font-family: var(--font-syne), sans-serif;
   font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-brass);
   margin-bottom: var(--space-3);
   display: inline-block;
 }
 
 .title {
   font-family: var(--font-cinzel), serif;
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: clamp(2rem, 3.2vw, 3rem);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.22;
   color: var(--color-text-primary);
   margin-bottom: var(--space-4);
 }
 
 .subtitle {
-  font-size: var(--text-base);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.95rem, 1vw, 1.08rem);
   color: var(--color-text-secondary);
   line-height: var(--leading-relaxed);
+  max-width: 720px;
+  margin: 0 auto;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+/* Carousel Viewport */
+.carouselContainer {
+  position: relative;
+  width: 100%;
+}
+
+.scrollTrack {
+  display: flex;
   gap: var(--space-6);
-  perspective: 1000px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 8px 4px 20px 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
 }
 
-.cardWrapper {
-  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
-  transform-style: preserve-3d;
-  height: 100%;
+.scrollTrack::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
+/* Service Card — Livspace Layout with Studio Nirmiti Aesthetics */
 .card {
-  background: var(--color-surface);
+  flex: 0 0 310px;
+  scroll-snap-align: start;
+  background: var(--color-bg-white);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-8);
+  border-radius: 20px;
+  padding: 14px 14px 22px 14px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s ease,
+              border-color 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  transition: all var(--transition-base);
 }
 
 .card:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 16px 36px rgba(176, 141, 87, 0.12);
+  transform: translateY(-6px);
+  border-color: var(--color-brass);
+  box-shadow: 0 18px 40px rgba(176, 141, 87, 0.16);
 }
 
-.cardIndex {
-  font-family: var(--font-cinzel), serif;
-  font-size: var(--text-xs);
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Image Container inside Card */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .image {
+  transform: scale(1.06);
 }
 
 .cardBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
   font-family: var(--font-syne), sans-serif;
   font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 3px 8px;
-  background: rgba(176, 141, 87, 0.1);
-  color: var(--color-accent);
+  padding: 4px 10px;
   border-radius: var(--radius-full);
+  background: rgba(26, 29, 28, 0.72);
+  color: var(--color-bg-primary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Card Content Area */
+.content {
+  padding: 18px 8px 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex-grow: 1;
 }
 
 .cardTitle {
   font-family: var(--font-syne), sans-serif;
-  font-size: var(--text-xl);
-  font-weight: 600;
+  font-size: 1.22rem;
+  font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: var(--space-3);
   line-height: 1.25;
+  margin-bottom: 8px;
+  transition: color 0.2s ease;
 }
 
-.cardDescription {
-  font-size: var(--text-sm);
+.card:hover .cardTitle {
+  color: var(--color-charcoal);
+}
+
+.cardSubtitle {
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.88rem;
   color: var(--color-text-secondary);
-  line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-6);
+  line-height: 1.48;
+  margin-bottom: 18px;
   flex-grow: 1;
 }
 
-.cardLink {
-  display: inline-flex;
+/* CTA Arrow Button at bottom */
+.ctaButtonWrapper {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-syne), sans-serif;
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  transition: gap var(--transition-fast);
+  margin-top: auto;
+  padding-top: 4px;
 }
 
-.cardLink:hover {
-  gap: var(--space-3);
-  color: var(--color-accent-dark);
+.ctaCircle {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(176, 141, 87, 0.12);
+  color: var(--color-brass);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+.card:hover .ctaCircle {
+  background: var(--color-charcoal);
+  color: var(--color-bg-white);
+  transform: scale(1.08);
+}
+
+.ctaCircle svg {
+  transition: transform 0.25s ease;
+}
+
+.card:hover .ctaCircle svg {
+  transform: translateX(2px);
+}
+
+/* Floating Navigation Arrows */
+.navButton {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navButtonLeft {
+  left: -20px;
+}
+
+.navButtonRight {
+  right: -20px;
+}
+
+.navButton:hover {
+  background: var(--color-bg-white);
+  border-color: var(--color-brass);
+  color: var(--color-brass);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 10px 26px rgba(176, 141, 87, 0.22);
+}
+
+.navButton:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+/* Bottom Progress Indicator */
+.progressWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--space-8);
+}
+
+.progressTrack {
+  width: 140px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: rgba(26, 29, 28, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.progressBar {
+  width: 48px;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--color-charcoal);
+  transition: transform 0.15s ease-out;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .navButtonLeft {
+    left: 4px;
+  }
+  .navButtonRight {
+    right: 4px;
   }
 }
 
-@media (max-width: 640px) {
-  .grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: var(--space-4);
-    padding-bottom: var(--space-4);
-    -webkit-overflow-scrolling: touch;
+@media (max-width: 768px) {
+  .headerArea {
+    margin-bottom: var(--space-8);
   }
-  .cardWrapper {
-    flex: 0 0 85%;
-    scroll-snap-align: start;
+
+  .card {
+    flex: 0 0 280px;
+    padding: 12px 12px 18px 12px;
+  }
+
+  .navButton {
+    display: none; /* Mobile uses natural touch swipe */
+  }
+
+  .progressWrapper {
+    margin-top: var(--space-6);
   }
 }

@@ -1,144 +1,258 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './CapabilitiesOrbit.module.css';
 
-interface CapabilityItem {
+export interface CapabilityOffering {
   id: string;
   index: string;
   badge: string;
   title: string;
+  subtitle: string;
   description: string;
+  image: string;
   href: string;
 }
 
-const capabilities: CapabilityItem[] = [
+const offerings: CapabilityOffering[] = [
   {
-    id: 'arch',
+    id: 'modular',
     index: '01',
-    badge: 'Structure',
-    title: 'Architectural Design',
-    description:
-      'Massing, spatial zoning, climate-responsive building envelopes, and full municipal working drawings.',
-    href: '/services/architectural-design',
+    badge: 'Precision',
+    title: 'Modular Interiors',
+    subtitle: 'Functional kitchen, wardrobe & storage',
+    description: 'Precision-engineered modular kitchen islands, custom walk-in wardrobes & bespoke storage systems.',
+    image: '/images/service_modular_kitchen.jpg',
+    href: '/services/modular-kitchens',
   },
   {
-    id: 'interior',
+    id: 'full-home',
     index: '02',
+    badge: 'Turnkey',
+    title: 'Full Home Interiors',
+    subtitle: 'Turnkey interior solutions for your home',
+    description: 'Bespoke spatial design, custom millwork, curated furnishings & comprehensive turnkey handover.',
+    image: '/images/service_full_home.jpg',
+    href: '/services/turnkey-interiors',
+  },
+  {
+    id: 'luxury',
+    index: '03',
     badge: 'Craft',
-    title: 'Interior Architecture',
-    description:
-      'Bespoke spatial design, custom millwork, textured stone feature walls, and tailored lighting plans.',
+    title: 'Luxury Residences',
+    subtitle: 'Tailored interiors that redefine elegance',
+    description: 'Bespoke master suites, textured travertine walls, artisan joinery & architectural mood lighting.',
+    image: '/images/service_luxury_bedroom.jpg',
     href: '/services/interior-design',
   },
   {
+    id: 'arch',
+    index: '04',
+    badge: 'Structure',
+    title: 'Architectural Design',
+    subtitle: 'Form, climate & structural excellence',
+    description: 'Massing, spatial zoning, climate-responsive building envelopes & full municipal working drawings.',
+    image: '/images/service_architectural_villa.jpg',
+    href: '/services/architectural-design',
+  },
+  {
+    id: 'renovation',
+    index: '05',
+    badge: 'Upgrade',
+    title: 'Renovations & Remodeling',
+    subtitle: 'Expert solutions to upgrade your home',
+    description: 'Complete structural transformation, space restructuring, wall modifications & modern finish renewal.',
+    image: '/images/service_renovation.jpg',
+    href: '/services/renovation-remodeling',
+  },
+  {
     id: 'turnkey',
-    index: '03',
+    index: '06',
     badge: 'Execution',
     title: 'Turnkey Execution',
-    description:
-      'End-to-end civil contracting, carpentry, electrical, MEP, and direct on-site architect supervision.',
+    subtitle: 'End-to-end contracting & supervision',
+    description: 'Civil contracting, artisan carpentry, electrical, MEP, and direct on-site architect supervision.',
+    image: '/images/after_completed_living.jpg',
     href: '/services/execution-works',
   },
   {
-    id: 'space',
-    index: '04',
-    badge: 'Flow',
-    title: 'Space Planning',
-    description:
-      'Rational circulation layout, daylight harvesting, and ergonomic floor plan optimization.',
-    href: '/services/space-planning',
-  },
-  {
     id: 'cadviz',
-    index: '05',
-    badge: 'Precision',
+    index: '07',
+    badge: 'Cinematic',
     title: '3D Visualization & CGI',
-    description:
-      'Hyper-realistic pre-construction rendering, physical material simulation, and sun study models.',
+    subtitle: 'Hyper-realistic pre-construction rendering',
+    description: 'Photorealistic CGI visual simulations, physical material studies & cinematic 4K flythroughs.',
+    image: '/images/service_3d_visualization.jpg',
     href: '/services/3d-visualization',
   },
   {
-    id: 'walkthrough',
-    index: '06',
-    badge: 'Cinematic',
-    title: '3D Walkthroughs',
-    description:
-      'Cinematic 4K architectural flythroughs and virtual tours exploring spatial depth before construction.',
-    href: '/services/3d-walkthroughs',
+    id: 'commercial',
+    index: '08',
+    badge: 'Bespoke',
+    title: 'Commercial & Hospitality',
+    subtitle: 'Experiential spaces for modern brands',
+    description: 'High-impact boutique offices, executive suites, retail flagship environments & luxury hospitality.',
+    image: '/images/service_hospitality.jpg',
+    href: '/services/commercial',
   },
 ];
 
 export default function CapabilitiesOrbit() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const updateScrollState = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    const currentScroll = el.scrollLeft;
+
+    setCanScrollLeft(currentScroll > 8);
+    setCanScrollRight(maxScroll - currentScroll > 8);
+
+    if (maxScroll > 0) {
+      setScrollProgress(Math.min(1, Math.max(0, currentScroll / maxScroll)));
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    updateScrollState();
+    el.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+
+    return () => {
+      el.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, [updateScrollState]);
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // Scroll by roughly 1 card width + gap
+    const scrollAmount = Math.max(320, el.clientWidth * 0.5);
+    el.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <section className={styles.sectionWrapper} aria-labelledby="capabilities-title">
-      <div className="container">
+      <div className={styles.container}>
+        {/* Section Header */}
         <div className={styles.headerArea}>
-          <div className={styles.introText}>
-            <span className={styles.eyebrow}>Capabilities Matrix</span>
-            <h2 id="capabilities-title" className={styles.title}>
-              End-to-end design & build capabilities.
-            </h2>
-            <p className={styles.subtitle}>
-              From raw topography and architectural structural blueprints through interior artisan millwork
-              to final turnkey handover.
-            </p>
+          <span className={styles.eyebrow}>Capabilities & Services</span>
+          <h2 id="capabilities-title" className={styles.title}>
+            One-stop shop for all things interiors & architecture
+          </h2>
+          <p className={styles.subtitle}>
+            Be it end-to-end interiors, luxury renovation or modular architectural solutions, we craft
+            enduring spaces tailored from concept through final turnkey handover.
+          </p>
+        </div>
+
+        {/* Carousel Viewport */}
+        <div className={styles.carouselContainer}>
+          {/* Left Arrow Button */}
+          {canScrollLeft && (
+            <button
+              type="button"
+              className={`${styles.navButton} ${styles.navButtonLeft}`}
+              onClick={() => handleScroll('left')}
+              aria-label="Scroll services left"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+          )}
+
+          {/* Right Arrow Button */}
+          {canScrollRight && (
+            <button
+              type="button"
+              className={`${styles.navButton} ${styles.navButtonRight}`}
+              onClick={() => handleScroll('right')}
+              aria-label="Scroll services right"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          )}
+
+          {/* Scrollable Track */}
+          <div ref={scrollRef} className={styles.scrollTrack}>
+            {offerings.map((item) => (
+              <ServiceCard key={item.id} item={item} />
+            ))}
           </div>
         </div>
 
-        <div className={styles.grid}>
-          {capabilities.map((item) => (
-            <TiltCard key={item.id} item={item} />
-          ))}
+        {/* Bottom Progress Bar Indicator */}
+        <div className={styles.progressWrapper} aria-hidden="true">
+          <div className={styles.progressTrack}>
+            <div
+              className={styles.progressBar}
+              style={{
+                transform: `translateX(${scrollProgress * 92}px)`,
+              }}
+            />
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function TiltCard({ item }: { item: CapabilityItem }) {
-  const [transform, setTransform] = useState('');
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    // Subtle 3D tilt max 4 degrees
-    const rotateX = ((y - centerY) / centerY) * -4;
-    const rotateY = ((x - centerX) / centerX) * 4;
-
-    setTransform(`perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`);
-  };
-
-  const handleMouseLeave = () => {
-    setTransform('perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)');
-  };
-
+function ServiceCard({ item }: { item: CapabilityOffering }) {
   return (
-    <div
-      className={styles.cardWrapper}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ transform }}
-    >
-      <div className={styles.card}>
-        <div>
-          <div className={styles.cardIndex}>
-            <span>{item.index}</span>
-            <span className={styles.cardBadge}>{item.badge}</span>
-          </div>
-          <h3 className={styles.cardTitle}>{item.title}</h3>
-          <p className={styles.cardDescription}>{item.description}</p>
-        </div>
-
-        <Link href={item.href} className={styles.cardLink}>
-          Explore Service →
-        </Link>
+    <Link href={item.href} className={styles.card} title={`Explore ${item.title}`}>
+      {/* Visual Image Media */}
+      <div className={styles.imageContainer}>
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 320px"
+          className={styles.image}
+        />
+        <span className={styles.cardBadge}>{item.badge}</span>
       </div>
-    </div>
+
+      {/* Content Area */}
+      <div className={styles.content}>
+        <h3 className={styles.cardTitle}>{item.title}</h3>
+        <p className={styles.cardSubtitle}>{item.subtitle}</p>
+
+        {/* Bottom CTA Arrow Button */}
+        <div className={styles.ctaButtonWrapper}>
+          <div className={styles.ctaCircle} aria-hidden="true">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 }
