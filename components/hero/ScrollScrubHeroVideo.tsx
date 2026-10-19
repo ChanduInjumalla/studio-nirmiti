@@ -33,22 +33,53 @@ export default function ScrollScrubHeroVideo() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  // ───── Continuous rAF Loop for Zero-Lag, Decoder-Safe Video Scrubbing ─────
+  // ───── Continuous rAF Loop for Buttery-Smooth, Zero-Black-Frame Video Scrubbing ─────
   useEffect(() => {
     if (reducedMotion) return;
     if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
 
     let active = true;
+    let isSeeking = false;
+    let lastSeekTime = 0;
 
-    const renderLoop = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const onSeeked = () => {
+      isSeeking = false;
+    };
+    video.addEventListener('seeked', onSeeked);
+
+    const renderLoop = (timestamp: number) => {
       if (!active) return;
 
-      const video = videoRef.current;
-      if (video && !video.seeking) {
-        const target = targetTimeRef.current;
-        // Only seek if the difference is more than ~1 frame (0.03s at 29fps)
-        if (Math.abs(video.currentTime - target) > 0.03) {
-          video.currentTime = target;
+      const vid = videoRef.current;
+      if (vid && vid.readyState >= 1) {
+        // Watchdog: release seek lock if decoder took longer than 80ms
+        if (isSeeking && timestamp - lastSeekTime > 80) {
+          isSeeking = false;
+        }
+
+        if (!isSeeking && !vid.seeking) {
+          const target = targetTimeRef.current;
+          const diff = Math.abs(vid.currentTime - target);
+
+          // Only seek if difference exceeds ~0.02s (~half a frame at 29fps)
+          if (diff > 0.02) {
+            isSeeking = true;
+            lastSeekTime = timestamp;
+
+            const vidAny = vid as unknown as { fastSeek?: (t: number) => void };
+            try {
+              if (typeof vidAny.fastSeek === 'function') {
+                vidAny.fastSeek(target);
+              } else {
+                vid.currentTime = target;
+              }
+            } catch {
+              isSeeking = false;
+            }
+          }
         }
       }
 
@@ -60,6 +91,7 @@ export default function ScrollScrubHeroVideo() {
     return () => {
       active = false;
       cancelAnimationFrame(rafIdRef.current);
+      video.removeEventListener('seeked', onSeeked);
     };
   }, [reducedMotion]);
 
@@ -84,17 +116,6 @@ export default function ScrollScrubHeroVideo() {
     targetTimeRef.current = Math.max(0, Math.min(dur - 0.05, normalized * dur));
   }, []);
 
-  // ───── Immediate Seek on 'seeked' for Maximum Responsiveness ─────
-  const handleSeeked = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const target = targetTimeRef.current;
-    if (Math.abs(video.currentTime - target) > 0.03) {
-      video.currentTime = target;
-    }
-  }, []);
-
   // ───── Initialize Video Priming (Immediate First Frame on Laptop/Desktop) ─────
   useEffect(() => {
     if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
@@ -105,13 +126,7 @@ export default function ScrollScrubHeroVideo() {
     const primeVideo = () => {
       video.muted = true;
       video.playsInline = true;
-      if (video.currentTime === 0) {
-        try {
-          video.currentTime = 0.01;
-        } catch {
-          // Ignore initial restriction
-        }
-      }
+      video.pause();
       handleScroll();
     };
 
@@ -121,13 +136,10 @@ export default function ScrollScrubHeroVideo() {
       video.addEventListener('loadedmetadata', primeVideo, { once: true });
     }
 
-    video.addEventListener('seeked', handleSeeked);
-
     return () => {
       video.removeEventListener('loadedmetadata', primeVideo);
-      video.removeEventListener('seeked', handleSeeked);
     };
-  }, [handleSeeked, handleScroll]);
+  }, [handleScroll]);
 
   // ───── Scroll and Resize Listeners ─────
   useEffect(() => {
@@ -163,7 +175,7 @@ export default function ScrollScrubHeroVideo() {
           poster="/images/hero_poster.webp"
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           disablePictureInPicture
           disableRemotePlayback
           aria-hidden="true"

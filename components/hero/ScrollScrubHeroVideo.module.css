@@ -11,7 +11,7 @@
 .heroScrollStory {
   position: relative;
   width: 100%;
-  height: 600vh;
+  height: 420vh;
   background-color: #0c0f0d;
 }
 
@@ -25,6 +25,9 @@
   height: 100dvh;
   overflow: hidden;
   background-color: #0c0f0d;
+  background-image: url('/images/hero_poster.webp');
+  background-size: cover;
+  background-position: center center;
   display: flex;
   flex-direction: column;
 
