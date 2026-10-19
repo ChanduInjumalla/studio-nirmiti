@@ -140,10 +140,25 @@
   font-family: var(--font-syne), sans-serif;
 }
 
-.scope {
-  font-size: var(--text-sm);
+.minimalMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-syne), sans-serif;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.metaSep {
+  color: var(--color-accent);
+  opacity: 0.6;
+}
+
+.metaYear {
   color: var(--color-text-secondary);
-  line-height: var(--leading-normal);
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
@@ -182,8 +197,11 @@
     padding: 2px 7px;
   }
 
-  .scope {
-    font-size: 11px;
-    line-height: 1.4;
+  .minimalMeta {
+    font-size: 10px;
+    gap: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

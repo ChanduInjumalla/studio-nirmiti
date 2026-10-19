@@ -56,7 +56,15 @@ export default function SelectedWorkGallery({ limit = 4 }: SelectedWorkGalleryPr
                   <span className={styles.location}>{project.location}</span>
                 </div>
 
-                <p className={styles.scope}>{project.scope}</p>
+                <div className={styles.minimalMeta}>
+                  <span>{project.serviceTags?.[0] || 'Architecture'}</span>
+                  <span className={styles.metaSep}>/</span>
+                  <span>{project.serviceTags?.[1] || 'Turnkey'}</span>
+                  <span className={styles.metaSep}>/</span>
+                  <span className={styles.metaYear}>
+                    {project.location ? project.location.split(',')[0] : 'Hyderabad'}
+                  </span>
+                </div>
               </Link>
             );
           })}

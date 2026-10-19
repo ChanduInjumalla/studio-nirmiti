@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import {
   Heart,
+  Eye,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -287,7 +288,20 @@ export default function CategoryDesignCatalog({
                       src={design.image}
                       alt={design.title}
                       className={styles.cardImg}
+                      loading="lazy"
                     />
+
+                    {/* Quick View Eye Option */}
+                    <button
+                      type="button"
+                      className={styles.quickViewBtn}
+                      onClick={() => setSelectedDesignForQuote(design)}
+                      title="View Details"
+                      aria-label={`View details for ${design.title}`}
+                    >
+                      <Eye size={15} />
+                    </button>
+
                     <button
                       type="button"
                       className={`${styles.wishlistBtn} ${
@@ -314,7 +328,8 @@ export default function CategoryDesignCatalog({
                       <span>{design.size}</span> · <span>{design.finish}</span>
                     </div>
 
-                    <div className={styles.cardActions}>
+                    {/* Desktop Actions: Both Consultation & Quote Buttons */}
+                    <div className={styles.cardActionsDesktop}>
                       <button
                         type="button"
                         className={styles.btnOutlineSmall}
@@ -328,6 +343,17 @@ export default function CategoryDesignCatalog({
                         onClick={() => setSelectedDesignForQuote(design)}
                       >
                         Get Quote
+                      </button>
+                    </div>
+
+                    {/* Mobile & Tablet Action: Clean Single 'Book Free Consultation' Button */}
+                    <div className={styles.cardActionsMobile}>
+                      <button
+                        type="button"
+                        className={styles.btnMobileConsult}
+                        onClick={() => setSelectedDesignForQuote(design)}
+                      >
+                        Book Free Consultation
                       </button>
                     </div>
                   </div>

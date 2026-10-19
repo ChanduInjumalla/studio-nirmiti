@@ -33,7 +33,7 @@
   backface-visibility: hidden;
 }
 
-/* Fullscreen Background Video */
+/* Fullscreen Background Video (Desktop) */
 .videoElement {
   position: absolute;
   top: 0;
@@ -50,6 +50,19 @@
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+/* Mobile & Tablet Static Villa Architectural Hero Image */
+.mobileHeroImage {
+  display: none;
+}
+
+.mobileEditorial {
+  display: none;
+}
+
+.desktopEditorial {
+  display: block;
 }
 
 /* Subtle Architectural Scrim (ensures text legibility without darkening the house) */
@@ -257,64 +270,107 @@
 }
 
 /* =========================================================================
-   RESPONSIVE DESIGN — 60–65svh Visible Hero on Tablet & Phone
+   RESPONSIVE DESIGN — Direct 60svh Hero on Tablet & Phone (Zero Black Void)
    ========================================================================= */
 @media (max-width: 1023px) {
-  .heroSticky {
-    height: 64svh;
-    height: 64dvh;
-    height: 64vh;
-    min-height: 440px;
-    max-height: 660px;
+  .heroScrollStory {
+    position: relative !important;
+    height: 60svh !important;
+    min-height: 440px !important;
+    max-height: 620px !important;
+    background-color: transparent !important;
+    overflow: hidden !important;
   }
 
-  .heroScrollStory {
-    height: 380vh;
+  .heroSticky {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 440px !important;
+    max-height: 620px !important;
+    transform: none !important;
+    overflow: hidden;
+  }
+
+  /* Completely disable video decoding and rendering on tablet and phone */
+  .videoElement {
+    display: none !important;
+  }
+
+  /* Show high-impact generated luxury villa architectural hero image */
+  .mobileHeroImage {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    z-index: 1;
+  }
+
+  .desktopEditorial {
+    display: none !important;
+  }
+
+  .mobileEditorial {
+    display: block !important;
+    position: relative;
+    z-index: 10;
+    max-width: 580px;
+    pointer-events: auto;
+    animation: fadeSlideIn 0.5s ease both;
+  }
+
+  .minimalScrollHint {
+    display: none !important;
   }
 
   .heroContent {
-    padding: 0 4vw;
+    padding: 0 5vw;
+    justify-content: center;
   }
 }
 
 @media (max-width: 767px) {
-  .heroSticky {
-    height: 62svh;
-    height: 62dvh;
-    height: 62vh;
-    min-height: 380px;
-    max-height: 560px;
+  .heroScrollStory {
+    height: 60svh !important;
+    min-height: 420px !important;
+    max-height: 520px !important;
   }
 
-  .heroScrollStory {
-    height: 300vh;
+  .heroSticky {
+    min-height: 420px !important;
+    max-height: 520px !important;
   }
 
   .heroContent {
-    padding: 0 clamp(1rem, 4vw, 1.5rem);
+    padding: 0 clamp(1rem, 4.5vw, 1.5rem);
   }
 
   .roomLabel {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    margin-bottom: 0.5rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 0.45rem;
   }
 
   .accentLine {
     width: 28px;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.75rem;
   }
 
   .headline {
-    font-size: clamp(1.45rem, 5.2vw, 2.1rem);
-    line-height: 1.18;
-    margin-bottom: 0.5rem;
+    font-size: clamp(1.45rem, 5.2vw, 1.95rem);
+    line-height: 1.16;
+    margin-bottom: 0.45rem;
   }
 
   .subheadline {
-    font-size: clamp(0.82rem, 2.4vw, 0.92rem);
+    font-size: clamp(0.82rem, 2.5vw, 0.92rem);
     line-height: 1.5;
-    max-width: 92vw;
+    max-width: 95vw;
   }
 
   .ctas {
@@ -331,10 +387,6 @@
     font-size: 0.78rem;
     min-height: 44px;
     box-sizing: border-box;
-  }
-
-  .minimalScrollHint {
-    display: none;
   }
 }
 

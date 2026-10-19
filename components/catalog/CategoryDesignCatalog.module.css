@@ -338,13 +338,57 @@
 @media (max-width: 1024px) {
   .designsGrid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  /* 1:1 Aspect ratio photo on tablet & mobile */
+  .cardImgWrap {
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .cardActionsDesktop {
+    display: none !important;
+  }
+
+  .cardActionsMobile {
+    display: block !important;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .specsMeta {
+    display: none !important;
   }
 }
 
 @media (max-width: 767px) {
+  /* Trending Section: Card 1 is 100% visible, not cut off at the start */
+  .trendingTrack {
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: clamp(1rem, 4vw, 1.5rem);
+    padding-left: clamp(1rem, 4vw, 1.5rem);
+    padding-right: clamp(1rem, 4vw, 1.5rem);
+    gap: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .trendingCard {
+    flex: 0 0 calc(100% - 24px) !important;
+    min-width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    scroll-snap-align: start;
+    scroll-margin-left: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .trendingCardImgWrap {
+    height: 180px;
+  }
+
   .designsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(8px, 2.5vw, 14px);
+    gap: clamp(8px, 2.5vw, 12px);
     margin-bottom: var(--space-10);
   }
 
@@ -353,8 +397,11 @@
     grid-column: span 2;
   }
 
+  /* 1:1 Aspect ratio photo on phone & tablet */
   .cardImgWrap {
-    height: clamp(120px, 30vw, 165px);
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    height: auto !important;
   }
 
   .cardBody {
@@ -362,7 +409,7 @@
   }
 
   .cardTitle {
-    font-size: clamp(11.5px, 2.9vw, 13.5px);
+    font-size: clamp(11.5px, 2.9vw, 13px);
     line-height: 1.3;
     min-height: auto;
     margin-bottom: 4px;
@@ -370,32 +417,35 @@
   }
 
   .priceTag {
-    font-size: clamp(12px, 3vw, 14.5px);
-    margin-bottom: 2px;
+    font-size: clamp(12px, 3vw, 14px);
+    margin-bottom: 8px;
   }
 
   .specsMeta {
+    display: none !important;
+  }
+
+  .cardActionsDesktop {
+    display: none !important;
+  }
+
+  .cardActionsMobile {
+    display: block !important;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .btnMobileConsult {
+    padding: 8px 6px;
     font-size: 10px;
-    margin-bottom: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    min-height: 34px;
   }
 
-  .cardActions {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .btnOutlineSmall,
-  .btnPrimarySmall {
-    padding: 7px 6px;
-    font-size: 9.5px;
-    min-height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .quickViewBtn {
+    width: 28px;
+    height: 28px;
+    top: 6px;
+    left: 6px;
   }
 
   .wishlistBtn {
@@ -452,6 +502,32 @@
 }
 .designCard:hover .cardImg {
   transform: scale(1.04);
+}
+
+.quickViewBtn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #1a1d1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.quickViewBtn:hover {
+  transform: scale(1.1);
+  background: var(--color-accent, #b08d57);
+  color: #ffffff;
+  border-color: var(--color-accent, #b08d57);
 }
 
 .wishlistBtn {
@@ -535,11 +611,41 @@
   line-height: 1.4;
 }
 
-.cardActions {
+.cardActions,
+.cardActionsDesktop {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
   margin-top: auto;
+}
+
+.cardActionsMobile {
+  display: none;
+}
+
+.btnMobileConsult {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--color-accent, #b08d57);
+  color: #ffffff;
+  border: 1px solid var(--color-accent, #b08d57);
+  font-family: var(--font-syne), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.btnMobileConsult:hover {
+  background: #dfc291;
+  color: #101311;
+  border-color: #dfc291;
 }
 
 .btnOutlineSmall {

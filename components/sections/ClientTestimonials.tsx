@@ -2,22 +2,32 @@ import styles from './ClientTestimonials.module.css';
 
 const testimonials = [
   {
+    category: 'Residential Villa',
     quote:
-      'What impressed us most was how accurately the finished villa matched the 3D walkthroughs shown during planning. The travertine hearth and custom oak millwork were executed without a single deviation.',
+      'The finished villa matched the 3D walkthrough with millimeter precision. Outstanding travertine hearth and bespoke oak joinery.',
     name: 'Rajesh & Malini Varma',
-    role: 'Homeowners, Jubilee Hills Villa',
+    role: 'Jubilee Hills Villa',
   },
   {
+    category: 'Penthouse Interiors',
     quote:
-      'Studio Nirmiti handed over our 14,500 sq.ft headquarters in 75 days flat. The acoustic zoning and lighting have genuinely elevated daily team productivity. Exceptional architectural rigor.',
+      'Seamless turnkey execution from structural reconfiguration to Italian marble detailing. Uncompromising design clarity.',
+    name: 'Dr. Arvind & Sunita Rao',
+    role: 'Skyline Residence',
+  },
+  {
+    category: 'Commercial HQ',
+    quote:
+      'Handed over our 14,500 sq.ft headquarters in 75 days. Precision acoustic zoning and lighting noticeably elevated team focus.',
     name: 'Vikram Sundaram',
-    role: 'Managing Director, Aura Tech Labs',
+    role: 'Aura Tech Labs',
   },
   {
+    category: 'Hospitality Resort',
     quote:
-      'Designing on a sensitive hill slope in Coorg required deep respect for topography. Their stepped pavilion solution preserved our century-old trees while delivering a world-class resort experience.',
+      'Stepped hillside pavilions preserved our century-old trees while crafting a world-class resort atmosphere. Exemplary craft.',
     name: 'Anita Hegde',
-    role: 'Co-Founder, Sereno Hospitality',
+    role: 'Sereno Hospitality',
   },
 ];
 
@@ -35,6 +45,7 @@ export default function ClientTestimonials() {
         <div className={styles.grid}>
           {testimonials.map((item, idx) => (
             <div key={idx} className={styles.card}>
+              <span className={styles.categoryBadge}>{item.category}</span>
               <p className={styles.quote}>{item.quote}</p>
               <div className={styles.authorArea}>
                 <p className={styles.authorName}>{item.name}</p>

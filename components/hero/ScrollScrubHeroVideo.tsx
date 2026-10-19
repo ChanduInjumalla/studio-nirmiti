@@ -36,6 +36,7 @@ export default function ScrollScrubHeroVideo() {
   // ───── Continuous rAF Loop for Zero-Lag, Decoder-Safe Video Scrubbing ─────
   useEffect(() => {
     if (reducedMotion) return;
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
 
     let active = true;
 
@@ -64,6 +65,8 @@ export default function ScrollScrubHeroVideo() {
 
   // ───── Direct Scroll to Video Progress Mapping ─────
   const handleScroll = useCallback(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
+
     const container = containerRef.current;
     const video = videoRef.current;
     if (!container) return;
@@ -92,8 +95,10 @@ export default function ScrollScrubHeroVideo() {
     }
   }, []);
 
-  // ───── Initialize Video Priming (Immediate First Frame) ─────
+  // ───── Initialize Video Priming (Immediate First Frame on Laptop/Desktop) ─────
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -126,6 +131,8 @@ export default function ScrollScrubHeroVideo() {
 
   // ───── Scroll and Resize Listeners ─────
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     window.addEventListener('orientationchange', handleScroll, { passive: true });
@@ -146,9 +153,9 @@ export default function ScrollScrubHeroVideo() {
       className={styles.heroScrollStory}
       aria-label="Studio Nirmiti Cinematic Architectural Walkthrough"
     >
-      {/* Pinned Sticky Viewport (100vh) */}
+      {/* Pinned Sticky Viewport on Desktop (100vh) / Direct 60svh Hero on Mobile */}
       <div className={styles.heroSticky}>
-        {/* Hardware-Accelerated Scrubbed Video Element */}
+        {/* Hardware-Accelerated Scrubbed Video Element (Desktop only) */}
         <video
           ref={videoRef}
           className={styles.videoElement}
@@ -162,12 +169,41 @@ export default function ScrollScrubHeroVideo() {
           aria-hidden="true"
         />
 
+        {/* Mobile & Tablet Static Architectural Villa Hero (Zero video load on mobile/tablet) */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/mobile_hero_villa.jpg"
+          alt="Studio Nirmiti Luxury Architectural Villa Interior"
+          className={styles.mobileHeroImage}
+          loading="eager"
+          fetchPriority="high"
+        />
+
         {/* Subtle Architectural Scrim Overlay for Readability */}
         <div className={styles.scrimOverlay} aria-hidden="true" />
 
         {/* Semantic HTML Editorial Content Layer */}
         <div className={styles.heroContent} aria-live="polite">
-          <div className={styles.editorialText}>
+          {/* Mobile & Tablet Direct Architectural Hero Editorial */}
+          <div className={styles.mobileEditorial}>
+            <span className={styles.accentLine} />
+            <span className={styles.roomLabel}>ARCHITECTURAL EXCELLENCE</span>
+            <h1 className={styles.headline}>Monumental Living, Sculpted in Light.</h1>
+            <p className={styles.subheadline}>
+              Bespoke residences and ultra-luxury interiors conceived with uncompromising materiality, balance, and precision.
+            </p>
+            <div className={styles.ctas}>
+              <Link href="/book-consultation" className={styles.primaryCta}>
+                Start a Project →
+              </Link>
+              <Link href="/projects" className={styles.secondaryCta}>
+                Explore Portfolio
+              </Link>
+            </div>
+          </div>
+
+          {/* Desktop Scrub-Synchronized Editorial Rooms */}
+          <div className={styles.desktopEditorial}>
             {/* Room-specific labels that change as video scrolls through spaces */}
             {(() => {
               const rooms = [
@@ -249,7 +285,7 @@ export default function ScrollScrubHeroVideo() {
             })()}
           </div>
 
-          {/* Minimalist scroll cue (visible only at the very beginning) */}
+          {/* Minimalist scroll cue (visible only on desktop at the very beginning) */}
           {progress < 0.08 && (
             <div className={styles.minimalScrollHint}>
               <span className={styles.hintLine} />
