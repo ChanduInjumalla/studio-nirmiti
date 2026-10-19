@@ -99,6 +99,20 @@
   color: #dfc291;
 }
 
+/* Profile Icon in Transparent Header */
+.transparent .profileBtn {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: transparent;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.transparent .profileBtn:hover {
+  color: #dfc291;
+  border-color: rgba(223, 194, 145, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
 /* Mobile Toggle in Transparent Header */
 .transparent .mobileToggle {
   background: transparent;
@@ -475,48 +489,45 @@
 .profileBtn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.8rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
   background: var(--color-bg-card);
-  border-radius: var(--radius-sm, 4px);
+  border-radius: 50%;
   cursor: pointer;
   transition: all var(--duration-fast, 180ms) ease;
-  white-space: nowrap;
 }
 
 .profileBtn:hover {
   color: var(--color-text-primary);
   border-color: var(--color-border-dark);
   background: var(--color-bg-alt);
+  transform: scale(1.05);
 }
 
 .mobileProfileBtn {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  width: 100%;
-  padding: 0.75rem 1rem;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
   margin-bottom: 0.85rem;
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm, 6px);
+  border-radius: 50%;
   color: var(--color-text-primary);
-  font-size: 0.875rem;
-  font-weight: 500;
   cursor: pointer;
-  text-align: left;
   transition: all var(--duration-fast) ease;
 }
 
 .mobileProfileBtn:hover {
   background: var(--color-border-subtle);
   border-color: var(--color-border-dark);
+  transform: scale(1.05);
 }
 
 .mobilePhone {

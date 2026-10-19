@@ -151,8 +151,7 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
             title="Client Profile & Studio Access"
             aria-label="Open Client Profile"
           >
-            <User size={15} />
-            <span>Profile</span>
+            <User size={18} />
           </Link>
           <a href={`tel:+91${phone}`} className={styles.phoneLink} aria-label="Call Studio Nirmiti">
             <Phone size={14} />
@@ -216,8 +215,7 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
             className={styles.mobileProfileBtn}
             onClick={() => setMobileOpen(false)}
           >
-            <User size={16} />
-            <span>Client Profile & Studio Access</span>
+            <User size={18} />
           </Link>
           <a href={`tel:+91${phone}`} className={styles.mobilePhone}>
             <Phone size={15} />
