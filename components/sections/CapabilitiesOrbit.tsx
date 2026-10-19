@@ -8,7 +8,6 @@ import styles from './CapabilitiesOrbit.module.css';
 export interface CapabilityOffering {
   id: string;
   index: string;
-  badge: string;
   title: string;
   subtitle: string;
   description: string;
@@ -20,7 +19,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'modular',
     index: '01',
-    badge: 'Precision',
     title: 'Modular Interiors',
     subtitle: 'Functional kitchen, wardrobe & storage',
     description: 'Precision-engineered modular kitchen islands, custom walk-in wardrobes & bespoke storage systems.',
@@ -30,7 +28,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'full-home',
     index: '02',
-    badge: 'Turnkey',
     title: 'Full Home Interiors',
     subtitle: 'Turnkey interior solutions for your home',
     description: 'Bespoke spatial design, custom millwork, curated furnishings & comprehensive turnkey handover.',
@@ -40,7 +37,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'luxury',
     index: '03',
-    badge: 'Craft',
     title: 'Luxury Residences',
     subtitle: 'Tailored interiors that redefine elegance',
     description: 'Bespoke master suites, textured travertine walls, artisan joinery & architectural mood lighting.',
@@ -50,7 +46,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'arch',
     index: '04',
-    badge: 'Structure',
     title: 'Architectural Design',
     subtitle: 'Form, climate & structural excellence',
     description: 'Massing, spatial zoning, climate-responsive building envelopes & full municipal working drawings.',
@@ -60,7 +55,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'renovation',
     index: '05',
-    badge: 'Upgrade',
     title: 'Renovations & Remodeling',
     subtitle: 'Expert solutions to upgrade your home',
     description: 'Complete structural transformation, space restructuring, wall modifications & modern finish renewal.',
@@ -70,7 +64,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'turnkey',
     index: '06',
-    badge: 'Execution',
     title: 'Turnkey Execution',
     subtitle: 'End-to-end contracting & supervision',
     description: 'Civil contracting, artisan carpentry, electrical, MEP, and direct on-site architect supervision.',
@@ -80,7 +73,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'cadviz',
     index: '07',
-    badge: 'Cinematic',
     title: '3D Visualization & CGI',
     subtitle: 'Hyper-realistic pre-construction rendering',
     description: 'Photorealistic CGI visual simulations, physical material studies & cinematic 4K flythroughs.',
@@ -90,7 +82,6 @@ const offerings: CapabilityOffering[] = [
   {
     id: 'commercial',
     index: '08',
-    badge: 'Bespoke',
     title: 'Commercial & Hospitality',
     subtitle: 'Experiential spaces for modern brands',
     description: 'High-impact boutique offices, executive suites, retail flagship environments & luxury hospitality.',
@@ -138,8 +129,8 @@ export default function CapabilitiesOrbit() {
     const el = scrollRef.current;
     if (!el) return;
 
-    // Scroll by roughly 1 card width + gap
-    const scrollAmount = Math.max(320, el.clientWidth * 0.5);
+    // Scroll by 1 card width + gap
+    const scrollAmount = Math.max(280, el.clientWidth * 0.45);
     el.scrollBy({
       left: direction === 'left' ? -scrollAmount : scrollAmount,
       behavior: 'smooth',
@@ -218,7 +209,7 @@ export default function CapabilitiesOrbit() {
 function ServiceCard({ item }: { item: CapabilityOffering }) {
   return (
     <Link href={item.href} className={styles.card} title={`Explore ${item.title}`}>
-      {/* Visual Image Media */}
+      {/* Top Part: Full-Bleed Edge-to-Edge Image */}
       <div className={styles.imageContainer}>
         <Image
           src={item.image}
@@ -227,10 +218,9 @@ function ServiceCard({ item }: { item: CapabilityOffering }) {
           sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 320px"
           className={styles.image}
         />
-        <span className={styles.cardBadge}>{item.badge}</span>
       </div>
 
-      {/* Content Area */}
+      {/* Bottom Part: Padded Content Container */}
       <div className={styles.content}>
         <h3 className={styles.cardTitle}>{item.title}</h3>
         <p className={styles.cardSubtitle}>{item.subtitle}</p>

@@ -1,7 +1,11 @@
 .sectionWrapper {
-  padding-top: var(--space-section);
-  padding-bottom: var(--space-section);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 4vh, 4rem) 0;
   background-color: var(--color-bg-secondary);
+  box-sizing: border-box;
 }
 
 .headerArea {
