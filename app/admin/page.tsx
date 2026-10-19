@@ -98,7 +98,7 @@ const defaultSections: EditableSection[] = [
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [emailInput, setEmailInput] = useState('admin@studionirmiti.com');
+  const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState<'dashboard' | 'editor' | 'leads'>('dashboard');
@@ -163,19 +163,10 @@ export default function AdminPage() {
         localStorage.setItem('studio_admin_auth', 'true');
       } catch {}
     } else {
-      setLoginError('Invalid credentials. Please use admin@studionirmiti.com / Nirmiti@2026');
+      setLoginError('Invalid credentials. Please verify your administrator email and password.');
     }
   };
 
-  const handleQuickDemoLogin = () => {
-    setEmailInput('admin@studionirmiti.com');
-    setPasswordInput('Nirmiti@2026');
-    setIsAuthenticated(true);
-    setLoginError('');
-    try {
-      localStorage.setItem('studio_admin_auth', 'true');
-    } catch {}
-  };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -216,12 +207,6 @@ export default function AdminPage() {
             Enter authorized administrator credentials to manage leads, page layouts, and the visual editor.
           </p>
 
-          <div className={styles.credentialsBadge}>
-            <div><strong>Authorized Administrator Access:</strong></div>
-            <div>Email: <code>admin@studionirmiti.com</code></div>
-            <div>Password: <code>Nirmiti@2026</code></div>
-          </div>
-
           {loginError && <div className={styles.loginError}>{loginError}</div>}
 
           <form onSubmit={handleLoginSubmit} className={styles.loginForm}>
@@ -244,21 +229,13 @@ export default function AdminPage() {
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
                 className={styles.loginInput}
-                placeholder="Enter password"
+                placeholder="••••••••••••"
                 required
               />
             </div>
 
             <button type="submit" className={styles.loginBtn}>
               Sign In to Admin Portal →
-            </button>
-
-            <button
-              type="button"
-              onClick={handleQuickDemoLogin}
-              className={styles.demoLoginBtn}
-            >
-              One-Click Demo Login
             </button>
           </form>
         </div>
