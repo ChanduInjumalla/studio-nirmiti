@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Phone, ArrowRight, Menu, X, ChevronDown, User } from 'lucide-react';
 import type { NavigationItem } from '@/types';
@@ -52,7 +53,16 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
       <div className={styles.inner}>
         {/* Logo */}
         <Link href="/" className={styles.logo} aria-label={`${businessName} — Home`}>
-          <span className={styles.logoMark}>N</span>
+          <div className={styles.logoMarkContainer}>
+            <Image
+              src="/images/logo.png"
+              alt="Studio Nirmiti Logo"
+              width={38}
+              height={38}
+              className={styles.logoImg}
+              priority
+            />
+          </div>
           <div className={styles.logoText}>
             <span className={styles.logoName}>STUDIO NIRMITI</span>
             <span className={styles.logoTagline}>Architecture · Interiors</span>

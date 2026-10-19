@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Phone, Mail } from 'lucide-react';
 import type { NavigationItem } from '@/types';
 import styles from './Footer.module.css';
@@ -21,7 +22,15 @@ export default function Footer({ navigation, businessName, phone }: FooterProps)
         <div className={styles.top}>
           <div className={styles.brand}>
             <div className={styles.logoRow}>
-              <span className={styles.logoMark}>N</span>
+              <div className={styles.logoMarkContainer}>
+                <Image
+                  src="/images/logo.png"
+                  alt="Studio Nirmiti Logo"
+                  width={38}
+                  height={38}
+                  className={styles.logoImg}
+                />
+              </div>
               <span className={styles.logoName}>STUDIO NIRMITI</span>
             </div>
             <p className={styles.brandDesc}>

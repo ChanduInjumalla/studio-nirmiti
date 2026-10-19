@@ -86,11 +86,11 @@ export default function HomePage() {
       {/* 1. Hero — Scroll-Scrubbed Cinematic Video Walkthrough */}
       <ScrollScrubHeroVideo />
 
-      {/* 2. Capabilities Orbit — 3D tilt material cards & mobile swipe */}
-      <CapabilitiesOrbit />
-
-      {/* 3. Project Type Switcher — Residential / Commercial / Hospitality tabs */}
+      {/* 2. Project Type Switcher — Residential / Commercial / Hospitality tabs */}
       <ProjectTypeSwitcher />
+
+      {/* 3. Capabilities Orbit — One-stop shop cards carousel */}
+      <CapabilitiesOrbit />
 
       {/* 4. Before / After Design Layer — Interactive draggable reveal slider */}
       <BeforeAfterSlider />
