@@ -159,10 +159,10 @@ export default function ProcessPage() {
                   background: 'var(--color-surface)',
                   border: '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-md)',
-                  padding: 'var(--space-8)',
+                  padding: 'clamp(1rem, 3.5vw, 2rem)',
                   display: 'grid',
-                  gridTemplateColumns: '80px 1fr',
-                  gap: 'var(--space-8)',
+                  gridTemplateColumns: 'clamp(44px, 12vw, 80px) 1fr',
+                  gap: 'clamp(12px, 3vw, 32px)',
                   alignItems: 'start',
                   boxShadow: '0 4px 18px rgba(0,0,0,0.03)',
                 }}

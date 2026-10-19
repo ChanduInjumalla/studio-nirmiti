@@ -244,13 +244,7 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
       {/* Challenge and Architectural Approach */}
       <section className="section">
         <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 'var(--space-12)',
-            }}
-          >
+          <div className="responsiveSplitGrid">
             {project.challenge && (
               <div>
                 <span
@@ -367,7 +361,7 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
                 gap: 'var(--space-6)',
               }}
             >
@@ -410,7 +404,7 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: 'var(--space-6)',
             }}
           >

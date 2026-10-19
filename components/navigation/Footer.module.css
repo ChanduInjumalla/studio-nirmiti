@@ -198,15 +198,47 @@
 
 .bottomLinks {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .bottomLinks a {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.45);
   text-decoration: none;
   transition: color var(--duration-fast) ease;
 }
 .bottomLinks a:hover {
   color: var(--color-text-light);
+}
+
+.desktopOnly {
+  display: inherit;
+}
+
+.desktopOnlyAdminLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-brass);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+@media (max-width: 1023px) {
+  .footer {
+    padding: clamp(3rem, 6vw, 5rem) 0 var(--space-8);
+  }
+
+  .desktopOnly,
+  .desktopOnlyAdminLink {
+    display: none !important;
+  }
+
+  .bottom {
+    text-align: center;
+    gap: 0.75rem;
+  }
 }

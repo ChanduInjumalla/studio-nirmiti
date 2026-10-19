@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Heart,
   ChevronLeft,
@@ -57,6 +57,18 @@ export default function CategoryDesignCatalog({
 
   // Trending carousel ref
   const trendingTrackRef = useRef<HTMLDivElement>(null);
+
+  // Lock body scroll when quote modal is open
+  useEffect(() => {
+    if (selectedDesignForQuote) {
+      document.body.classList.add('menu-locked');
+    } else {
+      document.body.classList.remove('menu-locked');
+    }
+    return () => {
+      document.body.classList.remove('menu-locked');
+    };
+  }, [selectedDesignForQuote]);
 
   const scrollTrending = (direction: 'left' | 'right') => {
     if (!trendingTrackRef.current) return;

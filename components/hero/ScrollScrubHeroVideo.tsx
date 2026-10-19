@@ -19,12 +19,24 @@ export default function ScrollScrubHeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [progress, setProgress] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   const targetTimeRef = useRef(0);
   const rafIdRef = useRef<number>(0);
 
+  // ───── Detect prefers-reduced-motion ─────
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
   // ───── Continuous rAF Loop for Zero-Lag, Decoder-Safe Video Scrubbing ─────
   useEffect(() => {
+    if (reducedMotion) return;
+
     let active = true;
 
     const renderLoop = () => {
@@ -48,7 +60,7 @@ export default function ScrollScrubHeroVideo() {
       active = false;
       cancelAnimationFrame(rafIdRef.current);
     };
-  }, []);
+  }, [reducedMotion]);
 
   // ───── Direct Scroll to Video Progress Mapping ─────
   const handleScroll = useCallback(() => {
@@ -141,9 +153,10 @@ export default function ScrollScrubHeroVideo() {
           ref={videoRef}
           className={styles.videoElement}
           src="/videos/hero_scrub_video.mp4"
+          poster="/images/hero_poster.webp"
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           disablePictureInPicture
           disableRemotePlayback
           aria-hidden="true"

@@ -21,17 +21,39 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [expandedMobileGroups, setExpandedMobileGroups] = useState<Record<string, boolean>>({});
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is active
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.classList.add('menu-locked');
+    } else {
+      document.body.classList.remove('menu-locked');
+    }
+    return () => {
+      document.body.classList.remove('menu-locked');
+    };
+  }, [mobileOpen]);
+
   // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
     setActiveDropdown(null);
+    setExpandedMobileGroups({});
   }, [pathname]);
+
+  const toggleMobileGroup = (label: string) => {
+    setExpandedMobileGroups((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
 
   const handleDropdownEnter = (label: string) => {
     if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
@@ -173,69 +195,155 @@ export default function Navbar({ navigation, phone, businessName }: NavbarProps)
           </Link>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Toggle Button */}
         <button
           className={styles.mobileToggle}
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer Navigation */}
       {mobileOpen && (
-        <nav className={styles.mobileNav} aria-label="Mobile navigation">
-          {navigation.map((item) => (
-            <div key={item.label} className={styles.mobileNavGroup}>
-              <Link href={item.href} className={styles.mobileNavLink}>
-                {item.label}
-              </Link>
-              {item.children && (
-                <div className={styles.mobileSubLinks}>
-                  {item.children.map((group) =>
-                    group.children ? (
-                      group.children.map((child) => (
+        <div className={styles.mobileDrawerBackdrop} onClick={() => setMobileOpen(false)}>
+          <div
+            className={styles.mobileDrawer}
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+          >
+            {/* Drawer Header */}
+            <div className={styles.mobileDrawerHeader}>
+              <div className={styles.drawerLogoRow}>
+                <Image
+                  src="/images/logo.png"
+                  alt="Studio Nirmiti"
+                  width={30}
+                  height={30}
+                  className={styles.drawerLogoImg}
+                />
+                <span className={styles.drawerLogoText}>STUDIO NIRMITI</span>
+              </div>
+              <button
+                type="button"
+                className={styles.drawerCloseBtn}
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Navigation List with Accordions */}
+            <nav className={styles.mobileNavList} aria-label="Mobile main navigation">
+              {navigation.map((item) => {
+                const hasChildren = Boolean(item.children && item.children.length > 0);
+                const isExpanded = Boolean(expandedMobileGroups[item.label]);
+
+                return (
+                  <div key={item.label} className={styles.mobileNavGroup}>
+                    {hasChildren ? (
+                      <div className={styles.accordionHeader}>
                         <Link
-                          key={child.href}
-                          href={child.href}
-                          className={styles.mobileSubLink}
+                          href={item.href}
+                          className={styles.accordionTitleLink}
+                          onClick={() => setMobileOpen(false)}
                         >
-                          {child.label}
+                          {item.label}
                         </Link>
-                      ))
+                        <button
+                          type="button"
+                          className={`${styles.accordionToggleBtn} ${isExpanded ? styles.accordionOpen : ''}`}
+                          onClick={() => toggleMobileGroup(item.label)}
+                          aria-expanded={isExpanded}
+                          aria-label={`Toggle ${item.label} sub-menu`}
+                        >
+                          <ChevronDown size={18} />
+                        </button>
+                      </div>
                     ) : (
                       <Link
-                        key={group.href}
-                        href={group.href}
-                        className={styles.mobileSubLink}
+                        href={item.href}
+                        className={styles.mobileNavLink}
+                        onClick={() => setMobileOpen(false)}
                       >
-                        {group.label}
+                        {item.label}
                       </Link>
-                    )
-                  )}
-                </div>
-              )}
+                    )}
+
+                    {/* Accordion Sub-links */}
+                    {hasChildren && isExpanded && (
+                      <div className={styles.mobileSubLinks}>
+                        {item.children?.map((group) =>
+                          group.children ? (
+                            <div key={group.label} className={styles.mobileSubGroup}>
+                              <span className={styles.mobileGroupHeader}>{group.label}</span>
+                              {group.children.map((child) => (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className={styles.mobileSubLink}
+                                  onClick={() => setMobileOpen(false)}
+                                >
+                                  {child.label}
+                                </Link>
+                              ))}
+                            </div>
+                          ) : (
+                            <Link
+                              key={group.href}
+                              href={group.href}
+                              className={styles.mobileSubLink}
+                              onClick={() => setMobileOpen(false)}
+                            >
+                              {group.label}
+                            </Link>
+                          )
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+
+            {/* Quick Action Footer in Drawer */}
+            <div className={styles.mobileDrawerFooter}>
+              <div className={styles.mobileContactRow}>
+                <a
+                  href={`tel:+91${phone}`}
+                  className={styles.mobileContactButton}
+                  aria-label="Direct phone call"
+                >
+                  <Phone size={15} />
+                  <span>Call +91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
+                </a>
+                <a
+                  href={`https://wa.me/91${phone}?text=Hello%20Studio%20Nirmiti%2C%20I%20would%20like%20to%20consult%20about%20a%20project.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mobileWhatsappButton}
+                  aria-label="Chat on WhatsApp"
+                >
+                  <span>💬 WhatsApp</span>
+                </a>
+              </div>
+
+              <Link
+                href="/book-consultation"
+                className={`btn btn-primary ${styles.mobileCtaBtn}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                <span>Start a Project</span>
+                <ArrowRight size={15} />
+              </Link>
             </div>
-          ))}
-          <div className={styles.mobileDivider} />
-          <Link
-            href="/profile"
-            className={styles.mobileProfileBtn}
-            onClick={() => setMobileOpen(false)}
-          >
-            <User size={18} />
-          </Link>
-          <a href={`tel:+91${phone}`} className={styles.mobilePhone}>
-            <Phone size={15} />
-            <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
-          </a>
-          <Link href="/book-consultation" className={`btn btn-primary ${styles.mobileCta}`}>
-            Start a Project
-            <ArrowRight size={15} />
-          </Link>
-        </nav>
+          </div>
+        </div>
       )}
     </header>
   );

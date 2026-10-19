@@ -187,7 +187,42 @@
 }
 
 @media (max-width: 900px) {
+  .sectionWrapper {
+    min-height: auto;
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .headerArea {
+    margin-bottom: var(--space-6);
+  }
+
+  .tabsBar {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: var(--space-8);
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabsBar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabButton {
+    padding: 8px 14px;
+    font-size: 10.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   .contentContainer {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .proofPoints {
+    gap: 12px;
+    padding: var(--space-3) 0;
   }
 }

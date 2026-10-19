@@ -246,3 +246,23 @@
   text-align: center;
   margin: 6px 0 0 0;
 }
+
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modalCard {
+    max-width: 100%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    max-height: 85vh;
+    padding: 1.25rem 1.15rem calc(1.5rem + env(safe-area-inset-bottom));
+  }
+
+  .twoCols {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

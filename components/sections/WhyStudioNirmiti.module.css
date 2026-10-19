@@ -97,8 +97,38 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .sectionWrapper {
+    min-height: auto;
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .headerArea {
+    margin-bottom: var(--space-8);
+  }
+
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 2.5vw, 14px);
+  }
+
+  .card {
+    padding: clamp(12px, 2.8vw, 18px);
+  }
+
+  .cardBadge {
+    font-size: 9.5px;
+    padding: 2px 7px;
+    margin-bottom: var(--space-3);
+  }
+
+  .cardTitle {
+    font-size: clamp(0.95rem, 2.8vw, 1.15rem);
+    margin-bottom: 4px;
+  }
+
+  .cardBody {
+    font-size: 11.5px;
+    line-height: 1.45;
   }
 }

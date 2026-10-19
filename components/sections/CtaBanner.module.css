@@ -113,13 +113,30 @@
   text-underline-offset: 4px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .sectionWrapper {
+    min-height: auto;
+    padding: clamp(3.5rem, 7vw, 5rem) 0;
+  }
+
+  .title {
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+  }
+
+  .description {
+    font-size: var(--text-base);
+  }
+
   .buttonGroup {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
+
   .primaryButton,
   .whatsappButton {
     justify-content: center;
+    padding: 14px 24px;
+    font-size: 0.85rem;
   }
 }

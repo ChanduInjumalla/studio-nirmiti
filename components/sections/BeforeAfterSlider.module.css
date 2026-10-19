@@ -147,3 +147,34 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+
+@media (max-width: 768px) {
+  .sectionWrapper {
+    min-height: auto;
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .headerArea {
+    margin-bottom: var(--space-6);
+  }
+
+  .badge {
+    bottom: 10px;
+    padding: 3px 8px;
+    font-size: 9px;
+  }
+
+  .badgeBefore {
+    left: 10px;
+  }
+
+  .badgeAfter {
+    right: 10px;
+  }
+
+  .handle {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+  }
+}

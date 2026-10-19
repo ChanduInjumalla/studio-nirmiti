@@ -196,7 +196,7 @@ export default function FaqPage() {
                         background: 'var(--color-surface)',
                         border: '1px solid var(--color-border)',
                         borderRadius: 'var(--radius-sm)',
-                        padding: 'var(--space-6)',
+                        padding: 'clamp(1rem, 2.8vw, 1.5rem)',
                         cursor: 'pointer',
                       }}
                     >
@@ -211,6 +211,8 @@ export default function FaqPage() {
                           display: 'flex',
                           justifyContent: 'space-between',
                           alignItems: 'center',
+                          minHeight: '44px',
+                          gap: '12px',
                         }}
                       >
                         <span>{item.q}</span>

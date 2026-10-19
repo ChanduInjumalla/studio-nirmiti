@@ -272,9 +272,9 @@
 @media (max-width: 768px) {
   .sectionWrapper {
     height: auto;
-    min-height: 100vh;
-    padding-top: var(--space-12);
-    padding-bottom: var(--space-12);
+    min-height: auto;
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
   .headerArea {
@@ -282,7 +282,30 @@
   }
 
   .card {
-    flex: 0 0 270px;
+    flex: 0 0 clamp(250px, 75vw, 290px);
+  }
+
+  .imageContainer {
+    height: clamp(160px, 24vh, 200px);
+  }
+
+  .content {
+    padding: 14px 16px 18px;
+  }
+
+  .cardTitle {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+
+  .cardSubtitle {
+    font-size: 0.82rem;
+    margin-bottom: 12px;
+  }
+
+  .ctaCircle {
+    width: 36px;
+    height: 36px;
   }
 
   .navButton {

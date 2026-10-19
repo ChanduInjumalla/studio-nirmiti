@@ -115,6 +115,15 @@
 }
 
 @media (max-width: 900px) {
+  .sectionWrapper {
+    min-height: auto;
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .headerArea {
+    margin-bottom: var(--space-8);
+  }
+
   .timelineContainer {
     display: flex;
     overflow-x: auto;
@@ -122,11 +131,17 @@
     padding-bottom: var(--space-6);
     gap: var(--space-6);
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .timelineContainer::-webkit-scrollbar {
+    display: none;
+  }
+
   .stepNode {
     flex: 0 0 200px;
     scroll-snap-align: start;
   }
+
   .connectingLine {
     display: none;
   }

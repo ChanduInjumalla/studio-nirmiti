@@ -453,118 +453,288 @@
 
 /* ── Mobile Nav ── */
 
-.mobileNav {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: var(--color-bg-white);
-  border-bottom: 1px solid var(--color-border);
-  padding: 1.5rem;
-  max-height: calc(100vh - var(--nav-height));
-  overflow-y: auto;
-  box-shadow: var(--shadow-lg);
-}
-
-.mobileNavGroup {
-  margin-bottom: 1rem;
-}
-
-.mobileNavLink {
-  display: block;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  text-decoration: none;
-  padding: 0.5rem 0;
-}
-
-.mobileSubLinks {
-  display: flex;
-  flex-direction: column;
-  padding-left: 0.75rem;
-  border-left: 1px solid var(--color-border);
-  margin-top: 0.25rem;
-  margin-left: 0.25rem;
-}
-
-.mobileSubLink {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  padding: 0.375rem 0.5rem;
-}
-.mobileSubLink:hover {
-  color: var(--color-text-primary);
-}
-
-.mobileDivider {
-  height: 1px;
-  background: var(--color-border);
-  margin: 1rem 0;
-}
-
-.profileBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-card);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all var(--duration-fast, 180ms) ease;
-}
-
-.profileBtn:hover {
-  color: var(--color-text-primary);
-  border-color: var(--color-border-dark);
-  background: var(--color-bg-alt);
-  transform: scale(1.05);
-}
-
-.mobileProfileBtn {
+/* ── Mobile Toggle Button (Min 44px Touch Target) ── */
+.mobileToggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  margin-bottom: 0.85rem;
-  background: var(--color-bg-alt);
+  border-radius: var(--radius-sm);
+  background: rgba(26, 29, 28, 0.05);
   border: 1px solid var(--color-border);
-  border-radius: 50%;
   color: var(--color-text-primary);
   cursor: pointer;
   transition: all var(--duration-fast) ease;
 }
 
-.mobileProfileBtn:hover {
-  background: var(--color-border-subtle);
-  border-color: var(--color-border-dark);
-  transform: scale(1.05);
+.mobileToggle:hover {
+  background: rgba(26, 29, 28, 0.1);
+  color: var(--color-brass);
 }
 
-.mobilePhone {
+/* ── Fullscreen / Drawer Backdrop ── */
+.mobileDrawerBackdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(14, 16, 15, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeInDrawer 0.25s ease-out;
+}
+
+@keyframes fadeInDrawer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Mobile Drawer Container ── */
+.mobileDrawer {
+  width: min(88vw, 380px);
+  height: 100%;
+  background: var(--color-bg-white);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.15);
+  animation: slideInDrawer 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+@keyframes slideInDrawer {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* ── Drawer Header ── */
+.mobileDrawerHeader {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9375rem;
-  color: var(--color-brass);
-  text-decoration: none;
-  margin-bottom: 1rem;
+  justify-content: space-between;
+  padding: 1.15rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-cream);
 }
 
-.mobileCta {
+.drawerLogoRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawerLogoImg {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.drawerLogoText {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+}
+
+.drawerCloseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-white);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.drawerCloseBtn:hover {
+  background: var(--color-border);
+  color: var(--color-brass);
+}
+
+/* ── Navigation List ── */
+.mobileNavList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobileNavGroup {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 0.5rem;
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.25rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+.mobileNavLink:hover {
+  color: var(--color-brass);
+}
+
+/* Accordion Header */
+.accordionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+}
+
+.accordionTitleLink {
+  flex: 1;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  padding: 0.5rem 0.25rem;
+}
+
+.accordionToggleBtn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: transform var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.accordionOpen {
+  transform: rotate(180deg);
+  color: var(--color-brass);
+}
+
+/* Sub-links inside Accordion */
+.mobileSubLinks {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.85rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  border-left: 2px solid var(--color-border);
+  gap: 2px;
+}
+
+.mobileSubGroup {
+  margin-bottom: 0.6rem;
+}
+
+.mobileGroupHeader {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-brass);
+  padding: 0.4rem 0.5rem 0.2rem;
+}
+
+.mobileSubLink {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-xs);
+  transition: all var(--duration-fast) ease;
+}
+
+.mobileSubLink:hover {
+  color: var(--color-text-primary);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* ── Mobile Drawer Footer (Quick CTAs) ── */
+.mobileDrawerFooter {
+  padding: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-cream);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.mobileContactRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mobileContactButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--duration-fast) ease;
+}
+
+.mobileWhatsappButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  background: #25d366;
+  border: 1px solid #20ba5a;
+  border-radius: var(--radius-sm);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--duration-fast) ease;
+}
+
+.mobileWhatsappButton:hover {
+  background: #1eb954;
+}
+
+.mobileCtaBtn {
   width: 100%;
+  min-height: 46px;
   justify-content: center;
 }
 
-/* ── Responsive ── */
-
+/* ── Responsive Viewport Rules ── */
 @media (min-width: 1024px) {
   .desktopNav {
     display: flex;
@@ -574,5 +744,20 @@
   }
   .mobileToggle {
     display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .header {
+    padding: 0.75rem 0;
+  }
+  .desktopNav {
+    display: none;
+  }
+  .desktopActions {
+    display: none;
+  }
+  .mobileToggle {
+    display: flex;
   }
 }

@@ -53,23 +53,39 @@ export default function Footer({ navigation, businessName, phone }: FooterProps)
           {navigation.map((column) => (
             <div key={column.label} className={styles.navColumn}>
               <h4 className={styles.navColumnTitle}>{column.label}</h4>
-              {column.children?.map((item) => (
-                <Link key={item.href} href={item.href} className={styles.navLink}>
-                  {item.label}
-                </Link>
-              ))}
+              {column.children?.map((item) => {
+                const isAdmin = item.href === '/admin' || item.label.toLowerCase().includes('admin');
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`${styles.navLink} ${isAdmin ? styles.desktopOnly : ''}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </div>
           ))}
 
           {/* Contact Column */}
           <div className={styles.navColumn}>
-            <h4 className={styles.navColumnTitle}>Contact</h4>
+            <h4 className={styles.navColumnTitle}>Contact & Connect</h4>
             <a
               href={`tel:+91${phone}`}
               className={styles.contactLink}
             >
               <Phone size={14} />
               <span>+91 {phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
+            </a>
+            <a
+              href={`https://wa.me/91${phone}?text=Hello%20Studio%20Nirmiti%2C%20I%20would%20like%20to%20discuss%20a%20project.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.contactLink}
+              style={{ color: '#25d366' }}
+            >
+              <span>💬 WhatsApp Consultation</span>
             </a>
           </div>
         </div>
@@ -86,14 +102,8 @@ export default function Footer({ navigation, businessName, phone }: FooterProps)
             <Link href="/terms">Terms</Link>
             <Link
               href="/admin"
-              title="Studio Nirmiti Admin Dashboard & Site Editor (Ctrl+Shift+A)"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px',
-                color: '#b08d57',
-                fontWeight: 500,
-              }}
+              className={styles.desktopOnlyAdminLink}
+              title="Studio Nirmiti Admin Dashboard & Site Editor (Desktop Only)"
             >
               🔒 Admin Portal & Live Editor
             </Link>

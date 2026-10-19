@@ -164,7 +164,7 @@ export default function AboutPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: 'var(--space-8)',
             }}
           >
@@ -209,14 +209,7 @@ export default function AboutPage() {
       {/* Visual Feature Strip */}
       <section className="section theme-cream">
         <div className="container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1.2fr 1fr',
-              gap: 'var(--space-12)',
-              alignItems: 'center',
-            }}
-          >
+          <div className="responsiveEditorialGrid">
             <div
               style={{
                 position: 'relative',

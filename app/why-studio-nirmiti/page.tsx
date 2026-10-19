@@ -175,6 +175,8 @@ export default function WhyStudioNirmitiPage() {
           <div
             style={{
               overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              maxWidth: '100%',
               background: 'var(--color-surface)',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--color-border)',

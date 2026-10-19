@@ -130,14 +130,7 @@ export default function ContactPage() {
       {/* Main Content Grid: Direct Contact Panel + Interactive Form */}
       <section className="section">
         <div className="container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1.35fr',
-              gap: 'var(--space-12)',
-              alignItems: 'start',
-            }}
-          >
+          <div className="responsiveSplitGrid">
             {/* Left: Direct Contact Panel */}
             <div>
               <div

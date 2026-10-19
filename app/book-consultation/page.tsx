@@ -118,14 +118,7 @@ export default function BookConsultationPage() {
       {/* Main Grid: Value Proposition + Booking Form */}
       <section className="section">
         <div className="container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1.3fr',
-              gap: 'var(--space-12)',
-              alignItems: 'start',
-            }}
-          >
+          <div className="responsiveSplitGrid">
             {/* Left: What to Expect */}
             <div>
               <div

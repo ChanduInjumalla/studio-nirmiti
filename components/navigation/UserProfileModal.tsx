@@ -40,6 +40,18 @@ export default function UserProfileModal({ isOpen, onClose }: UserProfileModalPr
     }
   }, []);
 
+  // Lock body scroll while modal is active
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('menu-locked');
+    } else {
+      document.body.classList.remove('menu-locked');
+    }
+    return () => {
+      document.body.classList.remove('menu-locked');
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSave = (e: React.FormEvent) => {
@@ -159,8 +171,8 @@ export default function UserProfileModal({ isOpen, onClose }: UserProfileModalPr
           )}
         </form>
 
-        {/* Staff & Admin Portal Section */}
-        <div className={styles.adminAccessSection}>
+        {/* Staff & Admin Portal Section (Desktop Only) */}
+        <div className={`${styles.adminAccessSection} desktopOnly`}>
           <div className={styles.adminHeader}>
             <span className={styles.adminTag}>Studio Management</span>
           </div>
