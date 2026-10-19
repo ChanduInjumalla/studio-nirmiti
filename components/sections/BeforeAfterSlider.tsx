@@ -14,11 +14,11 @@ interface BeforeAfterSliderProps {
 }
 
 export default function BeforeAfterSlider({
-  beforeSrc = '/images/before_concept_wireframe.jpg',
+  beforeSrc = '/images/before_empty_shell.jpg',
   afterSrc = '/images/after_completed_living.jpg',
-  beforeAlt = '3D architectural clay wireframe and lighting simulation',
-  afterAlt = 'Completed living pavilion handover with turnkey furnishings',
-  beforeLabel = 'Concept / 3D Simulation',
+  beforeAlt = 'Bare empty architectural room before interior design fit-out',
+  afterAlt = 'Completed luxury living pavilion handover with turnkey furnishings',
+  beforeLabel = 'Empty Shell / Raw Space',
   afterLabel = 'Completed Turnkey Reality',
 }: BeforeAfterSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -49,11 +49,11 @@ export default function BeforeAfterSlider({
         <div className={styles.headerArea}>
           <span className={styles.eyebrow}>Precision Verification</span>
           <h2 id="before-after-title" className={styles.title}>
-            From 3D digital model to completed reality.
+            From empty space to completed reality.
           </h2>
           <p className={styles.subtitle}>
-            Drag the divider to compare our pre-construction 3D architectural simulation against
-            the finalized turnkey handover. Zero discrepancy between render and reality.
+            Drag the divider to compare the raw empty architectural room against the finalized
+            turnkey interior. Flawless transformation from shell to bespoke luxury living.
           </p>
         </div>
 
