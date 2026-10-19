@@ -14,11 +14,11 @@ interface BeforeAfterSliderProps {
 }
 
 export default function BeforeAfterSlider({
-  beforeSrc = '/images/before_empty_shell.jpg',
+  beforeSrc = '/images/before_white_model.jpg',
   afterSrc = '/images/after_completed_living.jpg',
-  beforeAlt = 'Bare empty architectural room before interior design fit-out',
-  afterAlt = 'Completed luxury living pavilion handover with turnkey furnishings',
-  beforeLabel = 'Empty Shell / Raw Space',
+  beforeAlt = 'Pre-construction pure white architectural simulation of the living pavilion',
+  afterAlt = 'Completed living pavilion handover with turnkey furnishings',
+  beforeLabel = 'White Concept Model',
   afterLabel = 'Completed Turnkey Reality',
 }: BeforeAfterSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
